@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html  lang="en">
+    <head>
+        <title>Atlas - Demo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <style type="text/css">
+            body {
+                margin: 0px;
+            }
+
+            .header {
+                background-color: rgb(0, 21, 41);
+            }
+
+            #page-header {
+                background-size: cover;
+                height: 64px;
+              
+            }
+
+            div.header-image {
+                padding-left: 20px;
+                padding-top: 10px;
+                margin: 0;
+            }
+
+            .header-image img {
+                width: auto;
+                height: 27px;
+                padding: 7px;
+                border: 1px solid transparent;
+            }
+
+            #header {
+                margin-top: 0px;
+                text-align:center;
+                display: flex;                  
+            }
+
+            #credentials_div {
+                flex-grow: 1;
+                padding-top: 15px;
+                padding-right: 20px
+            }
+
+            .fa-right-from-bracket, .fa-globe {
+                color: white;
+            }
+
+            #credentials_div a {
+                float: right;
+                padding-right: 10px;
+            }
+
+            #title {
+                padding-left: 25px;
+                font-family: "Segoe UI";
+                font-size: 30px;
+                color: white;
+                float: left;
+            }
+
+            #links {
+                padding-right: 20px;
+                float: right;
+                display: none;
+                margin-top: -25px;
+            }
+
+            #cloud_gcloud {
+                content: url('data:image/png;base64,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');
+            }
+
+            #cloud_azure {
+                content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAfCAYAAACGVs+MAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUCSURBVFhHzVdLbFVVFL0kFqdOHOhATWSgI4ciRhNN/FAo9Ac0fNqCQ6MRSlGjQVFjIgKFgSYCGgXaYmkLBoF+oC1tra2W916LJkSgJgrtq7F99777/y7XOa8NbWXQ3g60ycped5/7bvfde52971HAP8P1ofshQnLN8+HSuhGg0k8DwwugT3HV8eCGEbwogqabCMMArhXBdfhr3mBmAwR+hDCIYOk5n8c1z44Q8dIyQmld18Xk5CQU3bKhnz0O4+NXYe3fCX3vdtoqmPuqJLcP7ITx6Q4ix/W9b8DatwNmzS44v6bw+8QAmlIVaExuwunhCjQkNqJpaItEQ2ITmofL0ZjazPXNkp/ifQ3J9Rj844gMVDH4xsYnr8N49j4YLz44P7zwAIz8h+F2nkdyrAG7L+ThnfOKxLtTdi6f6as+qzCQSoQ+oARMq33wzdyD1yybHwoehVH0GOyuC7g6fgYftS/F+60K9swTIojGZDkM3YGimiwBU77gAIofh9fThuRoIz5sy1tQACITZ65u46szA8zCIjNwOlYGmlLlFKQLxaTCzQPVsQJwu1swNNYcKwPNQ5XwPWZAd1wYQukLLoEIoBWp0aZ4JRjeiogCVMTedg69Fb8Ef8UXoa5ZUDKGBZ17Po4I/Z52JG7HE+F30yJkGSjCXbEy4HS14GqaImyLI8IK2KYHRbRcaxEBDMcNIMkALF/0gcWVYNF9QAwgu4a74Pn7Yax6RLbYWZjlm+IrH2IQy2B3nGMfaMYeBrC7RcF7xLSV/MId38z1t8+xFSfYCbM2t6HtwK49COe1fFjbC+HsLIa9o0hCcOmrKiaKJHfleiHs6lL4yX5cG7+ILweeweEfl+OLvidxdOBpHO5bLq+PDqyQviP9T0nI9f4V+Kz3CXT89gEnJjNg2zY0jsWJsTQm0+OYSAubljbHc75/+9N8gyxMM4OMNoKMehOqdvOOncuJ6fWMdgNZfQw2X15B4GH/Lxaea9exusvCyks6VnWaEoIXXLaR32FICP7yRR35XFvbZeLiLQeY6EV0pQjh4GogWYjgp9W8XkuskRwJ8sECRD8XkBciFHbwJXg3a6AbLIGd1bClS4XyVQbKN8SxOZjpm+a0eScyqBsJEP1Zi6glD2C9543vFUTshEJ/vAqxrc+A8vUklvCh84FC5NVmcOI6M5A+BbTfC1DdaF0yP3AXeOyEqhChb5uo6MkygLv/s7tBOZ7B0roM6kc4S29/C7APLDSAkBngVx47oWmgoluLH8Ctk7ED4CAWJYjwSp+5iBI0xiqBm9jC3cBhZGVVlF+mCGNk4KQUYT2iGBkAO6GYxHIbbv1BX1gAxFJmoPYGP+DH4onQ5zDSxTCKPAeVvTFEyADqbnCWjsYTYcAvItMOOA2NLMpji5AqiilC0Qd4Fvof9AFH1/4TEUYUIU9vzIDvsg9QA0d5ThOtlpkQweQw0zeb38OWfOy60EA9IFoxHyrb7LSdyYWdydmKfXEwER8kEXfB59csrO3IorRDxYZuHaWdGtYRgpfQt/6yTmRRcimDsm5Drpd1qugedRH+3YNoaCPC5Dp4gyXAUBmCxDr4V0rpL5M25FlQQPpSGxBwONnXD3EYcRqKE6o4qYpALA6mKAx52jXhEYJbmsq57XG3ejDJwVOxWHfZQUOua5oOz+Nv2NbUrCX3ti5OW3w4b5U+sebyHo0150+47sDgPQDwDyUJ8yD7tWKcAAAAAElFTkSuQmCC');
+            }
+
+            #cloud_aws {
+                content: url('data:image/png;base64,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');
+            }
+
+            #credentials {
+                float: right;
+                color: white;
+                padding-right: 10px;
+            }
+
+            #playlist_url {
+                font-family: "Segoe UI";
+                padding: 0px 0px 30px 60px;
+            }
+
+            #login_div, #admin_div, #user_div, #settings_div, #time_settings_div, #recording_div {
+                display: block;
+                font-family: "Segoe UI";
+                border-radius: 5px;
+                background: #f8f8f8;
+                border: 1px solid rgba(0,0,0,.1);
+                width: 90%;
+                margin: 10px auto;
+                padding: 10px 0px 10px 15px;
+            }
+
+            #account_div,  #admin_div, #user_div, #backend_div, #origin_div, #settings_div, #time_settings_div, #recording_div, #channel_div, #asset_div {
+                display: none;
+            }
+
+            #time_settings_div table {
+                border: 0px;
+            }
+
+            input.epoch_time {
+                width: 100px;
+                text-align: center;
+            }
+
+            input.hr_time {
+                width: 180px;
+                text-align: center;
+            }
+
+            td.left-border {
+                border-left: 1px solid;
+                padding-left: 20px;
+            }
+
+            .playlist {
+                border: none;
+                overflow: auto;
+                width: 100%;
+                max-width: 1200px;
+                height: 500px;
+                resize: none;
+                white-space: pre-wrap;
+                color: #4D4D4C;
+                font-size: 12px;
+            }
+
+            #playlists_div {
+                display: none;
+                font-family: "Segoe UI";
+                border-radius: 5px;
+                background: #f8f8f8;
+                border: 1px solid rgba(0,0,0,.1);
+                width: 90%;
+                margin: 15px auto;
+                padding: 10px 5px 10px 5px;
+
+            }
+
+            #playlists_div table {
+                width: 100%;
+            }
+
+            #playlists_div table td {
+                padding: 5px;
+                vertical-align: top;
+            }
+
+            #playlists_div table th {
+                font-size: 14px;
+            }
+
+            div {
+                margin-top: 5px;
+                font-family: "Segoe UI";
+            }
+
+            div label {
+                width: 110px;
+                display: inline-block;
+            }
+
+            div select {
+                min-width: 400px;
+            }
+
+            div input {
+                min-width: 192px;
+            }
+
+            span.info {
+                color: #8CDCDA;
+                font-family: "Segoe UI";
+            }
+
+            span.error {
+                color: red;
+                font-family: "Segoe UI";
+            }
+
+            #playlist_actions_div {
+                font-family: "Segoe UI";
+                margin: 10px auto;
+                padding: 10px 0px 10px 15px;
+            }
+
+            #playlist_error_div {
+                color: red;
+                display: block;
+                font-family: "Segoe UI";
+                width: 90%;
+                margin: 0 auto;
+                border-radius: 5px;
+                background: #f8f8f8;
+                border: 1px solid red;
+                padding: 10px;
+            }
+
+            #recording_actions_div {
+                float: right;
+                margin: 0px 10px 0px 0px
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                padding-top: 200px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0,0.4);
+            }
+
+            .modal_header {
+                height: 35px;
+                margin: 0;
+            }
+
+            #recording_modal_div_content {
+                background-color: #fefefe;
+                margin: auto;
+                border: 1px solid #888;
+                width: 45%;
+            }
+
+            #recording_modal_close {
+                color: white;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                margin-right: 5px;
+            }
+
+            #recording_modal_close:hover, #recording_modal_close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            #recording_modal_title {
+                color: white;
+                padding-left: 10px;
+                font-family: "Segoe UI";
+                font-size: 20px;
+            }
+
+            #mark_recording {
+                display: none;
+            }
+
+            #nl_playlist_player_div {
+                display: none;
+                width:360px;
+                height:202px;
+            }
+
+            #nl_playlist_pause  {
+                display: none;
+            }
+
+            .video-container {
+                overflow: hidden;
+                background: black;
+                position: relative;
+                width:100%;
+                height: 100%;
+                box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.7);
+            }
+    
+            .video-container video {
+                top: 0;
+                left: 0;
+                border: 0;
+                outline: 0;
+                width: 100%;
+                height: 100%;
+                background: black;
+                position: absolute;
+            }
+
+            #video_player_controls_div {
+                margin: 15px auto;
+                width: 50px;
+            }
+        </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+        <script type="text/javascript" src="./node_modules/@mediakind/mkplayer/mkplayer.js"></script>
+        <link rel="stylesheet" href="./node_modules/@mediakind/mkplayer/mkplayer-ui.css">
+
+        <script type="text/javascript">
+
+            //
+            // HTTP
+            //
+
+            async function http_post(url, data, contentType, bearer_token)
+            {
+                const controller = new AbortController();
+                const timeout_id = setTimeout(() => controller.abort(), 5000);
+
+                let options = {
+                    method: "POST",
+                    mode: "cors",
+                    credentials: "same-origin",
+                    headers: {
+                      "Content-Type": contentType,
+                    },
+                    body: data,
+                    signal: controller.signal
+                };
+
+                if (bearer_token) {
+                    options.headers = {
+                        "Content-Type": contentType,
+                        Authorization: 'Bearer ' + bearer_token,
+                        Accept: '*/*'
+                    }
+                }
+
+                try {
+                    let response = await fetch(url, options);
+                    markOperation();
+                    return response;
+                }
+                catch (error) {
+                    return null;
+                }
+                finally {
+                    clearTimeout(timeout_id);
+                }
+            }
+
+            async function http_get(url, bearer_token)
+            {
+                const controller = new AbortController();
+                const timeout_id = setTimeout(() => controller.abort(), 25000);
+
+                let options = {
+                    method: "GET",
+                    mode: "cors",
+                    credentials: "same-origin",
+                    signal: controller.signal
+                };
+
+                if (bearer_token) {
+                    options.headers = {
+                        Authorization: 'Bearer ' + bearer_token,
+                        Accept: '*/*'
+                    }
+                }
+
+                try {
+                    let response = await fetch(url, options);
+                    markOperation();
+                    return response;
+                }
+                catch (error) {
+                    return null;
+                }
+                finally {
+                    clearTimeout(timeout_id);
+                }
+            }
+
+            async function http_put(url, data, contentType, bearer_token)
+            {
+                let options = {
+                    method: "PUT",
+                    mode: "cors",
+                    credentials: "same-origin",
+                    headers: {
+                      "Content-Type": contentType,
+                    },
+                    body: data
+                };
+
+                if (bearer_token) {
+                    options.headers = {
+                        "Content-Type": contentType,
+                        Authorization: 'Bearer ' + bearer_token,
+                        Accept: '*/*'
+                    }
+                }
+
+                try {
+                    let response = await fetch(url, options);
+                    markOperation();
+                    return response;
+                }
+                catch (error) {
+                    return null;
+                }
+            }
+
+            async function http_delete(url, bearer_token)
+            {
+                let options = {
+                    method: "DELETE",
+                    mode: "cors",
+                    credentials: "same-origin",
+                };
+
+                if (bearer_token) {
+                    options.headers = {
+                        Authorization: 'Bearer ' + bearer_token,
+                        Accept: '*/*'
+                    }
+                }
+
+                try {
+                    let response = await fetch(url, options);
+                    markOperation();
+                    return response;
+                }
+                catch (error) {
+                    return null;
+                }
+            }
+
+            //
+            // Solution Hub
+            //
+
+            async function login_solution_hub()
+            {
+                hub_bearer_token = Cookies.get('hub-token');
+
+                let response = await http_get(saas_hub_url + "/api/v1.0/auth/decode", hub_bearer_token);
+
+                if (response === null || !response.ok) {
+                    redir = domain + (subdomain===undefined?"":"-"+subdomain)
+                    console.log("Moving to " + saas_hub_url + "?redir-solution=" + redir);
+                    window.location.replace(saas_hub_url + "?redir-solution=" + redir);
+                    return;
+                }
+
+                login_time = Date.now();
+                last_operation_time = Date.now();
+
+                let data = await response.json();
+                hub_account_id = data.accountID;
+                $('#credentials').html(data.userName);
+
+                if (data.role === "mkOps") {
+                    $('#admin_div').show();
+                    get_accounts();
+                    get_clusters();
+                }
+                else {
+                    $('#user_div').show();
+                }
+            }
+
+            async function refresh_token()
+            {
+                let response = await http_get(saas_hub_url + "/api/v1.0/auth/refresh", hub_bearer_token);
+                if (response === null || !response.ok) {
+                    return;
+                }
+
+                let data = await response.text();
+                hub_bearer_token = data;
+
+                login_time = Date.now();
+            }
+
+            async function get_accounts()
+            {
+                let response = await http_get(saas_hub_url + "/api/v1.0/accounts?returnField=accountName", hub_bearer_token);
+                if (response === null || !response.ok) {
+                    return;
+                }
+
+                $('#account_info').html('');
+                $('#account_error').html('');
+
+                let data = await response.json();
+                for (var index = 0; index < data.length; index++) {
+                    $('#account_id_input').append(new Option(data[index].accountName, data[index].accountID));
+                }
+
+                $("#account_id_input").html($("#account_id_input option").sort(function (a, b) {
+                    return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+                }))
+
+                $('#account_id_input').val(hub_account_id).attr("selected", "selected");
+                $('#account_id_input').show();
+                $('#account_div').show();
+            }
+
+            async function get_clusters()
+            {
+                let response = await http_get(solution_hub_url + "/api/v1.0/accounts/" + hub_account_id +"/deployments", hub_bearer_token);
+                if (response === null || !response.ok) {
+                    if (response !== null) {
+                        let data = await response.json();
+                        $('#cluster_error').html(data.summary);
+                    }
+                    return;
+                }
+
+                $('#cluster_input').show();
+                $('#cluster_input').empty();
+                $('#cluster_info').html('');
+                $('#cluster_error').html('');
+
+                let data = await response.json();
+                $('#cluster_data').val(JSON.stringify(data));
+                for (var index = 0; index < data.length; index++) {
+                    $('#cluster_input').append(new Option(data[index].id, index));
+                }
+
+                $("#cluster_input").html($("#cluster_input option").sort(function (a, b) {
+                    return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+                }))
+
+                if ($('#cluster_input option').length === 0) {
+                    $('#cluster_error').html("No cluster found for this account");
+                    $('#cluster_input').hide();
+                }
+                else {
+                    $('#cluster_input').show();
+                }
+
+                get_cluster();
+            }
+
+            async function get_cluster() {
+                json = JSON.parse($('#cluster_data').val());
+                index = $('#cluster_input').val();
+
+                $('#backend_div').hide();
+                $('#origin_div').hide();
+                $('#settings_div').hide();
+                $('#recording_div').hide();
+                $('#links').hide();
+
+                $('#device_profile_select').empty();
+                $('#use_case_select').val("select");
+                $('#dvr_channel_id_select').empty();
+                $('#asset_id_select').empty();
+
+                if (json !== null && index !== null) {
+                    cluster_info = json[index];
+                    $('#cluster_info').html(json[index].status.cluster_status[0].status + " / " + json[index].config.clusters[0].version + " / " + json[index].config.zone);
+
+                    $('#links .cloud_vendor').hide();
+                    $('#links').show();
+                    $('#links #cloud_' + json[index].config.cloud).show();
+
+                    if (json[index].status.cluster_status[0].status === "Deployed") {
+                        $('#backend_url').html(json[index].status.cluster_status[0].controller_address);
+                        $('#origin_url').html(json[index].status.cluster_status[0].origin_server_ip_address);
+
+                        controller_url = "https://" + json[index].status.cluster_status[0].controller_address + ":8443";
+                        controller_password = json[index].status.cluster_status[0].controller_password;
+                        origin_url = "https://" + json[index].status.cluster_status[0].origin_server_ip_address;
+
+                        if ($('#backend_url').html() !== "null" && $('#backend_url').html() !== '') {
+                            $('#backend_div').show();
+                            $('#origin_div').show();
+                            update_controller(); 
+                        }
+                    }
+                }
+
+                update_view();
+            }
+
+            async function update_controller() {
+                if (await login_controller()) {
+                    get_device_profiles();
+
+                    $('#settings_div').show();
+                }
+            }
+
+            //
+            // Controller
+            //
+
+            async function login_controller()
+            {
+                let body = "client_id=admin&client_secret=" + controller_password;
+
+                $('#backend_info').html("Authorizing...");
+
+                let response = await http_post(cors_anywhere_url + controller_url + "/o/token", body, "application/x-www-form-urlencoded");
+                if (response === null || !response.ok) {
+                    $('#backend_info').html('');
+                    $('#backend_error').html("Unauthorized");
+                    return false;
+                }
+
+                let data = await response.json();
+                controller_bearer = data.access_token;
+
+                $('#backend_info').html("Authorized");
+                $('#backend_error').html('');
+
+                return true;
+            }
+
+            async function get_device_profiles()
+            {
+                $('#device_profile_info').html('Loading device profiles...');
+
+                let response = await http_get(cors_anywhere_url + controller_url + "/api/config", controller_bearer);
+                if (response === null || !response.ok) {
+                    $('#device_profile_info').html('');
+                    $('#device_profile_error').html("Cannot get config from Controller");
+
+                    return false;
+                }
+
+                $('#device_profile_select').empty();
+
+                let data = await response.json();
+                packager_config = data;
+
+                for (var i = 0; i < data.catalogs.length; i++) {
+                    for (var j = 0; j < data.catalogs[i].outputs.length; j++) {
+                        for (var k = 0; k < data.catalogs[i].outputs[j].manifests.length; k++) {
+                            $('#device_profile_select').append('<option value="' + data.catalogs[i].outputs[j].manifests[k].name + '">' + data.catalogs[i].name + " / " + data.catalogs[i].outputs[j].name + " / " + data.catalogs[i].outputs[j].manifests[k].name + '</option>');
+                        }
+                    }
+                }
+
+                if ($('#device_profile_select option').length === 0) {
+                    $('#device_profile_info').html('');
+                    $('#device_profile_error').html('No device profiles');
+                    $('#device_profile_select').hide();
+                }
+                else {
+                    $('#device_profile_info').html('');
+                    $('#device_profile_error').html('');
+                    $('#device_profile_select').show();
+                    $('#device_profile_select').prepend('<option value="select">Please select device profile...</option>');
+                    $('#device_profile_select').val('select').attr("selected", "selected");
+                }
+                
+                return true;
+            }
+
+            function get_device_profile()
+            {
+                if ($('#device_profile_select').val() !== 'select') {
+                    device_profile=$('#device_profile_select :selected').text().split(" / ");
+                    output = packager_config.catalogs.find((element) => element.name === device_profile[0]).outputs.find((element) => element.name === device_profile[1]);
+                    $('#device_profile_info').html("Type: " + output.manifests.find((element) => element.name === device_profile[2]).manifestType + "/" + output.type + ", Naming scheme: " + output.namingScheme);
+                }
+                else {
+                    $('#device_profile_info').html('');
+                    $('#device_profile_error').html('');
+                }
+
+                if ($('#use_case_select').val() === 'origin') {
+                    get_assets($('#asset_id_select').val());
+                }
+
+                update_view();
+            }
+
+            //
+            // Channels
+            //
+
+            async function get_dvr_channels(default_channel=0)
+            {
+                $('#dvr_channel_info').html('Loading channels...');
+
+                let response = await http_get(cors_anywhere_url + controller_url + "/api/cdvrChannels", controller_bearer);
+                if (response === null || !response.ok) {
+                    $('#dvr_channel_id_select').hide();
+                    $('#dvr_channel_info').html('Not a CDVR cluster');
+                    $('#dvr_channel_id_select').empty();
+                    return;
+                }
+
+                let data = await response.json();
+                if (data === null || data.length == 0 || data[0] == undefined) {
+                    $('#dvr_channel_id_select').hide();
+                    $('#dvr_channel_error').html('No channels');
+
+                    return;
+                }
+
+                $('#dvr_channel_info').html('');
+                $('#dvr_channel_error').html('');
+                $('#dvr_channel_id_select').empty();
+
+                for (var index = 0; index < data.length; index++) {
+                    $('#dvr_channel_id_select').append('<option value="' + data[index].id + '">' + data[index].name + '</option>');
+                }
+
+                $('#dvr_channel_id_select').prepend('<option value="select">Please select channel...</option>');
+                $('#dvr_channel_id_select').val('select').attr("selected", "selected");
+                $('#dvr_channel_id_select').show();
+
+                if (default_channel == null || default_channel == 0) {
+                    $('#dvr_channel_id_select').val('select').attr("selected", "selected");
+                }
+                else {
+                    $('#dvr_channel_id_select').val(default_channel).attr("selected", "selected");
+                    get_dvr_channel(default_channel);
+                }
+
+                update_view();
+            }
+
+            async function get_dvr_channel(dvrChannelId)
+            {
+                if (dvrChannelId === 'select') {
+                    update_view();
+                    return;
+                }
+
+                $('#dvr_channel_info').html('');
+                $('#dvr_channel_error').html('');
+
+                let response = await http_get(cors_anywhere_url + controller_url + "/api/cdvrChannels/" + dvrChannelId, controller_bearer);
+                if (response === null || !response.ok) {
+                    update_view();
+                    return;
+                }
+
+                let data = await response.json();
+                if (data === null || data.length == 0) {
+                    update_view();
+                    return null;
+                }
+
+                $('#dvr_channel_info').html('Duration: ' + data.rollingBufferDuration + ', Recording retention: ' + data.recordingRetentionDuration);
+                get_dvr(data.cdvrId);
+
+                if ($('#use_case_select').val() === 'recording') {
+                    get_recordings();
+                }
+                
+                update_view();
+            }
+
+            async function get_dvr(cdvrId)
+            {
+                let response = await http_get(cors_anywhere_url + controller_url + "/api/cdvrs/" + cdvrId, controller_bearer);
+                if (response === null || !response.ok) {
+                    update_view();
+                    return;
+                }
+            }
+
+            //
+            // Recordings
+            //
+
+            async function get_recordings(default_recording=0)
+            {
+                $('#recording_info').html('Loading recordings profiles...');
+
+                let cdvrId = $('#dvr_channel_id_select').val();
+                if (cdvrId === null || cdvrId === 0) {
+                    $('#recording_id_select').hide();
+                    update_view();
+                    return;
+                }
+
+                let response = await http_get(cors_anywhere_url + controller_url + "/api/recordings?cdvrChannelId=" + cdvrId, controller_bearer);
+                if (response === null || !response.ok) {
+                    $('#recording_id_select').hide();
+                    update_view();
+                    return;
+                }
+                
+                $('#recording_info').html('');
+                $('#recording_error').html('');
+                $('#recording_id_select').empty();
+
+                let data = await response.json();
+                if (data === null || data.length == 0 || data[0] == undefined) {
+                    $('#recording_info').html('No recordings');
+
+                    update_view();
+                    return;
+                }
+
+                for (var index = 0; index < data.length; index++) {
+                    $('#recording_id_select').append('<option value="' + data[index].id + '">' + data[index].name + '</option>');
+                }
+
+                $('#recording_id_select').prepend('<option value="select">Please select recording...</option>');
+                if (default_recording == 0) {
+                    $('#recording_id_select').val('select').attr("selected", "selected");
+                }
+                else {
+                    $('#recording_id_select').val(default_recording).attr("selected", "selected");
+                    get_recording(default_recording);
+                }
+
+                $('#recording_id_select').show();
+
+                update_view();
+            }
+
+            async function get_recording(recordingId)
+            {
+                if (recordingId === 'select') {
+                    update_view();
+                    return;
+                }
+
+                $('#recording_info').html('');
+                $('#recording_error').html('');
+
+                let response = await http_get(cors_anywhere_url + controller_url + "/api/recordings/" + recordingId, controller_bearer);
+                if (response === null || !response.ok) {
+                    update_view();
+                    return;
+                }
+
+                let data = await response.json();
+                if (data === null || data.length == 0) {
+                    update_view();
+                    return null;
+                }
+
+                recording_data = data;
+
+                $('#recording_info').html("Time range: [" + data.startTime + " - " + data.stopTime + "]");
+                    
+                update_view();
+            }
+
+            async function delete_recording(recordingId)
+            {
+                let response = await http_delete(cors_anywhere_url + controller_url + "/api/recordings/" + recordingId, controller_bearer);
+                if (response === null || !response.ok) {
+                    return;
+                }
+
+                get_recordings();
+            }
+
+            //
+            // Live / Vod assets
+            //
+
+            async function get_assets(default_asset=0)
+            {
+                $('#asset_id_info').html('');
+                $('#asset_id_error').html('');
+                $('#asset_id_select').empty();
+
+                if ($('#device_profile_select').val() === 'select') {
+                    $('#asset_id_select').hide();
+                    $('#asset_id_info').html('Please configure device profile');
+
+                    update_view();
+                    return;
+                }
+
+                device_profile=$('#device_profile_select :selected').text().split(" / ");
+                if (device_profile[0] === "") {
+                    $('#asset_id_select').hide();
+                    $('#asset_id_error').html('Could not read catalog configuration');
+
+                    update_view();
+                    return;
+                }
+
+                catalogId = packager_config.catalogs.find((element) => element.name === device_profile[0]).id;
+
+                let response = await http_get(cors_anywhere_url + controller_url + "/api/catalogs/" + catalogId + "/assets", controller_bearer);
+                if (response === null || !response.ok) {
+                    $('#asset_id_select').hide();
+                    $('#asset_id_info').html('Could not read catalog configuration');
+
+                    update_view();
+                    return;
+                }
+
+                let data = await response.json();
+                if (data === null || data.length == 0 || data[0] == undefined) {
+                    $('#asset_id_select').hide();
+                    $('#asset_id_error').html('No asset in catalog');
+
+                    update_view();
+                    return;
+                }
+
+                for (var index = 0; index < data.length; index++) {
+                    $('#asset_id_select').append('<option value="' + catalogId + ' / ' +  data[index].id + '">' + data[index].name + '</option>');
+                }
+
+                $('#asset_id_select').prepend('<option value="select">Please select asset...</option>');
+                $('#asset_id_select').val('select').attr("selected", "selected");
+                $('#asset_id_select').show();
+
+                if (default_asset == null || default_asset == 0) {
+                    $('#asset_id_select').val('select').attr("selected", "selected");
+                }
+                else {
+                    $('#asset_id_select').val(default_asset).attr("selected", "selected");
+                    get_asset(default_asset);
+                }
+
+                update_view();
+            }
+
+            function get_asset()
+            {
+                if ($('#asset_id_select').val() !== 'select') {
+                    asset = $('#asset_id_select :selected').val().split(" / ");
+                    asset_access_url = packager_config.catalogs.find((element) => element.id === asset[0]).assets.find((element) => element.id === asset[1]).accessUrl;
+                    device_profile=$('#device_profile_select :selected').text().split(" / ");
+                    output = packager_config.catalogs.find((element) => element.name === device_profile[0]).outputs.find((element) => element.name === device_profile[1]);
+                    manifest = output.manifests.find((element) => element.name === device_profile[2]).manifestType == 'hls'?".m3u8":".mpd";
+                    access_url = output.accessUrl + "/" + asset_access_url + "/" + device_profile[2] + manifest;
+                    $('#asset_id_info').html("Access URL: " + access_url);
+                }
+                else {
+                    access_url = "";
+                    $('#asset_id_info').html('');
+                    $('#asset_id_error').html('');
+                }
+
+                update_view();
+            }
+
+            //
+            // Manifest / Playlist
+            //
+
+            async function get_manifest_url(target)
+            {
+                let url = '';
+                let query_parameters ='';
+                let manifest_url = '';
+                
+                show_playlists();
+
+                if ($('#use_case_select').val() === 'origin') {
+                    manifest_url = "/" + access_url; 
+                }
+                else {
+                    if ($('#use_case_select').val() === 'replay') {
+                        url = controller_url + "/api/delivery/replay";
+                        query_parameters = new URLSearchParams($('#url_time_range').text());
+                        query_parameters.append("deviceProfile", $('#device_profile_select').val());
+                        query_parameters.append("cdvrChannelId", $('#dvr_channel_id_select').val());
+                    }
+                    else if ($('#use_case_select').val() === 'recording') {
+                        url = controller_url + "/api/delivery/recordings"
+                        query_parameters = new URLSearchParams();
+                        query_parameters.append("deviceProfile", $('#device_profile_select').val());
+                        query_parameters.append("recordingId", $('#recording_id_select').val());
+                    }
+    
+                    if(query_parameters.toString() != '') {
+                        url = url.split('?')[0] + "?" + query_parameters.toString()
+                    }
+    
+                    let response = await http_get(cors_anywhere_url + url, controller_bearer);
+                    if (response === null || !response.ok) {
+                        show_playlist_error_div("Error");
+                        return;
+                    }
+    
+                    await sleep(2000);
+    
+                    let data = await response.json();
+                    if (data === null || data.length == 0) {
+                        return null;
+                    }    
+
+                    manifest_url = data.url;
+                }
+
+
+                $('#nl_playlist_url').html(origin_url + manifest_url)
+                $('#nl_playlist_copy_div').show();
+
+                get_manifest_content(origin_url + manifest_url, 'nl_playlist');
+            }
+
+            async function get_manifest_content(url, target)
+            {
+                if (manifest_update_timeout) {
+                    clearTimeout(manifest_update_timeout);
+                }
+
+                let response = await http_get(url);
+                if (response === null) {
+                    return;
+                }
+
+                let data = await response.text();
+                if (data === null || data.length == 0) {
+                    return null;
+                }
+
+                $('#' + target).html('');
+                let content_type = "closed";
+
+                if (data.match("MPD"))
+                {
+                    if (data.match(/type="dynamic"/)) {
+                        content_type = "open";
+                    }
+
+                    manifest = prettify_xml(data);
+                    manifest = html_special_chars(manifest);
+                    manifest = manifest.replace(/(&lt;\/?)([^ $&]*)([ $&])/g , "$1<b><font color='#000000'>$2</font></b>$3");
+                    manifest = manifest.replace(/=&quot;([^&]*)&quot;/g , "=&quot;<font color='#718C00'>$1</font>&quot;");
+                    manifest = manifest.replace(/([a-zA-Z0-9x\.\-:]+)=&/g , "<font color='#C82829'>$1=</font>&");
+
+                    $('#nl_playlist_player_div').show();
+
+                    $('#' + target).html(manifest);
+                }
+                else if (data.match("EXTM3U"))
+                {
+                    if (!data.match(/#EXT-X-STEAM-INF/) && !data.match(/#EXT-X-ENDLIST/)) {
+                        content_type = "open";
+                    }
+
+                    playlist = html_special_chars(data);
+                    playlist = playlist.replace(/(\#[a-zA-Z0-9\-]*)/g , "<b><font color='#000000'>$1</font></b>");
+                    playlist = playlist.replace(/([,:])([a-zA-Z0-9\-]*)=/g , "$1<font color='#C82829'>$2</font>=");
+                    playlist = playlist.replace(/=&quot;([^&]*)&quot;/g , "=&quot;<font color='#718C00'>$1</font>&quot;");
+                    playlist = playlist.replace(/=([a-zA-Z0-9x\.]+)/g , "=<font color='#718C00'>$1</font>");
+                    playlist = playlist.replace(/:([a-zA-Z0-9x\.]+)/g , ":<font color='#718C00'>$1</font>");
+                    playlist = playlist.replace(/([a-zA-Z0-9\/\-_]*.m3u8)/g, "<a href=\"javascript:void(0);\" onclick=\"update_playlist_url('$&')\">$&</a>");
+
+                    $('#nl_playlist_player_div').show();
+
+                    $('#' + target).html(playlist);
+                }
+                else 
+                {
+                    show_playlist_error_div(data);
+                }
+
+                if (content_type === "open") {
+                    manifest_update_timeout = setTimeout(() => get_manifest_content(url, target), 2 * 1000);
+                }
+            }
+
+            function update_playlist_url(media_playlist)
+            {
+                var url = $('#nl_playlist_url').html();
+                live_playlist_url = (url.split('?'))[0];
+                query_parameters = new URLSearchParams((url.split('?'))[1]);
+
+                base_url = live_playlist_url.substring(0, live_playlist_url.lastIndexOf("/"));
+                new_playlist_url = base_url + "/" + media_playlist;
+                new_live_playlist_url = (new_playlist_url.split('?'))[0];
+
+                $('#nl_playlist_url').html(new_playlist_url);
+                get_manifest_content(new_playlist_url, 'nl_playlist');
+            }
+
+            //
+            // Time range panel
+            //
+
+            function update_time_from_input_epoch(input, newValue)
+            {
+                updated_delay = Math.round(($('#current_epoch').val() - newValue) / (-60000));
+
+                $('#' + input + '_input_hour').val(epoch_to_date(updated_time_epoch));
+                $('#' + input + '_slider').val(updated_delay);
+                $('#span_' + input + '_slider').html(updated_delay);
+
+                update_url_time_range();
+            }
+
+            function update_time_from_input_hour(input, newValue)
+            {
+                var d = new Date(newValue);
+
+                updated_delay = Math.round(($('#current_epoch').val() - d.getTime()) / (-60000));
+
+                $('#' + input + '_input_epoch').val(d.getTime());
+                $('#' + input + '_slider').val(updated_delay);
+                $('#span_' + input + '_slider').html(updated_delay);
+
+                update_url_time_range();
+            }
+
+            function update_time_from_slider(elem, newValue)
+            {
+                var d = new Date();
+                updated_time_epoch = d.getTime() - (newValue * (-60000));
+
+                $('#' + elem + '_input_epoch').val(updated_time_epoch);
+                $('#' + elem + '_input_hour').val(epoch_to_date(updated_time_epoch));
+
+                update_url_time_range();
+            }
+
+            function update_duration_from_input_minute(newValue)
+            {
+                var d = new Date(newValue*60000);
+
+                $('#duration_input_hour').val(d.toISOString().slice(11, 19));
+                $('#duration_slider').val(newValue);
+                $('#span_duration_slider').html(newValue);
+
+                update_url_time_range();
+            }
+
+            function update_duration_from_input_hour(newValue)
+            {
+                var minutes = parseInt(newValue.split(':')[0]) * 60 + parseInt(newValue.split(':')[1]);
+
+                $('#duration_input_epoch').val(minutes);
+                $('#duration_slider').val(minutes);
+                $('#span_duration_slider').html(minutes);
+
+                update_url_time_range();
+            }
+
+            function update_duration_from_slider(newValue)
+            {
+                var d = new Date(newValue*60000)
+
+                $('#duration_input_epoch').val(newValue);
+                $('#duration_input_hour').val(d.toISOString().slice(11, 16));
+
+                update_url_time_range();
+            }
+
+            function reset_slider(elem)
+            {
+                $('#' + elem + "_slider").val(0);
+                $('#' + "span_" + elem + "_slider").html(0);
+
+                $('#' + elem + '_input_epoch').val('');
+                $('#' + elem + '_input_hour').val('');
+
+                update_url_time_range();
+            }
+
+            function update_url_time_range()
+            {
+                var d = new Date();
+
+                query_parameters = new URLSearchParams();
+
+                if ($('#starttime_input_epoch').val() != '') {
+                    query_parameters.set('startTime', $('#starttime_input_epoch').val());
+                }
+                else {
+                    query_parameters.delete('startTime');
+                }
+
+                if ($('#stoptime_input_epoch').val() != '') {
+                    query_parameters.set('stopTime', $('#stoptime_input_epoch').val());
+                }
+                else {
+                    query_parameters.delete('stopTime');
+                }
+
+                if ($('#duration_input_epoch').val() != '') {
+
+                    query_parameters.set('duration', "PT" + $('#duration_input_epoch').val() + "M");
+                }
+                else {
+                    query_parameters.delete('duration');
+                }
+
+                $('#url_time_range').text(query_parameters.toString());
+
+                if ($('#starttime_input_epoch').val() != $('#stoptime_input_epoch').val()
+                    && $('#starttime_input_epoch').val() < $('#stoptime_input_epoch').val()) {
+                    $('#mark_recording').show();
+                }
+                else {
+                    $('#mark_recording').hide();
+                }
+            }
+
+            //
+            // Playlist display
+            //
+
+            function hide_playlists()
+            {
+                clear_playlists();
+                $('#playlists_div').hide();
+            }
+
+            function show_playlists()
+            {
+                clear_playlists();
+
+                if ($('#device_profile_select option').length !== 0 && $('#device_profile_select').val() !== 'select') {
+                    hide_playlist_error_div();
+                    $('#playlists_div').show();    
+                }
+            }
+
+            function clear_playlists()
+            {
+                clearTimeout(manifest_update_timeout);
+                
+                $('#nl_playlist').html('');
+                $('#nl_playlist_url').html("");
+                $('#nl_playlist_copy_div').hide();
+                $('#nl_playlist_player_div').hide();
+
+                stop_player();
+            }
+
+            function show_playlist_error_div(additionalInfo)
+            {
+                clear_playlists();
+                $('#playlist_error_div').show();
+                $('#playlist_error_div').html("An error occured while retrieving the playlist/manifest.<br>" + additionalInfo);
+            }
+
+            function hide_playlist_error_div()
+            {
+                $('#playlist_error_div').hide();
+                $('#error').html('');
+            }
+
+            function show_time_settings()
+            {
+                if ($('#device_profile_select option').length !== 0 && $('#device_profile_select').val() !== 'select') {
+                    $('#time_settings_div').show();
+                    reset_slider('starttime');
+                    reset_slider('stoptime');
+                    reset_slider('duration');
+                }
+            }
+
+            function hide_time_settings() {
+                $('#time_settings_div').hide();
+            }
+
+            function update_view() {
+                if ($('#device_profile_select').val() === 'select') {
+                    hide_time_settings();
+                    hide_playlists();                    
+                }
+
+                if ($('#use_case_select').val() === 'select') {
+                    $('#channel_div').hide();
+                    $('#recording_div').hide();
+                    $('#asset_div').hide();
+                    hide_time_settings();
+                    hide_playlists();
+                }
+                else if ($('#use_case_select').val() === 'replay') {
+                    if ($('#dvr_channel_id_select option').length !== 0) {
+                        $('#channel_div').show();
+                    }
+                    else {
+                        $('#channel_div').hide();
+                    }
+                    
+                    $('#recording_div').hide();
+                    $('#asset_div').hide();
+
+                    if ($('#dvr_channel_id_select option').length !== 0 && $('#dvr_channel_id_select').val() !== 'select') {
+                        show_time_settings();
+                        show_playlists();
+                    }
+                    else {
+                        hide_time_settings();
+                        hide_playlists();
+                    }
+                }
+                else if ($('#use_case_select').val() === 'recording') {
+                    if ($('#dvr_channel_id_select option').length !== 0) {
+                        $('#channel_div').show();
+                    }
+                    else {
+                        $('#channel_div').hide();
+                    }
+
+                    $('#asset_div').hide();
+                    hide_time_settings();
+
+                    if ($('#dvr_channel_id_select option').length !== 0 && $('#dvr_channel_id_select').val() !== 'select') {
+                        $('#recording_div').show();
+
+                        if ($('#recording_id_select option').length !== 0 && $('#recording_id_select').val() !== 'select') {
+                            $('#recording_delete').show();
+                            $('#recording_update').show();
+                            show_playlists();
+                        }
+                        else {
+                            $('#recording_delete').hide();
+                            $('#recording_update').hide();
+                            hide_time_settings();
+                            hide_playlists();
+                        }
+                    }
+                    else {
+                        $('#recording_div').hide();
+                        hide_time_settings();
+                        hide_playlists();
+                    }                    
+                }
+                else if ($('#use_case_select').val() === 'origin') {
+                    $('#channel_div').hide();
+                    $('#recording_div').hide();
+                    $('#asset_div').show();
+
+                    if ($('#asset_id_select option').length !== 0 && $('#asset_id_select').val() !== 'select') {
+                        show_playlists();
+                    }
+                    else {
+                        hide_playlists();
+                    }
+                }
+            }
+
+            //
+            // Utility functions
+            //
+
+            function refresh_epoch_time()
+            {
+                var date = new Date();
+                $('#current_epoch').val(date.getTime());
+                $('#current_time').val(date.toISOString())
+            }
+
+            function markOperation()
+            {
+                last_operation_time = Date.now();
+            }
+
+            async function refreshHubToken()
+            {
+                const elapsedSinceRefresh = Date.now() - login_time;
+                const elapsedSinceLastOperation = Date.now() - last_operation_time;
+
+                if (elapsedSinceLastOperation > 60 * 60 * 1000) {
+                    console.log('Logging user out due to inactivity.');
+                    logout();
+                } else if (elapsedSinceRefresh > 20 * 1000) {
+                    await refresh_token();
+                    set_timers();
+                } else {
+                    set_timers();
+                }
+            }
+
+            function set_timers()
+            {
+                setInterval(function() { refresh_epoch_time(); }, 5000);
+                setTimeout(() => refreshHubToken(), 20 * 1000);
+            }
+
+            function html_special_chars(unsafe)
+            {
+                if (unsafe == null) {
+                    return null;
+                }
+
+                return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+            }
+
+            function epoch_to_date(epoch_time)
+            {
+                var d = new Date(0);
+                d.setUTCMilliseconds(epoch_time)
+                return d.toISOString();
+            }
+
+            function prettify_xml(source_xml)
+            {
+                var xmlDoc = new DOMParser().parseFromString(source_xml, 'application/xml');
+                var xsltDoc = new DOMParser().parseFromString([
+                    // describes how we want to modify the XML - indent everything
+                    '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform">',
+                    '  <xsl:strip-space elements="*"/>',
+                    '  <xsl:template match="para[content-style][not(text())]">', // change to just text() to strip space in text nodes
+                    '    <xsl:value-of select="normalize-space(.)"/>',
+                    '  </xsl:template>',
+                    '  <xsl:template match="node()|@*">',
+                    '    <xsl:copy><xsl:apply-templates select="node()|@*"/></xsl:copy>',
+                    '  </xsl:template>',
+                    '  <xsl:output indent="yes"/>',
+                    '</xsl:stylesheet>',
+                ].join('\n'), 'application/xml');
+
+                var xsltProcessor = new XSLTProcessor();
+                xsltProcessor.importStylesheet(xsltDoc);
+                var resultDoc = xsltProcessor.transformToDocument(xmlDoc);
+                var resultXml = new XMLSerializer().serializeToString(resultDoc);
+                return resultXml;
+            }
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function copyToClipboard(textToCopy) {
+                try {
+                    // Navigator clipboard api needs a secure context (https)
+                    if (navigator.clipboard && window.isSecureContext) {
+                        await navigator.clipboard.writeText(textToCopy);
+                    } else {
+                        // Use the 'out of viewport hidden text area' trick
+                        const textArea = document.createElement("textarea");
+                        textArea.value = textToCopy;
+                            
+                        // Move textarea out of the viewport so it's not visible
+                        textArea.style.position = "absolute"; textArea.style.opacity = 0;
+                            
+                        document.body.prepend(textArea);
+                        textArea.select();
+                
+                        try {
+                            document.execCommand('copy');
+                        } catch (error) {
+                            console.error(error);
+                        } finally {
+                            textArea.remove();
+                        }
+                    }
+                }
+                catch {
+                    alert(textToCopy);
+                }
+            }
+
+            //
+            // Create recording modal window
+            //
+
+            async function open_recording_modal(recordingId)
+            {
+                $('#recording_modal_id').val('');
+                $('#recording_modal_name_input').val('');
+                $('#recording_modal_content_id_input').val('');
+                $('#recording_modal_start_time_input').val('');
+                $('#recording_modal_stop_time_input').val('');
+
+                $('#recording_modal_info').val('');
+                $('#recording_modal_error').val('');
+
+                var d = new Date();
+                $('#recording_modal_current_time_info').html(d.toISOString());
+
+                if (recordingId === null) {
+                    $('#recording_modal_title').html("Create Recording");
+                    $('#recording_modal_button_apply').html("Create");
+                    $('#recording_modal_name_input').val("rec-" + d.toISOString());
+                    $('#recording_modal_dvr_channel_id').val($('#dvr_channel_id_select').val());
+
+                    $('#recording_modal_div *').prop('disabled', false);
+                }
+                else {
+                    $('#recording_modal_id').val(recordingId);
+                    $('#recording_modal_title').html("Update Recording");
+                    $('#recording_modal_button_apply').html("Update");
+
+                    $('#recording_modal_div *').prop('disabled', true);
+
+                    $('#recording_modal_name_input').val(recording_data.name);
+                    $('#recording_modal_content_id_input').val(recording_data.contentId);
+                    $('#recording_modal_start_time_input').val(recording_data.startTime);
+                    $('#recording_modal_stop_time_input').val(recording_data.stopTime);
+                    $('#recording_modal_dvr_channel_id').val(recording_data.cdvrChannelId);
+
+                    $('#recording_modal_info').html('');
+                    $('#recording_modal_div *').prop('disabled', false);
+                }
+
+                $('#recording_modal_div').show();
+            }
+
+            function extract_recording_modal(dvrChannel, startTime, stopTime)
+            {
+                var d = new Date();
+                $('#recording_modal_current_time_info').html(d.toISOString());
+
+                $('#recording_modal_title').html("Create Recording");
+                $('#recording_modal_button_apply').html("Create");
+
+                $('#recording_modal_id').val('');
+                $('#recording_modal_name_input').val("rec-" + d.toISOString());
+                $('#recording_modal_content_id_input').val('');
+                $('#recording_modal_start_time_input').val(startTime);
+                $('#recording_modal_stop_time_input').val(stopTime);
+                $('#recording_modal_dvr_channel_id').val(dvrChannel);
+
+                $('#recording_modal_time_range_div').hide()
+
+                $('#recording_modal_div').show();
+            }
+
+            function close_recording_modal()
+            {
+                $('#recording_modal_div').hide();
+                $('#recording_modal_name_input').val('');
+                $('#recording_modal_content_id_input').val('');
+                $('#recording_modal_start_time_input').val('');
+                $('#recording_modal_stop_time_input').val('');
+            }
+
+            async function apply_recording_modal(recordingId)
+            {
+                var body = {
+                    "name": $('#recording_modal_name_input').val(),
+                    "contentId": $('#recording_modal_content_id_input').val(),
+                    "startTime": $('#recording_modal_start_time_input').val(),
+                    "stopTime": $('#recording_modal_stop_time_input').val()
+                };
+
+                body["cdvrChannelId"] = $('#recording_modal_dvr_channel_id').val();
+
+                let response = null;
+
+                if (recordingId === '') {
+                    response = await http_post(cors_anywhere_url + controller_url + "/api/recordings", JSON.stringify(body), 'application/json', controller_bearer);
+                    if (response === null || !response.ok) {
+                        return false;
+                    }
+
+                }
+                else {
+                    response = await http_put(cors_anywhere_url + controller_url + "/api/recordings/" + recordingId, JSON.stringify(body), 'application/json', controller_bearer);
+                    if (response === null || !response.ok) {
+                        return false;
+                    }
+                }
+
+                let data = await response.json();
+                get_recordings(data.id);
+            }
+
+            //
+            // MediaKind Player
+            //
+
+            let mkPlayer = undefined;
+
+            const playerConfig = {
+                playback: {
+                    muted: true,
+                    autoplay: true,
+                },
+                ui: true,   // ensure mkplayer-ui.css is included in your HTML file!
+                key: "91c1e62d-1547-464b-a73c-4701fc5dea24",
+                log: {
+                    level: "debug"
+                },
+                enableHlsImageMediaPlaylistSupport: false,
+                enableSubtitleOverlay: false
+            };
+
+            
+            function stop_player()
+            {
+                if (mkPlayer) {
+                    mkPlayer.unload()
+                    .then(() => {
+                        console.log("[MKPlayer] Source unloaded!")
+                        mkPlayer.destroy();
+                        mkPlayer = undefined;                        
+                    })
+                    .catch((error) => {console.error("[MKPlayer] Failed to unload source!");});
+                }
+
+                $('#nl_playlist_play').show();
+                $('#nl_playlist_pause').hide();
+            }
+
+            function start_player(url)
+            {
+                stop_player();
+
+                const liveSourceConfig = {};
+                const regex = /(?:\.([^.]+))?$/;
+                extension = regex.exec(url)[1];
+
+                if (extension == "mpd") {
+                    liveSourceConfig["dash"] = url
+                }
+                else {
+                    liveSourceConfig["hls"] = url
+                }
+
+                mkPlayer = new mkplayer.MKPlayer(document.querySelector("#video_player_div"), playerConfig);
+                mkPlayer.on("error", (data) => {console.log("[MKPlayer] Error: ", JSON.stringify(data))});
+
+                mkPlayer.load(liveSourceConfig)
+                .catch((error) => {console.error("[MKPlayer] Failed to start playback!");});
+
+                $('#nl_playlist_play').hide();
+                $('#nl_playlist_pause').show();
+            }
+
+            //
+            // Page init
+            //
+
+            function logout()
+            {
+                $('#credentials').html("Not logged in ");
+
+                Cookies.remove('hub-token', {
+                    'domain': '.aas.mediakind.com',
+                    'path': '/'
+                });
+
+                login_solution_hub();
+            }
+
+            function on_load()
+            {
+                $('#use_case_select').on('change', function handleChange(event) {
+                    $('#use_case_info').html('');
+                    
+                    if (event.target.value === 'replay') {
+                        if (cluster_info != null && cluster_info !== "" && cluster_info.config.type !== 'CDVR') {
+                            $('#use_case_info').html('Not a CDVR cluster');
+                        }                        
+                        else {
+                            get_dvr_channels($('#dvr_channel_id_select').val());
+                        }
+                    }
+                    else if (event.target.value === 'recording') {
+                        if (cluster_info != null && cluster_info !== "" && cluster_info.config.type !== 'CDVR') {
+                            $('#use_case_info').html('Not a CDVR cluster');
+                        }
+                        else {
+                            get_dvr_channels($('#dvr_channel_id_select').val());
+                        }
+                    }
+                    else if (event.target.value === 'origin') {
+                        get_assets($('#asset_id_select').val());
+                    }
+
+                    update_view();
+                });
+
+                $('#account_id_input').on('change', function handleChange(event) {
+                    hub_account_id = $('#account_id_input').val();
+                    get_clusters();
+                });
+
+                $('#cluster_input').on('change', function handleChange(event) {
+                    get_cluster();
+                });
+
+            }
+        </script>
+
+    </head>
+
+    <body onload="set_timers(); on_load();">
+
+        <header id="page-header" class="header">
+            <div id="header">
+                <div class="header-image">
+                    <img alt='' src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCAxNDAgMjMiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZT4uc3Qxe2ZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO2ZpbGw6I2ZmZn08L3N0eWxlPjxnIGlkPSJQYWdlLTEiPjxnIGlkPSJHcm91cC0yMyI+PHBhdGggaWQ9IkZpbGwtMSIgZD0iTTg1IDIyLjU4di01LjE3YzAtLjM3LjM5LS41Ni42Mi0uMjlsMi4yNyAyLjU4Yy4xNC4xNi4xNC40MyAwIC41OWwtMi4yNyAyLjU4Yy0uMjMuMjctLjYyLjA4LS42Mi0uMjkiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjMDA5ZmUzIi8+PHBhdGggaWQ9IkZpbGwtMyIgY2xhc3M9InN0MSIgZD0iTTI4Ljk4IDEzLjFjLjM3LjAxLjcyLjAyIDEuMDYuMDJoMS4yNWMxLjA3IDAgMS45NS0uMDcgMi42MS0uMi42NS0uMTMgMS4xNi0uMyAxLjUxLS41LjMzLS4xOS41NS0uNC42NS0uNjIuMTEtLjI0LjE2LS41LjE2LS43NiAwLS42Ni0uMjYtMS4xNC0uOC0xLjQ3LS41Ny0uMzUtMS4yOC0uNTItMi4xMi0uNTItLjcgMC0xLjMyLjEyLTEuODQuMzZzLS45Ny41Ni0xLjMyLjk1Yy0uMzYuNC0uNjQuODYtLjgzIDEuMzgtLjE5LjQ1LS4yOS45LS4zMyAxLjM2bTQuMjUgOC45Yy0xLjEzIDAtMi4yMS0uMTctMy4xOS0uNTEtLjk5LS4zNC0xLjg3LS44Ni0yLjYyLTEuNTNzLTEuMzQtMS41MS0xLjc3LTIuNDhjLS40My0uOTgtLjY1LTIuMTEtLjY1LTMuMzYgMC0xLjIuMjEtMi4zMS42My0zLjMuNDItLjk5IDEuMDEtMS44NiAxLjc1LTIuNTcuNzQtLjcxIDEuNjMtMS4yNyAyLjY0LTEuNjZDMzEuMDQgNi4yIDMyLjE1IDYgMzMuMzUgNmMxLjA2IDAgMiAuMTQgMi44Mi40MS44Mi4yNyAxLjUyLjY0IDIuMDkgMS4xLjU3LjQ2IDEuMDEgMSAxLjMgMS42Mi4yOS42MS40NCAxLjI3LjQ0IDEuOTcgMCAuNzEtLjE0IDEuMzctLjQxIDEuOTYtLjI4LjYtLjc3IDEuMTEtMS40NiAxLjU0LS42OC40MS0xLjYuNzQtMi43My45Ny0xLjEyLjIzLTIuNTYuMzQtNC4yOC4zNC0uNCAwLS43OCAwLTEuMTItLjAxbC0uODItLjAzYy4xOS44MS42MyAxLjQ2IDEuMzMgMS45OC43OC41OCAxLjkyLjg3IDMuMzkuODdhNy45MjUgNy45MjUgMCAwMDMuNC0uNzNjLjI1LS4xMi40My0uMi41NS0uMjZsLjIxLS4xIDEuNDcgMi43NC0uMTkuMTFjLS4xNi4xLS40Mi4yNC0uNzYuNDItLjM1LjE4LS43OS4zNi0xLjMxLjUycy0xLjEyLjMtMS43OS40MmMtLjY5LjEtMS40NC4xNi0yLjI1LjE2Ii8+PHBhdGggaWQ9IkZpbGwtNSIgY2xhc3M9InN0MSIgZD0iTTUwLjU5IDEwLjE3Yy0uNjggMC0xLjI5LjEyLTEuODMuMzUtLjU0LjI0LTEuMDEuNTYtMS40MS45Ny0uMzkuNC0uNy45LS45MSAxLjQ2LS4yMS41Ny0uMzIgMS4xOS0uMzIgMS44NyAwIC42Ny4xMSAxLjI5LjMyIDEuODUuMjEuNTYuNTIgMS4wNC45MSAxLjQ1LjM5LjQxLjg3LjczIDEuNDEuOTcgMS4wNS40NiAyLjUzLjQ3IDMuNjQuMDEuNTUtLjIyIDEuMDItLjU0IDEuNC0uOTMuMzgtLjQuNjktLjg4LjkxLTEuNDUuMjItLjU3LjM0LTEuMjEuMzQtMS44OSAwLS42NS0uMTEtMS4yNi0uMzQtMS44M2E0LjYxIDQuNjEgMCAwMC0uOTEtMS40OGMtLjM4LS40MS0uODYtLjc0LTEuNC0uOTgtLjU0LS4yNS0xLjE1LS4zNy0xLjgxLS4zN001MC41MyAyM2MtMS4yMyAwLTIuMzgtLjIxLTMuNDEtLjYyLTEuMDMtLjQxLTEuOTQtLjk4LTIuNjktMS43YTcuODEzIDcuODEzIDAgMDEtMS43OC0yLjZjLS40My0xLS42NS0yLjEtLjY1LTMuMjcgMC0xLjE4LjIxLTIuMjkuNjEtMy4yOC40MS0uOTkuOTgtMS44NyAxLjctMi42czEuNTktMS4zIDIuNTYtMS43Yy45Ny0uNCAyLjA1LS42IDMuMi0uNiAxLjIxIDAgMi4zLjI0IDMuMjMuNy42OS4zNSAxLjI4Ljc2IDEuNzUgMS4yMlYxLjgzYzAtLjYxLjE5LTEuMDguNTYtMS4zOC4zNy0uMy44OC0uNDUgMS41Mi0uNDUuMzkgMCAuNzUuMDUgMS4wOC4xNS4zMi4wOS41My4xNi42My4ybC4xNi4wNlYxNC4xYzAgMS40OC0uMjIgMi43OS0uNjQgMy45LS40MyAxLjExLTEuMDMgMi4wNC0xLjc4IDIuNzgtLjc1Ljc0LTEuNjYgMS4zLTIuNjkgMS42Ny0xLjAzLjM2LTIuMTUuNTUtMy4zNi41NSIvPjxwYXRoIGlkPSJGaWxsLTciIGNsYXNzPSJzdDEiIGQ9Ik02NSAyMmgtNFY4Ljc3YzAtLjYxLjItMS4wNy41OS0xLjM2LjM3LS4yNy44OC0uNDEgMS41My0uNDEuMzkgMCAuNzYuMDUgMS4wOS4xNC4zMi4wOS41My4xNS42My4xOWwuMTYuMDZWMjJ6Ii8+PHBhdGggaWQ9IkZpbGwtOSIgY2xhc3M9InN0MSIgZD0iTTc0LjY3IDE0LjczYy0xLjMzIDAtMi4yOS4xOS0yLjg4LjU2LS41Ni4zNi0uODMuOTEtLjgzIDEuNjkgMCAuMzIuMDYuNjEuMTguODcuMTEuMjUuMzEuNDcuNTkuNjQuMy4xOS43Mi4zMyAxLjI0LjQzLjU0LjEgMS4yMi4xNiAyLjA0LjE2LjkyIDAgMS42Ni0uMDMgMi4xOS0uMS4zOS0uMDUuNjktLjA5Ljg4LS4xMnYtMy44OWMtLjIyLS4wNC0uNTMtLjA4LS45My0uMTQtLjU1LS4wNi0xLjM4LS4xLTIuNDgtLjFNNzUgMjJjLTEuNiAwLTIuOTItLjE0LTMuOTQtLjQtMS4wMy0uMjctMS44Ni0uNjQtMi40Ni0xLjEtLjYxLS40Ni0xLjA0LTEuMDEtMS4yNy0xLjYzLS4yMi0uNi0uMzMtMS4yMi0uMzMtMS44NSAwLS44My4xMy0xLjU3LjQtMi4yLjI3LS42NC43Mi0xLjE5IDEuMzMtMS42Mi42LS40MyAxLjQtLjc1IDIuMzYtLjk2Ljk1LS4yMSAyLjExLS4zMSAzLjQ2LS4zMS43NiAwIDEuNTEuMDMgMi4yMS4wNy41My4wNC45Ni4wNyAxLjI4LjExLS4wMy0uNTMtLjEzLS45OC0uMzItMS4zMy0uMjEtLjQxLS41MS0uNzMtLjg3LS45Ni0uMzgtLjIzLS44NC0uNC0xLjM3LS40OS0uNTUtLjA5LTEuMTctLjE0LTEuODQtLjE0LTEuMTIgMC0yLjAzLjEyLTIuNy4zNy0uNjcuMjUtMS4xMi40NS0xLjMyLjYxbC0uMTYuMTItLjE1LS4xMmMtLjE0LS4xMS0uMzItLjMxLS41NC0uNmExLjg2MiAxLjg2MiAwIDAxLS4xMS0yLjA2Yy4xOC0uMy40OC0uNTcuOS0uNzkuNDEtLjIyLjk1LS4zOSAxLjYyLS41MS42Ny0uMTUgMS41MS0uMjEgMi41MS0uMjEgMS4yMSAwIDIuMzMuMTIgMy4zMy4zNCAxLjAxLjIzIDEuODkuNiAyLjYzIDEuMTFhNS4yNSA1LjI1IDAgMDExLjc0IDIuMDJjLjQxLjgzLjYyIDEuODQuNjIgM3Y5LjAxbC0uMi4wNGMtLjIxLjA0LS41My4wOC0uOTguMTNhNTQuNTk1IDU0LjU5NSAwIDAxLTMuNTMuMjhjLS43My4wNS0xLjUuMDctMi4zLjA3Ii8+PHBhdGggaWQ9IkZpbGwtMTEiIGNsYXNzPSJzdDEiIGQ9Ik0xMDQgMjJoLTRWOC43N2MwLS42MS4yLTEuMDcuNTktMS4zNi4zNy0uMjcuODktLjQxIDEuNTQtLjQxLjM5IDAgLjc2LjA1IDEuMDkuMTQuMzIuMDkuNTMuMTUuNjMuMTlsLjE1LjA2VjIyeiIvPjxwYXRoIGlkPSJGaWxsLTEzIiBjbGFzcz0ic3QxIiBkPSJNMTIxIDIyaC0zLjg3di04LjQ4YzAtMS4yOS0uMzEtMi4yOS0uOTItMi45NS0uNi0uNjYtMS41Mi0uOTktMi43MS0uOTktMS4yMSAwLTIuMTMuMzMtMi43Mi45OS0uNi42Ni0uOTEgMS42Ni0uOTEgMi45NVYyMkgxMDZ2LTkuMzVjMC0xLjAzLjE5LTEuOTcuNTctMi43OS4zOC0uODIuOTEtMS41MiAxLjU4LTIuMDkuNjYtLjU3IDEuNDYtMS4wMSAyLjM3LTEuMzEuOTEtLjMgMS45MS0uNDUgMi45OC0uNDVzMi4wOC4xNSAyLjk5LjQ1YTcgNyAwIDAxMi4zOSAxLjMxYy42Ny41NyAxLjIgMS4yOCAxLjU3IDIuMS4zNy44Mi41NiAxLjc2LjU2IDIuNzlWMjJ6Ii8+PHBhdGggaWQ9IkZpbGwtMTUiIGNsYXNzPSJzdDEiIGQ9Ik0xMzEuNTkgMTAuMTdjLS42NyAwLTEuMjkuMTItMS44My4zNS0uNTQuMjQtMS4wMS41Ni0xLjQxLjk3LS4zOS40LS43LjktLjkxIDEuNDYtLjIxLjU3LS4zMiAxLjItLjMyIDEuODcgMCAuNjcuMTEgMS4yOS4zMiAxLjg1LjIxLjU2LjUyIDEuMDQuOTEgMS40NS4zOS40MS44Ny43MyAxLjQuOTcgMS4wNS40NiAyLjUzLjQ3IDMuNjQuMDEuNTUtLjIyIDEuMDItLjU0IDEuNC0uOTMuMzgtLjQuNjktLjg4LjkxLTEuNDUuMjItLjU3LjM0LTEuMjEuMzQtMS44OSAwLS42NS0uMTEtMS4yNi0uMzQtMS44My0uMjItLjU3LS41My0xLjA2LS45Mi0xLjQ4LS4zOC0uNDEtLjg2LS43NC0xLjQtLjk4LS41Mi0uMjUtMS4xMy0uMzctMS43OS0uMzdNMTMxLjUzIDIzYy0xLjIzIDAtMi4zOC0uMjEtMy40MS0uNjJhOC4xNyA4LjE3IDAgMDEtMi42OS0xLjcgNy44MTMgNy44MTMgMCAwMS0xLjc4LTIuNmMtLjQzLTEtLjY1LTIuMS0uNjUtMy4yNyAwLTEuMTguMjEtMi4yOS42MS0zLjI4LjQxLS45OS45OC0xLjg3IDEuNy0yLjZzMS41OC0xLjMgMi41Ni0xLjdjLjk3LS40IDIuMDUtLjYgMy4yLS42IDEuMjEgMCAyLjMuMjQgMy4yMy43LjY5LjM1IDEuMjguNzYgMS43NSAxLjIyVjEuODNjMC0uNjEuMTktMS4wOC41Ni0xLjM4LjM2LS4zLjg3LS40NSAxLjUyLS40NS4zOSAwIC43NS4wNSAxLjA4LjE1LjMyLjA5LjUzLjE2LjYzLjJsLjE2LjA2VjE0LjFjMCAxLjQ4LS4yMiAyLjc5LS42NCAzLjktLjQzIDEuMTEtMS4wMyAyLjA0LTEuNzggMi43OC0uNzUuNzQtMS42NiAxLjMtMi42OSAxLjY3LTEuMDMuMzYtMi4xNS41NS0zLjM2LjU1Ii8+PHBhdGggaWQ9IkZpbGwtMTciIGNsYXNzPSJzdDEiIGQ9Ik05NS45MSAyMmMtLjUzIDAtMS4wNy0uMjEtMS40Ny0uNjJsLTguODMtOC45Yy0uODEtLjgyLS44MS0yLjE1IDAtMi45N2w4LjgzLTguOWMuODEtLjgyIDIuMTMtLjgyIDIuOTUgMCAuODEuODIuODEgMi4xNSAwIDIuOTdMOTAuMDQgMTFsNy4zNSA3LjQxYy44MS44Mi44MSAyLjE1IDAgMi45Ny0uNDEuNDEtLjk0LjYyLTEuNDguNjIiLz48cGF0aCBpZD0iRmlsbC0xOSIgZD0iTTg2IDFjLjU2IDAgMS4wMy4xOSAxLjQyLjU4LjM5LjM5LjU4Ljg2LjU4IDEuNDIgMCAuNTYtLjE5IDEuMDQtLjU4IDEuNDItLjM5LjM5LS44Ni41OC0xLjQyLjU4cy0xLjAzLS4xOS0xLjQyLS41OEM4NC4xOSA0LjAzIDg0IDMuNTYgODQgM2MwLS41Ni4xOS0xLjAzLjU4LTEuNDIuMzktLjM5Ljg2LS41OCAxLjQyLS41OCIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNkNDEwM2EiLz48cGF0aCBpZD0iRmlsbC0yMSIgY2xhc3M9InN0MSIgZD0iTTIxLjcyIDEuMTZjLS43Ny0uMzItMS42Ny0uMTQtMi4yNi40NWwtOS41MSA5LjUzLTMuNzEtMy43MmgtLjAxbC0yLjY5LTIuN2EyLjA3IDIuMDcgMCAwMC0yLjkzIDBDLjIgNS4xMyAwIDUuNjcgMCA2LjIxdjE0LjcxQzAgMjIuMDcuOTMgMjMgMi4wOCAyM3MyLjA3LS45MyAyLjA3LTIuMDh2LTkuN2wxLjYzIDEuNjRoLjAxbDIuNjkgMi43Yy44MS44MSAyLjEyLjgxIDIuOTMgMGw3LjQ0LTcuNDV2MTIuODJjMCAxLjE1LjkzIDIuMDggMi4wNyAyLjA4UzIzIDIyLjA3IDIzIDIwLjkyVjMuMDhjMC0uODQtLjUxLTEuNi0xLjI4LTEuOTIiLz48L2c+PC9nPjwvc3ZnPg==" />
+                </div>                
+                <div id="credentials_div">
+                    <a href='' onclick="logout();"><i class="fa-solid fa-right-from-bracket"></i></a>
+                    <a href='' target="blank" onclick="this.href=solution_hub_url"><i class="fa-solid fa-globe"></i></a>
+                    <span id="credentials"></span>
+                </div>
+            </div>
+        </header>
+
+        <main id="main" class="main">
+            <div id="admin_div">
+                <div id="account_div">
+                    <label>Account:</label>
+                    <select id="account_id_input"></select>
+                    <input type="hidden" id="account_data">
+                    <span class="info" id="account_info"></span>
+                    <span class="error" id="account_error"></span>
+                </div>
+
+                <div id="cluster_div">
+                    <label>Cluster:</label>
+                    <select id="cluster_input"></select>
+                    <span id="links">
+                        <a href="https://console.cloud.google.com" target="blank"><img id="cloud_gcloud" class="cloud_vendor" width="40" height="40" style="margin-right: 8px;"></a>
+                        <a href="https://portal.azure.com/" target="blank"><img id="cloud_azure" class="cloud_vendor" width="40" height="40" style="margin-right: 8px;"></a>
+                        <a href="#" target="blank"><img id="cloud_aws" class="cloud_vendor" width="40" height="40" style="margin-right: 8px;"></a>
+
+                        <a href='' target="blank" onclick="this.href=grafana_url.replaceAll('CLUSTER-ID', $('#cluster_input :selected').text());"><img src="https://user-images.githubusercontent.com/10999/43383564-afa9ea6c-93db-11e8-855b-de8be4f79756.png" width="40" height="40" style="margin-right: 8px;"></a>
+                        <a href='' target="blank" onclick="this.href=elastic_url.replaceAll('CLUSTER-ID', $('#cluster_input :selected').text());"><img src="https://cdn.worldvectorlogo.com/logos/elasticsearch.svg" width="40" height="40"></a>
+                    </span>
+                    <input type="hidden" id="cluster_data">
+                    <span class="info" id="cluster_info"></span>
+                    <span class="error" id="cluster_error"></span>
+                </div>
+
+                <div id="backend_div">
+                    <label>Backend:</label>
+                    <span id="backend_url"></span>
+                    <a href='' target="blank" onclick="this.href=controller_url; copyToClipboard(controller_password);"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    <span class="info" id="backend_info"></span>
+                    <span class="error" id="backend_error"></span>
+                </div>
+
+                <div id="origin_div">
+                    <label>Origin Server:</label>
+                    <span id="origin_url"></span>
+                </div>
+            </div>
+
+            <div id="user_div">
+                <div id="backend_user_div">
+                    <div>
+                        <label>Backend:</label>
+                        <input id="backend_user_url" type="text" size="100"/>
+                        <a href="" target="blank" onclick="this.href='https://' + $('#backend_user_url').val() + ':8443'"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input id="backend_user_password" type="password" size="100"/>
+                    </div>
+                </div>
+                <div id="origin_user_div">
+                    <label>Origin Server:</label>
+                    <input id="origin_user_url" type="text" size="100"/>
+                </div>
+                <div>
+                    <button id="connect" type="button" onclick="controller_url = 'https://' + $('#backend_user_url').val() + ':8443'; controller_password = $('#backend_user_password').val(); origin_url = 'https://' + $('#origin_user_url').val(); update_controller();">Connect</button>
+                </div>
+            </div>
+
+            <div id="settings_div">
+                <div id="profile_div">
+                    <div id="device_profile_div">
+                        <label>Device Profile:</label>
+                        <select id="device_profile_select" onchange="get_device_profile(); clear_playlists();"></select>
+                        <span class="info" id="device_profile_info"></span>
+                        <span class="error" id="device_profile_error"></span>
+                    </div>
+                </div>
+
+                <div id="use_case_div">
+                    <label>Use case:</label>
+                    <select name="use_case_select" id="use_case_select">
+                        <option value="select">Please select...</option>
+                        <option value="replay">Replay / Timeshift</option>
+                        <option value="recording">Recording</option>
+                        <option value="origin">Live / VOD Origin</option>
+                    </select>
+                    <span class="info" id="use_case_info"></span>
+                    <span class="error" id="use_case_error"></span>
+                </div>
+
+                <div id="channel_div">
+                    <div id="dvr_channel_list_div">
+                        <label>Channel:</label>
+                        <select id="dvr_channel_id_select" onChange="get_dvr_channel($('#dvr_channel_id_select').val());"></select>
+                        <span class="info" id="dvr_channel_info"></span>
+                        <span class="error" id="dvr_channel_error"></span>
+                    </div>
+                </div>
+
+                <div id="asset_div">
+                    <div id="asset_list_div">
+                        <label>Asset:</label>
+                        <select id="asset_id_select" onChange="get_asset();"></select>
+                        <span class="info" id="asset_id_info"></span>
+                        <span class="error" id="asset_id_error"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="recording_div">
+                <label>Recording:</label>
+                <select id="recording_id_select" onChange="get_recording($('#recording_id_select').val());"></select>
+                <span class="info" id="recording_info"></span>
+                <span class="error" id="recording_error"></span>
+
+                <div id="recording_actions_div">
+                    <button type="button" id="recording_create" onclick="open_recording_modal(null);">Add</button>
+                    <button type="button" id="recording_update" onclick="open_recording_modal($('#recording_id_select').val());">Update</button>
+                    <button type="button" id="recording_delete" onclick="delete_recording($('#recording_id_select').val());" style="display: none;">Delete</button> |
+
+                    <button type="button" id="recording_refresh" onclick="get_recordings()">Refresh List</button>
+                </div>
+            </div>
+
+            <div id="time_settings_div">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                Current Time:
+                            </td>
+                            <td>
+                                <input type="text" id="current_epoch" class="epoch_time">
+                            </td>
+                            <td>
+                                <input type="text" id="current_time" class="hr_time">
+                            </td>
+                            <td width="20px"></td>
+                            <td class="left-border" style="width:330px;">
+                                Delay from current time
+                            </td>
+                            <td class="left-border">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                StartTime:
+                            </td>
+                            <td>
+                                <input type="text" id="starttime_input_epoch" class="epoch_time" onchange="update_time_from_input_epoch('starttime', this.value)">
+                            </td>
+                            <td>
+                                <input type="text" id="starttime_input_hour" class="hr_time" onchange="update_time_from_input_hour('starttime', this.value)">
+                            </td>
+                            <td width="20px"></td>
+                            <td class="left-border" style="width:330px;">
+                                <input id="starttime_slider" type="range" min="-720" max="720" value="0" step="1" onchange="update_time_from_slider('starttime', this.value)" oninput="$('#span_starttime_slider').html(this.value)" style="display:inline; width:100px;" />
+                                <span id="span_starttime_slider">0</span> minutes
+                            </td>
+                            <td class="left-border">
+                                <button type="button" onclick="reset_slider('starttime');">Reset</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                StopTime:
+                            </td>
+                            <td>
+                                <input type="text" id="stoptime_input_epoch" class="epoch_time" onchange="update_time_from_input_epoch('stoptime', this.value)">
+                            <td>
+                                <input type="text" id="stoptime_input_hour" class="hr_time"  onchange="update_time_from_input_hour('stoptime', this.value)">
+                            </td>
+                            <td width="20px"></td>
+                            <td class="left-border" style="width:330px;">
+                                <input id="stoptime_slider" type="range" min="-720" max="720" value="0" step="1" onchange="update_time_from_slider('stoptime', this.value)" oninput="$('#span_stoptime_slider').html(this.value)" style="display:inline; width:100px;" />
+                                <span id="span_stoptime_slider">0</span> minutes
+                            </td>
+                            <td class="left-border">
+                                <button type="button" onclick="reset_slider('stoptime');">Reset</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Duration (minutes):
+                            </td>
+                            <td>
+                                <input type="text" id="duration_input_epoch" class="epoch_time" onchange="update_duration_from_input_minute(this.value)">
+                            <td>
+                                <input type="text" id="duration_input_hour" class="hr_time" onchange="update_duration_from_input_hour(this.value)">
+                            </td>
+                            <td width="20px"></td>
+                            <td class="left-border" style="width:330px;">
+                                <input id="duration_slider" type="range" min="0" max="60" value="0" step="1" onchange="update_duration_from_slider(this.value)" oninput="$('#span_duration_slider').html(this.value)" style="display:inline; width:100px;" />
+                                <span id="span_duration_slider">0</span> minutes
+                            </td>
+                            <td class="left-border">
+                                <button type="button" onclick="reset_slider('duration');">Reset</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <span id="url_time_range" style="display:none;"></span>
+                </div>
+            </div>
+
+            <div id="playlists_div">
+                <div id="playlist_actions_div">
+                    <button id="load_playlist" type="button" onclick="get_manifest_url('nl_playlist');">Load Manifest / Playlist</button>
+                    <button id="mark_recording" type="button" onclick="extract_recording_modal($('#dvr_channel_id_select').val(), $('#starttime_input_hour').val(), $('#stoptime_input_hour').val())">Mark as recording</button>
+                </div>
+
+                <div id="playlist_error_div">
+                    An error occured while retrieving the playlist/manifest.
+                </div>
+
+                <table>
+                    <tr>
+                        <th colspan="2">
+                            <span id="nl_playlist_url" size="100"></span>
+                            <div id="nl_playlist_copy_div">
+                                <button type="button" id="nl_playlist_copy" onclick="navigator.clipboard.writeText($('#nl_playlist_url').text());">Copy URL</button>
+                                <button type="button" id="nl_playlist_content_copy" onclick="navigator.clipboard.writeText($('#nl_playlist').text());">Copy Manifest / Playlist</button>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr><td colspan="2" style="border-bottom: 1px solid rgba(0,0,0,.1);"></td></tr>
+                    <tr>
+                        <td>
+                            <div id="nl_playlist" class="playlist"></div>
+                        </td>
+                        <td>
+                            <div id="nl_playlist_player_div">
+                                <div class="video-container" id="video_player_div"></div>
+
+                                <div id="video_player_controls_div">
+                                    <button type="button" id="nl_playlist_play" onclick="start_player($('#nl_playlist_url').text());">Play</button>
+                                    <button type="button" id="nl_playlist_pause" onclick="stop_player();">Stop</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+
+        <div id="recording_modal_div" class="modal">
+            <div id="recording_modal_div_content">
+                <div class="header modal_header">
+                    <span id="recording_modal_title"></span>
+                    <span class="recording_modal_close">&times;</span>
+                </div>
+                <div style="padding-left: 20px;">
+                    <span class="info" id="recording_modal_info"></span>
+                    <span class="error" id="recording_modal_error"></span>
+                </div>
+                <div style="padding: 0px 20px 20px 20px;">
+                    <input type="hidden" id="recording_modal_id">
+                    <input type="hidden" id="recording_modal_dvr_channel_id">
+                    <div id="recording_modal_name_div">
+                        <label>Name:</label>
+                        <input type="text" id="recording_modal_name_input">
+                    </div>
+                    <div id="recording_modal_content_id_div">
+                        <label>Content Id:</label>
+                        <input type="text" id="recording_modal_content_id_input">
+                    </div>
+                    <div id="recording_modal_current_time_div">
+                        <label>Current time</label>
+                        <span class="info" id="recording_modal_current_time_info" size="50"></span>
+                    </div>
+                    <div id="recording_modal_start_time_div">
+                        <label>Start Time:</label>
+                        <input type="text" id="recording_modal_start_time_input">
+                    </div>
+                    <div id="recording_modal_stop_time_div">
+                        <label>Stop Time:</label>
+                        <input type="text" id="recording_modal_stop_time_input">
+                    </div>
+                    <div id="recording_modal_actions_div" style="text-align: center; margin-top: 10px;">
+                        <button type="button" id="recording_modal_button_apply" onclick="if (apply_recording_modal($('#recording_modal_id').val())) close_recording_modal();"></button>
+                        <button type="button" id="recording_modal_button_cancel" onclick="close_recording_modal();">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+
+        const host = window.location.host.split('.')[0];
+        const domain = host.split('-')[0] + "-" + host.split('-')[1];
+        const subdomain = host.split('-')[2];
+        let saas_hub_url = "https://hub" + (subdomain===undefined?"":"-"+subdomain) + ".aas.mediakind.com";
+        let solution_hub_url = "https://aquila" + (subdomain===undefined?"":"-"+subdomain) + ".aas.mediakind.com";
+
+        let login_time = 0;
+        let last_operation_time = 0;
+
+        let hub_bearer_token = "";
+        let hub_account_id = "";
+
+        let controller_url = "";
+        let controller_password ="";
+        let controller_bearer = "";
+        let packager_config ="";
+        let recording_data = "";
+        let origin_url = "";
+        let cluster_info = "";
+        let access_url = "";
+
+        let manifest_update_timeout = 0;
+
+        let grafana_url = "";
+        let elastic_url = "";
+
+        let cors_anywhere_url = "https://atlas-cors-proxy.aas.mediakind.com:8443/";
+
+        if (subdomain == "staging") {
+            grafana_url = "https://mediakindsaas.grafana.net/d/5KXr-p7Vk/cdvr-high-level-dashboard?orgId=1&var-node=All&var-namespace=mediakind&var-Datasource=victoria-metrics-dev&from=now-1h&to=now&var-cluster=CLUSTER-ID";
+            elastic_url = "https://mpd-dev.kb.westeurope.azure.elastic-cloud.com:9243/app/dashboards#/view/88ddc920-e7b3-11ea-99e3-e3e4a4929f7a?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-1h,to:now))&_a=(description:'',filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:env.keyword,negate:!f,params:(query:CLUSTER-ID),type:phrase),query:(match_phrase:(env.keyword:CLUSTER-ID))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!t,type:custom),query:(wildcard:(kubernetes.host.keyword:'*controller-*'))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!t,type:custom),query:(wildcard:(kubernetes.host.keyword:'*abrsurveyor-*')))),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(enhancements:()),gridData:(h:11,i:'2a327779-a29a-4214-aa41-af4601303d25',w:7,x:0,y:0),id:'80dc9300-e90c-11ea-99e3-e3e4a4929f7a',panelIndex:'2a327779-a29a-4214-aa41-af4601303d25',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:11,i:'81b090f6-08d8-4178-860b-822e919d5990',w:41,x:7,y:0),id:fcfdc340-e7b4-11ea-99e3-e3e4a4929f7a,panelIndex:'81b090f6-08d8-4178-860b-822e919d5990',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:'96ceae7d-edf1-4b5d-950e-cefc1b3b66a2',w:24,x:0,y:11),id:ba686460-e7b2-11ea-99e3-e3e4a4929f7a,panelIndex:'96ceae7d-edf1-4b5d-950e-cefc1b3b66a2',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:e39f52ca-2ada-4cf2-a66e-40f018735200,w:24,x:24,y:11),id:d79e4ee0-e7b3-11ea-99e3-e3e4a4929f7a,panelIndex:e39f52ca-2ada-4cf2-a66e-40f018735200,type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:ac0f5e7a-fa54-4144-a47e-5c948a636f77,w:24,x:0,y:27),id:'33327b10-e7b3-11ea-99e3-e3e4a4929f7a',panelIndex:ac0f5e7a-fa54-4144-a47e-5c948a636f77,type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:f9fed6c2-557c-44df-a485-d55deef91fcb,w:24,x:24,y:27),id:ecd2c660-e7b3-11ea-99e3-e3e4a4929f7a,panelIndex:f9fed6c2-557c-44df-a485-d55deef91fcb,type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:17,i:'3d7d5d92-63a6-4ad5-97ba-9eff0f24b86b',w:24,x:0,y:43),id:'6e3c28a0-e7b3-11ea-99e3-e3e4a4929f7a',panelIndex:'3d7d5d92-63a6-4ad5-97ba-9eff0f24b86b',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:17,i:'2a85634f-274b-49a6-96d7-f997c706600e',w:24,x:24,y:43),id:'2d4927c0-e7b4-11ea-99e3-e3e4a4929f7a',panelIndex:'2a85634f-274b-49a6-96d7-f997c706600e',type:visualization,version:'7.17.6'),(embeddableConfig:(columns:!(kubernetes.container_name,message,msg,pri,subsys,w3c.sc-status),enhancements:()),gridData:(h:42,i:d924886b-222d-4ec1-8f90-25e9447c7412,w:48,x:0,y:60),id:'766f5060-4532-11eb-843c-41222f975acd',panelIndex:d924886b-222d-4ec1-8f90-25e9447c7412,type:search,version:'7.17.6')),query:(language:kuery,query:''),tags:!(),timeRestore:!f,title:'IPHEv4:%20Log%20Volumes',viewMode:view)";
+        }
+        else {
+            grafana_url = "https://mediakindsaas.grafana.net/d/5KXr-p7Vk/cdvr-high-level-dashboard?orgId=1&var-node=All&var-namespace=mediakind&var-Datasource=Victoria-metrics-Aquila:%20Mr.Admin&from=now-1h&to=now&var-cluster=CLUSTER-ID";
+            elastic_url = "https://mpd-prod.kb.eastus2.azure.elastic-cloud.com:9243/app/dashboards#/view/88ddc920-e7b3-11ea-99e3-e3e4a4929f7a?_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-1h,to:now))&_a=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,field:env.keyword,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:env.keyword,negate:!f,params:(query:CLUSTER-ID),type:phrase),query:(match_phrase:(env.keyword:CLUSTER-ID))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!f,type:custom),query:(wildcard:(kubernetes.host.keyword:'*controller-*'))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!f,type:custom),query:(wildcard:(kubernetes.host.keyword:'*abrsurveyor-*')))))";          
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const onPrem = urlParams.get('onprem');
+        const data = JSON.parse(urlParams.get('data'));
+
+        if (data !== null) {
+            $("#backend_user_url").val(data.backend_url);
+            $("#backend_user_password").val(data.backend_password);
+            $("#origin_user_url").val(data.origin_server);
+        }
+
+        if (onPrem !== "true") {
+            $('#credentials').html("Not logged in");
+            login_solution_hub();   
+        }
+        else {
+            $('#user_div').show();
+        }
+
+        refresh_epoch_time();
+    </script>
+
+</html>
+

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MKPlayer-Web Latency Test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="./node_modules/@mediakind/mkplayer/mkplayer.js"></script>
+    <link rel="stylesheet" href="./node_modules/@mediakind/mkplayer/mkplayer-ui.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+        h1 {
+            color: white;
+            text-align: center;
+            background-color: black;
+        }
+
+        .video-container {
+            height: 0;
+            width: 100%;
+            overflow: hidden;
+            background: black;
+            position: relative;
+            padding-top: 56.25%;
+            box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .video-container video {
+            top: 0;
+            left: 0;
+            border: 0;
+            outline: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <br><br>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <label>Live Url:</label>
+                    <input class="form-control" id="live_url" type="text" size="100"/>
+                </div>
+                <div class="col-6">
+                    <label>Atlas Url:</label>
+                    <input class="form-control" id="atlas_url" type="text" size="100"/>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12">
+                    <button class="btn btn-sm btn-outline-secondary" id="connect" type="button" onclick="startPlayers();">Play</button>
+                </div>            
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-6">
+                    <div class="video-container col-6" id="video-container-live"></div>
+                </div>
+                <div class="col-6">
+                    <div class="video-container col-6" id="video-container-atlas"></div>				
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card" id="latency">
+                        <div class="card-header text-center">
+                            <strong>Time delta</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4" style="text-align: center;">
+                                    <strong>WallClock Time Delta: </strong>
+                                    <code id="WallClockTimeDelta"></code>
+                                </div>
+                                <div class="col-4" style="text-align: center;">
+                                    <strong>Presentation Time Delta: </strong>
+                                    <code id="presentationTimeDelta"></code>
+                                </div>
+                                <div class="col-4" style="text-align: center;">
+                                    <strong>Playback Time Delta: </strong>
+                                    <code id="playbackTimeDelta"></code>
+                                </div>                                                                        
+                            </div>							
+                        </div>
+                    </div>				
+                </div>                              
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card" id="metrics-live">
+                        <div class="card-header text-center">
+                            <strong>Live Player Metrics</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Startup Time: </strong>
+                                    <code id="playerStartupTime-live"></code>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Video Buffer Level: </strong>
+                                    <code id="videoBufferLevel-live"></code>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Live Latency: </strong>
+                                    <code id="playerLiveLatency-live"></code>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Audio Buffer Level: </strong>
+                                    <code id="audioBufferLevel-live"></code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card" id="metrics-atlas">
+                        <div class="card-header text-center">
+                            <strong>Atlas Player Metrics</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Startup Time: </strong>
+                                    <code id="playerStartupTime-atlas"></code>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Video Buffer Level: </strong>
+                                    <code id="videoBufferLevel-atlas"></code>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Live Latency: </strong>
+                                    <code id="playerLiveLatency-atlas"></code>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Audio Buffer Level: </strong>
+                                    <code id="audioBufferLevel-atlas"></code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>					
+                </div>				
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card" id="metrics-live">
+                        <div class="card-header text-center">
+                            <strong>Live Player Segments</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <h6>
+                                    <strong>Video Segment: </strong>
+                                </h6>
+                                <pre id="videoSegmentPlayback-live"></pre>
+                            </div>
+                            <div class="row">
+                                <h6>
+                                    <strong>Audio Segment: </strong>
+                                </h6>
+                                <pre id="audioSegmentPlayback-live"></pre>
+                            </div>	
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card" id="metrics-atlas">
+                        <div class="card-header text-center">
+                            <strong>Atlas Player Segments</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <h6>
+                                    <strong>Video Segment: </strong>
+                                </h6>
+                                <pre id="videoSegmentPlayback-atlas"></pre>
+                            </div>
+                            <div class="row">
+                                <h6>
+                                    <strong>Audio Segment: </strong>
+                                </h6>
+                                <pre id="audioSegmentPlayback-atlas"></pre>
+                            </div>	
+                        </div>
+                    </div>					
+                </div>				
+            </div>            
+        </div>
+    </main>
+    <script type="text/javascript">
+        // Handle to the video container
+        const videoContainerLive = document.getElementById("video-container-live");
+        const videoContainerAtlas = document.getElementById("video-container-atlas");
+
+        // Player handles
+        let livePlayer = undefined;
+        let atlasPlayer = undefined;
+
+        let liveMetrics = undefined;
+        let atlasMetrics = undefined;
+
+        const firstTimeChanged = {
+            live: false,
+            atlas: false
+        };
+
+        const startupTime = {
+            live: 0,
+            atlas: 0
+        };
+        
+        // Player config
+        const playerConfig = {
+            playback: {
+                muted: true,
+                autoplay: true,
+            },
+            ui: true,   // ensure mkplayer-ui.css is included in your HTML file!
+            key: "91c1e62d-1547-464b-a73c-4701fc5dea24",
+            log: {
+                level: "debug"
+            },
+            enableHlsImageMediaPlaylistSupport: false,
+            enableSubtitleOverlay: false
+        };
+
+        // On window load
+        window.onload = function() {
+            // Initialize the players
+            livePlayer = new mkplayer.MKPlayer(videoContainerLive, playerConfig);
+            atlasPlayer = new mkplayer.MKPlayer(videoContainerAtlas, playerConfig);
+
+            // Player1 event handlers
+            livePlayer.on(mkplayer.MKPlayerEvent.Error, (event) => {
+                console.error(`[Error:Player1]: ${JSON.stringify(error, null, 4)}`);
+            });
+
+            livePlayer.on(mkplayer.MKPlayerEvent.SourceLoaded, (event) => {
+                console.log(`[Player1]: Source loaded!`);
+            });
+
+            livePlayer.on(mkplayer.MKPlayerEvent.Ready, (event) => {
+                console.log(`[Player1]: Ready`);
+            });
+
+            livePlayer.on(mkplayer.MKPlayerEvent.Playing, (event) => {
+                console.log(`[Player1]: Playing`);
+            });
+
+            // Player2 event handlers
+            atlasPlayer.on(mkplayer.MKPlayerEvent.Error, (event) => {
+                console.error(`[Error:Player2]: ${JSON.stringify(error, null, 4)}`);
+            });
+
+            atlasPlayer.on(mkplayer.MKPlayerEvent.SourceLoaded, (event) => {
+                console.log(`[Player2]: Source loaded!`);
+            });
+
+            atlasPlayer.on(mkplayer.MKPlayerEvent.Ready, (event) => {
+                console.log(`[Player2]: Ready`);
+            });
+
+            atlasPlayer.on(mkplayer.MKPlayerEvent.Playing, (event) => {
+                console.log(`[Player2]: Playing`);
+            });
+
+            livePlayer.on(mkplayer.MKPlayerEvent.SegmentPlayback, (data) => {
+                liveMetrics = data;
+                onSegmentPlayback("live", data)
+            });
+
+            atlasPlayer.on(mkplayer.MKPlayerEvent.SegmentPlayback, (data) => {
+                atlasMetrics = data;
+                onSegmentPlayback("atlas", data)
+            });
+
+            livePlayer.on(mkplayer.MKPlayerEvent.TimeChanged, (event) => {
+                onTimeChange("live", event)
+            });
+
+            atlasPlayer.on(mkplayer.MKPlayerEvent.TimeChanged, (event) => {
+                onTimeChange("atlas", event)
+            });
+
+            if (autoStart) {
+                startPlayers();
+            }
+        };
+
+        function startPlayers() {
+            // Player1 source config
+            const liveSourceConfig = {
+                title: "[Player1: Live]",
+                dash: liveUrl
+            };
+
+            // Player2 source config
+            const atlasSourceConfig = {
+                title: "[Player2: Atlas]",
+                dash: atlasUrl
+            };
+
+            // Start playback livePlayer
+            livePlayer.load(liveSourceConfig)
+            .then(() => {
+                // player startup time
+                startupTime.live = new Date();
+            })
+            .catch((error) => {console.error("[Player1] Failed to start playback!");});
+
+            // Start playback livePlayer
+            atlasPlayer.load(atlasSourceConfig)
+            .then(() => {
+                // player startup time
+                startupTime.atlas = new Date();
+            })
+            .catch((error) => {console.error("[Player2] Failed to start playback!");});
+        }
+
+        function onSegmentPlayback(playerStr, data) {
+            if (data) {
+                // remove type and timestamp from the event as it will confuse people
+                // as this timestamp is the value generated by player at the time of
+                // generating this event and not the actual timestamp we need to consider
+                data.type = undefined;
+                data.timestamp = undefined;
+
+                if (data.dateTime) {
+                    // format dateTime
+                    data.dateTime = `${new Date(data.dateTime).toISOString()} | timestamp: ${new Date(data.dateTime).getTime()/1000}`;
+                }
+                if (data.mimeType.includes("video")) {
+                    // update video segment playback
+                    document.getElementById("videoSegmentPlayback-" + playerStr).innerText = JSON.stringify(data, null, 4);
+                    document.getElementById("WallClockTimeDelta").innerText = ((liveMetrics['wallClockTime'] - atlasMetrics['wallClockTime'])/1000).toFixed(2) + "s";
+                    document.getElementById("presentationTimeDelta").innerText = (liveMetrics['presentationTimestamp'] - atlasMetrics['presentationTimestamp']).toFixed(2) + "s";
+                    document.getElementById("playbackTimeDelta").innerText = (liveMetrics['playbackTime'] - atlasMetrics['playbackTime']).toFixed(2) + "s";
+                } else {
+                    // update audio segment playback
+                    document.getElementById("audioSegmentPlayback-" + playerStr).innerText = JSON.stringify(data, null, 4);
+                }
+            }
+        }
+
+        function  onTimeChange(playerStr, event) {
+            let player = undefined;
+            if (playerStr == "live") {
+                player = livePlayer
+            }
+            else {
+                player = atlasPlayer
+            }
+            
+            if (player) {
+
+                if (!firstTimeChanged[playerStr]) {
+                    firstTimeChanged[playerStr] = true;
+                    document.getElementById("playerStartupTime-" + playerStr).innerText = (parseFloat(new Date() - startupTime[playerStr])/1000).toFixed(2) + "s";
+                }
+
+                document.getElementById("playerLiveLatency-" + playerStr).innerText = (Date.now()/1000 - event.time).toFixed(2) + "s";
+
+                document.getElementById("videoBufferLevel-" + playerStr).innerText = parseFloat(Number(player.getBufferLevel("forwardduration", "video").level).toFixed(2)) ?? 0;
+                document.getElementById("audioBufferLevel-" + playerStr).innerText = parseFloat(Number(player.getBufferLevel("forwardduration", "audio").level).toFixed(2)) ?? 0;
+            }
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const liveUrl = urlParams.get('liveUrl');
+        const atlasUrl = urlParams.get('atlasUrl');
+        const autoStart = urlParams.get('autoStart');
+
+        if (liveUrl !== null) {
+            $("#live_url").val(liveUrl);
+        }
+
+        if (atlasUrl !== null) {
+            $("#atlas_url").val(atlasUrl);
+        }
+
+    </script>
+</body>
