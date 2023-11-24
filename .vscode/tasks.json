@@ -4,15 +4,25 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Atlas Demo",
+            "label": "Atlas Demo Prod",
             "type": "shell",
-            "command": "scp -i ~/.ssh/gcp_key Atlas-Demo.html frederic.huet@cdvr-mvp.aas.mediakind.com:/var/www/html",
+            "command": "scp -i ~/.ssh/gcp_key Atlas-Demo.html frederic.huet@cdvr-mvp.aas.mediakind.com:/var/www/html/Atlas-Demo.html",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
         },
+        {
+            "label": "Atlas Demo Staging",
+            "type": "shell",
+            "command": "scp -i ~/.ssh/gcp_key Atlas-Demo.html frederic.huet@cdvr-mvp.aas.mediakind.com:/var/www/html/Atlas-Demo-Staging.html",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },        
         {
             "label": "CDVR Latency",
             "type": "shell",

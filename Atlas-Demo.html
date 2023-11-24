@@ -8,19 +8,55 @@
         <style type="text/css">
             body {
                 margin: 0px;
+                height: 100vh;          
+                display: flex;
+                flex-direction: column;
+                align-items: center;   
+                font-family: "Segoe UI";
+                font-size: 14px;
             }
 
-            .header {
-                background-color: rgb(0, 21, 41);
+            input {
+                font-family: "Segoe UI";
+                font-size: 13px;
+            }
+
+            div label {
+                width: 110px;
+                display: inline-block;
+            }
+
+            div select {
+                min-width: 400px;
+            }
+
+            div input {
+                min-width: 192px;
+            }
+
+            span.info {
+                color: #8CDCDA;
+            }
+
+            span.error {
+                color: red;
             }
 
             #page-header {
-                background-size: cover;
-                height: 64px;
-              
+                background-color: rgb(0, 21, 41);        
+                height: 60px;
+                width: 100%;
             }
 
-            div.header-image {
+            #header_div {
+                margin-top: 0px;
+                text-align:center;
+                display: flex;       
+                height: 60px;
+                width: 100%;   
+            }
+
+            .header-image {
                 padding-left: 20px;
                 padding-top: 10px;
                 margin: 0;
@@ -32,11 +68,13 @@
                 padding: 7px;
                 border: 1px solid transparent;
             }
-
-            #header {
-                margin-top: 0px;
-                text-align:center;
-                display: flex;                  
+                
+            #main {
+                width: 100%;
+                display: flex;
+                flex-direction: column; 
+                align-items: center;
+                flex-grow: 1;
             }
 
             #credentials_div {
@@ -56,7 +94,6 @@
 
             #title {
                 padding-left: 25px;
-                font-family: "Segoe UI";
                 font-size: 30px;
                 color: white;
                 float: left;
@@ -67,6 +104,25 @@
                 float: right;
                 display: none;
                 margin-top: -25px;
+            }
+
+            #page-footer {
+                background-color: rgb(0, 21, 41);        
+                height: 30px;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            #footer_div {
+                display: flex;
+            }
+
+            #footer_right_div {
+                flex-grow: 1;
+                color: white;
+                text-align: right;
+                padding-right: 10px;
+                padding-top: 2px;
             }
 
             #cloud_gcloud {
@@ -88,18 +144,17 @@
             }
 
             #playlist_url {
-                font-family: "Segoe UI";
                 padding: 0px 0px 30px 60px;
+                font-weight: bold;
             }
 
-            #login_div, #admin_div, #user_div, #settings_div, #time_settings_div, #recording_div {
-                display: block;
-                font-family: "Segoe UI";
+            #login_div, #admin_div, #user_div, #settings_div, #time_settings_div, #recording_div, #playlist_div {
+                /* display: block; */
                 border-radius: 5px;
                 background: #f8f8f8;
                 border: 1px solid rgba(0,0,0,.1);
                 width: 90%;
-                margin: 10px auto;
+                margin-top: 10px;
                 padding: 10px 0px 10px 15px;
             }
 
@@ -111,97 +166,42 @@
                 border: 0px;
             }
 
-            input.epoch_time {
-                width: 100px;
+            .epoch_time {
                 text-align: center;
+                display: block;
+                font-size: 13px;;
             }
 
-            input.hr_time {
-                width: 180px;
+            .hr_time {
                 text-align: center;
+                display: block;
+                font-size: 13px;;                
             }
 
-            td.left-border {
-                border-left: 1px solid;
-                padding-left: 20px;
+            #playlist_div {
+                display: flex;
+                flex-grow: 1;
+                flex-direction: column;
+                align-items: center;
             }
 
-            .playlist {
-                border: none;
-                overflow: auto;
-                width: 100%;
-                max-width: 1200px;
-                height: 500px;
-                resize: none;
-                white-space: pre-wrap;
-                color: #4D4D4C;
-                font-size: 12px;
-            }
-
-            #playlists_div {
-                display: none;
-                font-family: "Segoe UI";
-                border-radius: 5px;
-                background: #f8f8f8;
-                border: 1px solid rgba(0,0,0,.1);
-                width: 90%;
-                margin: 15px auto;
-                padding: 10px 5px 10px 5px;
-
-            }
-
-            #playlists_div table {
-                width: 100%;
-            }
-
-            #playlists_div table td {
-                padding: 5px;
-                vertical-align: top;
-            }
-
-            #playlists_div table th {
-                font-size: 14px;
-            }
-
-            div {
+            #playlist_actions_div, #playlist_copy_div {
                 margin-top: 5px;
-                font-family: "Segoe UI";
+                padding-bottom: 10px;
+                width: 95%;
+                border-bottom: 1px solid rgba(0,0,0,.1);
+                display: flex;
+                flex-direction: row;
             }
 
-            div label {
-                width: 110px;
-                display: inline-block;
-            }
-
-            div select {
-                min-width: 400px;
-            }
-
-            div input {
-                min-width: 192px;
-            }
-
-            span.info {
-                color: #8CDCDA;
-                font-family: "Segoe UI";
-            }
-
-            span.error {
-                color: red;
-                font-family: "Segoe UI";
-            }
-
-            #playlist_actions_div {
-                font-family: "Segoe UI";
-                margin: 10px auto;
-                padding: 10px 0px 10px 15px;
+            #playlist_copy_div {
+                justify-content: center;
             }
 
             #playlist_error_div {
                 color: red;
                 display: block;
-                font-family: "Segoe UI";
-                width: 90%;
+                width: 95%;
                 margin: 0 auto;
                 border-radius: 5px;
                 background: #f8f8f8;
@@ -209,69 +209,32 @@
                 padding: 10px;
             }
 
-            #recording_actions_div {
-                float: right;
-                margin: 0px 10px 0px 0px
+            #playlist_content_div {
+                display: flex;
+                flex-direction: row;
+                max-height: 50vh;
+                margin: 10px;
+                width: 95%;
             }
 
-            .modal {
-                display: none;
-                position: fixed;
-                z-index: 1;
-                padding-top: 200px;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                overflow: auto;
-                background-color: rgb(0,0,0);
-                background-color: rgba(0,0,0,0.4);
+            #playlist_data_div {
+                overflow-y: auto;
+                overflow-x: hidden;
+                resize: none;
+                white-space: pre-wrap;
+                color: #4D4D4C;
+                font-size: 12px;
+                flex-grow: 1;
             }
 
-            .modal_header {
-                height: 35px;
-                margin: 0;
-            }
-
-            #recording_modal_div_content {
-                background-color: #fefefe;
-                margin: auto;
-                border: 1px solid #888;
-                width: 45%;
-            }
-
-            #recording_modal_close {
-                color: white;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-                margin-right: 5px;
-            }
-
-            #recording_modal_close:hover, #recording_modal_close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-            #recording_modal_title {
-                color: white;
-                padding-left: 10px;
-                font-family: "Segoe UI";
-                font-size: 20px;
-            }
-
-            #mark_recording {
-                display: none;
-            }
-
-            #nl_playlist_player_div {
+            #playlist_player_div {
                 display: none;
                 width:360px;
                 height:202px;
+                margin-left: 20px;
             }
 
-            #nl_playlist_pause  {
+            #video_pause  {
                 display: none;
             }
 
@@ -299,6 +262,51 @@
                 margin: 15px auto;
                 width: 50px;
             }
+            
+            #mark_recording {
+                display: none;
+            }
+
+            #recording_actions_div {
+                float: right;
+                margin: 0px 10px 0px 0px
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                padding-top: 200px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;                
+            }
+
+            .modal_header {
+                height: 35px;
+                margin: 0;
+                background-color: rgb(0, 21, 41);
+            }
+
+            #recording_modal_div_content {
+                background-color: #fefefe;
+                margin: auto;
+                border: 1px solid #888;
+                width: 45%;
+            }
+
+            #recording_modal_title {
+                color: white;
+                padding-left: 10px;
+                font-size: 20px;
+            }
+
+            .recording_modal_input {
+                margin-bottom: 5px;
+            }
+
         </style>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -492,8 +500,8 @@
                     return;
                 }
 
-                $('#account_info').html('');
-                $('#account_error').html('');
+                $('#account_info').html("");
+                $('#account_error').html("");
 
                 let data = await response.json();
                 for (var index = 0; index < data.length; index++) {
@@ -522,8 +530,8 @@
 
                 $('#cluster_input').show();
                 $('#cluster_input').empty();
-                $('#cluster_info').html('');
-                $('#cluster_error').html('');
+                $('#cluster_info').html("");
+                $('#cluster_error').html("");
 
                 let data = await response.json();
                 $('#cluster_data').val(JSON.stringify(data));
@@ -608,7 +616,7 @@
 
                 let response = await http_post(cors_anywhere_url + controller_url + "/o/token", body, "application/x-www-form-urlencoded");
                 if (response === null || !response.ok) {
-                    $('#backend_info').html('');
+                    $('#backend_info').html("");
                     $('#backend_error').html("Unauthorized");
                     return false;
                 }
@@ -617,18 +625,18 @@
                 controller_bearer = data.access_token;
 
                 $('#backend_info').html("Authorized");
-                $('#backend_error').html('');
+                $('#backend_error').html("");
 
                 return true;
             }
 
             async function get_device_profiles()
             {
-                $('#device_profile_info').html('Loading device profiles...');
+                $('#device_profile_info').html("Loading device profiles...");
 
                 let response = await http_get(cors_anywhere_url + controller_url + "/api/config", controller_bearer);
                 if (response === null || !response.ok) {
-                    $('#device_profile_info').html('');
+                    $('#device_profile_info').html("");
                     $('#device_profile_error').html("Cannot get config from Controller");
 
                     return false;
@@ -648,13 +656,13 @@
                 }
 
                 if ($('#device_profile_select option').length === 0) {
-                    $('#device_profile_info').html('');
-                    $('#device_profile_error').html('No device profiles');
+                    $('#device_profile_info').html("");
+                    $('#device_profile_error').html("No device profiles");
                     $('#device_profile_select').hide();
                 }
                 else {
-                    $('#device_profile_info').html('');
-                    $('#device_profile_error').html('');
+                    $('#device_profile_info').html("");
+                    $('#device_profile_error').html("");
                     $('#device_profile_select').show();
                     $('#device_profile_select').prepend('<option value="select">Please select device profile...</option>');
                     $('#device_profile_select').val('select').attr("selected", "selected");
@@ -671,8 +679,8 @@
                     $('#device_profile_info').html("Type: " + output.manifests.find((element) => element.name === device_profile[2]).manifestType + "/" + output.type + ", Naming scheme: " + output.namingScheme);
                 }
                 else {
-                    $('#device_profile_info').html('');
-                    $('#device_profile_error').html('');
+                    $('#device_profile_info').html("");
+                    $('#device_profile_error').html("");
                 }
 
                 if ($('#use_case_select').val() === 'origin') {
@@ -688,12 +696,12 @@
 
             async function get_dvr_channels(default_channel=0)
             {
-                $('#dvr_channel_info').html('Loading channels...');
+                $('#dvr_channel_info').html("Loading channels...");
 
                 let response = await http_get(cors_anywhere_url + controller_url + "/api/cdvrChannels", controller_bearer);
                 if (response === null || !response.ok) {
                     $('#dvr_channel_id_select').hide();
-                    $('#dvr_channel_info').html('Not a CDVR cluster');
+                    $('#dvr_channel_info').html("Not a CDVR cluster");
                     $('#dvr_channel_id_select').empty();
                     return;
                 }
@@ -701,13 +709,13 @@
                 let data = await response.json();
                 if (data === null || data.length == 0 || data[0] == undefined) {
                     $('#dvr_channel_id_select').hide();
-                    $('#dvr_channel_error').html('No channels');
+                    $('#dvr_channel_error').html("No channels");
 
                     return;
                 }
 
-                $('#dvr_channel_info').html('');
-                $('#dvr_channel_error').html('');
+                $('#dvr_channel_info').html("");
+                $('#dvr_channel_error').html("");
                 $('#dvr_channel_id_select').empty();
 
                 for (var index = 0; index < data.length; index++) {
@@ -736,8 +744,8 @@
                     return;
                 }
 
-                $('#dvr_channel_info').html('');
-                $('#dvr_channel_error').html('');
+                $('#dvr_channel_info').html("");
+                $('#dvr_channel_error').html("");
 
                 let response = await http_get(cors_anywhere_url + controller_url + "/api/cdvrChannels/" + dvrChannelId, controller_bearer);
                 if (response === null || !response.ok) {
@@ -751,7 +759,7 @@
                     return null;
                 }
 
-                $('#dvr_channel_info').html('Duration: ' + data.rollingBufferDuration + ', Recording retention: ' + data.recordingRetentionDuration);
+                $('#dvr_channel_info').html("Duration: " + data.rollingBufferDuration + ", Recording retention: " + data.recordingRetentionDuration);
                 get_dvr(data.cdvrId);
 
                 if ($('#use_case_select').val() === 'recording') {
@@ -776,7 +784,7 @@
 
             async function get_recordings(default_recording=0)
             {
-                $('#recording_info').html('Loading recordings profiles...');
+                $('#recording_info').html("Loading recordings profiles...");
 
                 let cdvrId = $('#dvr_channel_id_select').val();
                 if (cdvrId === null || cdvrId === 0) {
@@ -792,13 +800,13 @@
                     return;
                 }
                 
-                $('#recording_info').html('');
-                $('#recording_error').html('');
+                $('#recording_info').html("");
+                $('#recording_error').html("");
                 $('#recording_id_select').empty();
 
                 let data = await response.json();
                 if (data === null || data.length == 0 || data[0] == undefined) {
-                    $('#recording_info').html('No recordings');
+                    $('#recording_info').html("No recordings");
 
                     update_view();
                     return;
@@ -824,13 +832,13 @@
 
             async function get_recording(recordingId)
             {
+                $('#recording_info').html("");
+                $('#recording_error').html("");
+
                 if (recordingId === 'select') {
                     update_view();
                     return;
                 }
-
-                $('#recording_info').html('');
-                $('#recording_error').html('');
 
                 let response = await http_get(cors_anywhere_url + controller_url + "/api/recordings/" + recordingId, controller_bearer);
                 if (response === null || !response.ok) {
@@ -845,8 +853,9 @@
                 }
 
                 recording_data = data;
+                let duration = getDuration(data.startTime, data.stopTime);
 
-                $('#recording_info').html("Time range: [" + data.startTime + " - " + data.stopTime + "]");
+                $('#recording_info').html("Time range: [" + data.startTime + "-" + data.stopTime +"], Duration: " + duration);
                     
                 update_view();
             }
@@ -867,13 +876,13 @@
 
             async function get_assets(default_asset=0)
             {
-                $('#asset_id_info').html('');
-                $('#asset_id_error').html('');
+                $('#asset_id_info').html("");
+                $('#asset_id_error').html("");
                 $('#asset_id_select').empty();
 
                 if ($('#device_profile_select').val() === 'select') {
                     $('#asset_id_select').hide();
-                    $('#asset_id_info').html('Please configure device profile');
+                    $('#asset_id_info').html("Please configure device profile");
 
                     update_view();
                     return;
@@ -882,7 +891,7 @@
                 device_profile=$('#device_profile_select :selected').text().split(" / ");
                 if (device_profile[0] === "") {
                     $('#asset_id_select').hide();
-                    $('#asset_id_error').html('Could not read catalog configuration');
+                    $('#asset_id_error').html("Could not read catalog configuration");
 
                     update_view();
                     return;
@@ -893,7 +902,7 @@
                 let response = await http_get(cors_anywhere_url + controller_url + "/api/catalogs/" + catalogId + "/assets", controller_bearer);
                 if (response === null || !response.ok) {
                     $('#asset_id_select').hide();
-                    $('#asset_id_info').html('Could not read catalog configuration');
+                    $('#asset_id_info').html("Could not read catalog configuration");
 
                     update_view();
                     return;
@@ -902,7 +911,7 @@
                 let data = await response.json();
                 if (data === null || data.length == 0 || data[0] == undefined) {
                     $('#asset_id_select').hide();
-                    $('#asset_id_error').html('No asset in catalog');
+                    $('#asset_id_error').html("No asset in catalog");
 
                     update_view();
                     return;
@@ -940,8 +949,8 @@
                 }
                 else {
                     access_url = "";
-                    $('#asset_id_info').html('');
-                    $('#asset_id_error').html('');
+                    $('#asset_id_info').html("");
+                    $('#asset_id_error').html("");
                 }
 
                 update_view();
@@ -997,10 +1006,10 @@
                 }
 
 
-                $('#nl_playlist_url').html(origin_url + manifest_url)
-                $('#nl_playlist_copy_div').show();
+                $('#playlist_url').html(origin_url + manifest_url)
+                $('#playlist_copy_div').show();
 
-                get_manifest_content(origin_url + manifest_url, 'nl_playlist');
+                get_manifest_content(origin_url + manifest_url, 'playlist_data_div');
             }
 
             async function get_manifest_content(url, target)
@@ -1019,7 +1028,7 @@
                     return null;
                 }
 
-                $('#' + target).html('');
+                $('#' + target).html("");
                 let content_type = "closed";
 
                 if (data.match("MPD"))
@@ -1030,11 +1039,29 @@
 
                     manifest = prettify_xml(data);
                     manifest = html_special_chars(manifest);
-                    manifest = manifest.replace(/(&lt;\/?)([^ $&]*)([ $&])/g , "$1<b><font color='#000000'>$2</font></b>$3");
-                    manifest = manifest.replace(/=&quot;([^&]*)&quot;/g , "=&quot;<font color='#718C00'>$1</font>&quot;");
-                    manifest = manifest.replace(/([a-zA-Z0-9x\.\-:]+)=&/g , "<font color='#C82829'>$1=</font>&");
+                    manifest_lines = manifest.split('\n');
+                    manifest_lines[0] = manifest_lines[0].replace(/ ([^=]*=&quot;[^&]*&quot;)/g, (match) => {
+                        newline = false;
+                        if (match.match(/type=/) 
+                            || match.match(/publishTime=/) 
+                            || match.match(/mediaPresentationDuration=/)
+                            || match.match(/profiles=/)
+                            || match.match(/id=/)) {
+                            newline = true;
+                        }
+                        return (newline) ? "\r\n\t" + match : " " + match; 
+                    });
+                    manifest = manifest_lines.join('\n');
+                    manifest = manifest.replace(/(type=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
+                    manifest = manifest.replace(/(timeShiftBufferDepth=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
+                    manifest = manifest.replace(/(mediaPresentationDuration=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
 
-                    $('#nl_playlist_player_div').show();
+                    manifest = manifest.replace(/(&lt;\/?)([^ $&]*)([ $&])/g , "$1<b><span style='color: #000000'>$2</span></b>$3");
+                    manifest = manifest.replace(/=&quot;([^&]*)&quot;/g , "=&quot;<span style='color: #718C00'>$1</span>&quot;");
+                    manifest = manifest.replace(/([a-zA-Z0-9x\.\-:]+)=&/g , "<span style='color: #C82829'>$1=</span>&");
+
+
+                    $('#playlist_player_div').show();
 
                     $('#' + target).html(manifest);
                 }
@@ -1045,14 +1072,14 @@
                     }
 
                     playlist = html_special_chars(data);
-                    playlist = playlist.replace(/(\#[a-zA-Z0-9\-]*)/g , "<b><font color='#000000'>$1</font></b>");
-                    playlist = playlist.replace(/([,:])([a-zA-Z0-9\-]*)=/g , "$1<font color='#C82829'>$2</font>=");
-                    playlist = playlist.replace(/=&quot;([^&]*)&quot;/g , "=&quot;<font color='#718C00'>$1</font>&quot;");
-                    playlist = playlist.replace(/=([a-zA-Z0-9x\.]+)/g , "=<font color='#718C00'>$1</font>");
-                    playlist = playlist.replace(/:([a-zA-Z0-9x\.]+)/g , ":<font color='#718C00'>$1</font>");
+                    playlist = playlist.replace(/(\#[a-zA-Z0-9\-]*)/g , "<b><span style='color: #000000'>$1</span></b>");
+                    playlist = playlist.replace(/([,:])([a-zA-Z0-9\-]*)=/g , "$1<span style='color: #C82829'>$2</span>=");
+                    playlist = playlist.replace(/=&quot;([^&]*)&quot;/g , "=&quot;<span style='color: #718C00'>$1</span>&quot;");
+                    playlist = playlist.replace(/=([a-zA-Z0-9x\.]+)/g , "=<span style='color: #718C00'>$1</span>");
+                    playlist = playlist.replace(/:([a-zA-Z0-9x\.]+)/g , ":<span style='color: #718C00'>$1</span>");
                     playlist = playlist.replace(/([a-zA-Z0-9\/\-_]*.m3u8)/g, "<a href=\"javascript:void(0);\" onclick=\"update_playlist_url('$&')\">$&</a>");
 
-                    $('#nl_playlist_player_div').show();
+                    $('#playlist_player_div').show();
 
                     $('#' + target).html(playlist);
                 }
@@ -1068,7 +1095,7 @@
 
             function update_playlist_url(media_playlist)
             {
-                var url = $('#nl_playlist_url').html();
+                var url = $('#playlist_url').html();
                 live_playlist_url = (url.split('?'))[0];
                 query_parameters = new URLSearchParams((url.split('?'))[1]);
 
@@ -1076,8 +1103,8 @@
                 new_playlist_url = base_url + "/" + media_playlist;
                 new_live_playlist_url = (new_playlist_url.split('?'))[0];
 
-                $('#nl_playlist_url').html(new_playlist_url);
-                get_manifest_content(new_playlist_url, 'nl_playlist');
+                $('#playlist_url').html(new_playlist_url);
+                get_manifest_content(new_playlist_url, 'playlist_data_div');
             }
 
             //
@@ -1086,7 +1113,7 @@
 
             function update_time_from_input_epoch(input, newValue)
             {
-                updated_delay = Math.round(($('#current_epoch').val() - newValue) / (-60000));
+                updated_delay = Math.round(($('#current_epoch').html() - newValue) / (-60000));
 
                 $('#' + input + '_input_hour').val(epoch_to_date(updated_time_epoch));
                 $('#' + input + '_slider').val(updated_delay);
@@ -1099,7 +1126,7 @@
             {
                 var d = new Date(newValue);
 
-                updated_delay = Math.round(($('#current_epoch').val() - d.getTime()) / (-60000));
+                updated_delay = Math.round(($('#current_epoch').html() - d.getTime()) / (-60000));
 
                 $('#' + input + '_input_epoch').val(d.getTime());
                 $('#' + input + '_slider').val(updated_delay);
@@ -1168,15 +1195,15 @@
 
                 query_parameters = new URLSearchParams();
 
-                if ($('#starttime_input_epoch').val() != '') {
-                    query_parameters.set('startTime', $('#starttime_input_epoch').val());
+                if ($('#starttime_input_hour').val() != '') {
+                    query_parameters.set('startTime', $('#starttime_input_hour').val());
                 }
                 else {
                     query_parameters.delete('startTime');
                 }
 
-                if ($('#stoptime_input_epoch').val() != '') {
-                    query_parameters.set('stopTime', $('#stoptime_input_epoch').val());
+                if ($('#stoptime_input_hour').val() != '') {
+                    query_parameters.set('stopTime', $('#stoptime_input_hour').val());
                 }
                 else {
                     query_parameters.delete('stopTime');
@@ -1208,7 +1235,7 @@
             function hide_playlists()
             {
                 clear_playlists();
-                $('#playlists_div').hide();
+                $('#playlist_div').hide();
             }
 
             function show_playlists()
@@ -1217,7 +1244,7 @@
 
                 if ($('#device_profile_select option').length !== 0 && $('#device_profile_select').val() !== 'select') {
                     hide_playlist_error_div();
-                    $('#playlists_div').show();    
+                    $('#playlist_div').show();    
                 }
             }
 
@@ -1225,10 +1252,10 @@
             {
                 clearTimeout(manifest_update_timeout);
                 
-                $('#nl_playlist').html('');
-                $('#nl_playlist_url').html("");
-                $('#nl_playlist_copy_div').hide();
-                $('#nl_playlist_player_div').hide();
+                $('#playlist_data_div').html("");
+                $('#playlist_url').html("");
+                $('#playlist_copy_div').hide();
+                $('#playlist_player_div').hide();
 
                 stop_player();
             }
@@ -1243,7 +1270,7 @@
             function hide_playlist_error_div()
             {
                 $('#playlist_error_div').hide();
-                $('#error').html('');
+                $('#error').html("");
             }
 
             function show_time_settings()
@@ -1346,8 +1373,8 @@
             function refresh_epoch_time()
             {
                 var date = new Date();
-                $('#current_epoch').val(date.getTime());
-                $('#current_time').val(date.toISOString())
+                $('#current_epoch').html(date.getTime());
+                $('#current_time').html(date.toISOString())
             }
 
             function markOperation()
@@ -1374,7 +1401,10 @@
             function set_timers()
             {
                 setInterval(function() { refresh_epoch_time(); }, 5000);
-                setTimeout(() => refreshHubToken(), 20 * 1000);
+
+                if (subdomain !== "onprem") {
+                    setTimeout(() => refreshHubToken(), 20 * 1000);
+                }
             }
 
             function html_special_chars(unsafe)
@@ -1455,6 +1485,35 @@
                 }
             }
 
+            function getDuration(startDate, endDate)
+            {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+              
+                const timeDiff = Math.abs(end - start);
+              
+                // Calculate the number of years, months, days, hours, minutes, and seconds
+                const years = Math.floor(timeDiff / (365 * 24 * 60 * 60 * 1000));
+                const months = Math.floor((timeDiff % (365 * 24 * 60 * 60 * 1000)) / (30 * 24 * 60 * 60 * 1000));
+                const days = Math.floor((timeDiff % (30 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+                const hours = Math.floor((timeDiff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                const minutes = Math.floor((timeDiff % (60 * 60 * 1000)) / (60 * 1000));
+                const seconds = Math.floor((timeDiff % (60 * 1000)) / 1000);
+              
+                // Display the duration
+                let duration = ''
+                if (years > 0)
+                    duration += years + ' years, ';
+                if (months > 0)
+                    duration += months + ' months, ';
+                if (days > 0)
+                    duration += days + ' days, ';
+
+                duration += hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+                
+                return duration;
+            }
+
             //
             // Create recording modal window
             //
@@ -1494,7 +1553,7 @@
                     $('#recording_modal_stop_time_input').val(recording_data.stopTime);
                     $('#recording_modal_dvr_channel_id').val(recording_data.cdvrChannelId);
 
-                    $('#recording_modal_info').html('');
+                    $('#recording_modal_info').html("");
                     $('#recording_modal_div *').prop('disabled', false);
                 }
 
@@ -1594,8 +1653,8 @@
                     .catch((error) => {console.error("[MKPlayer] Failed to unload source!");});
                 }
 
-                $('#nl_playlist_play').show();
-                $('#nl_playlist_pause').hide();
+                $('#video_play').show();
+                $('#video_pause').hide();
             }
 
             function start_player(url)
@@ -1619,8 +1678,8 @@
                 mkPlayer.load(liveSourceConfig)
                 .catch((error) => {console.error("[MKPlayer] Failed to start playback!");});
 
-                $('#nl_playlist_play').hide();
-                $('#nl_playlist_pause').show();
+                $('#video_play').hide();
+                $('#video_pause').show();
             }
 
             //
@@ -1642,26 +1701,32 @@
             function on_load()
             {
                 $('#use_case_select').on('change', function handleChange(event) {
-                    $('#use_case_info').html('');
+                    $('#use_case_info').html("");
                     
                     if (event.target.value === 'replay') {
                         if (cluster_info != null && cluster_info !== "" && cluster_info.config.type !== 'CDVR') {
-                            $('#use_case_info').html('Not a CDVR cluster');
+                            $('#use_case_info').html("Not a CDVR cluster");
                         }                        
                         else {
                             get_dvr_channels($('#dvr_channel_id_select').val());
                         }
+
+                        $('#playlist_data_div').css('max-height', '40vh');
                     }
                     else if (event.target.value === 'recording') {
                         if (cluster_info != null && cluster_info !== "" && cluster_info.config.type !== 'CDVR') {
-                            $('#use_case_info').html('Not a CDVR cluster');
+                            $('#use_case_info').html("Not a CDVR cluster");
                         }
                         else {
                             get_dvr_channels($('#dvr_channel_id_select').val());
                         }
+
+                        $('#playlist_data_div').css('max-height', '50vh');
                     }
                     else if (event.target.value === 'origin') {
                         get_assets($('#asset_id_select').val());
+
+                        $('#playlist_data_div').css('max-height', '50vh');
                     }
 
                     update_view();
@@ -1684,7 +1749,7 @@
     <body onload="set_timers(); on_load();">
 
         <header id="page-header" class="header">
-            <div id="header">
+            <div id="header_div">
                 <div class="header-image">
                     <img alt='' src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCAxNDAgMjMiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZT4uc3Qxe2ZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO2ZpbGw6I2ZmZn08L3N0eWxlPjxnIGlkPSJQYWdlLTEiPjxnIGlkPSJHcm91cC0yMyI+PHBhdGggaWQ9IkZpbGwtMSIgZD0iTTg1IDIyLjU4di01LjE3YzAtLjM3LjM5LS41Ni42Mi0uMjlsMi4yNyAyLjU4Yy4xNC4xNi4xNC40MyAwIC41OWwtMi4yNyAyLjU4Yy0uMjMuMjctLjYyLjA4LS42Mi0uMjkiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjMDA5ZmUzIi8+PHBhdGggaWQ9IkZpbGwtMyIgY2xhc3M9InN0MSIgZD0iTTI4Ljk4IDEzLjFjLjM3LjAxLjcyLjAyIDEuMDYuMDJoMS4yNWMxLjA3IDAgMS45NS0uMDcgMi42MS0uMi42NS0uMTMgMS4xNi0uMyAxLjUxLS41LjMzLS4xOS41NS0uNC42NS0uNjIuMTEtLjI0LjE2LS41LjE2LS43NiAwLS42Ni0uMjYtMS4xNC0uOC0xLjQ3LS41Ny0uMzUtMS4yOC0uNTItMi4xMi0uNTItLjcgMC0xLjMyLjEyLTEuODQuMzZzLS45Ny41Ni0xLjMyLjk1Yy0uMzYuNC0uNjQuODYtLjgzIDEuMzgtLjE5LjQ1LS4yOS45LS4zMyAxLjM2bTQuMjUgOC45Yy0xLjEzIDAtMi4yMS0uMTctMy4xOS0uNTEtLjk5LS4zNC0xLjg3LS44Ni0yLjYyLTEuNTNzLTEuMzQtMS41MS0xLjc3LTIuNDhjLS40My0uOTgtLjY1LTIuMTEtLjY1LTMuMzYgMC0xLjIuMjEtMi4zMS42My0zLjMuNDItLjk5IDEuMDEtMS44NiAxLjc1LTIuNTcuNzQtLjcxIDEuNjMtMS4yNyAyLjY0LTEuNjZDMzEuMDQgNi4yIDMyLjE1IDYgMzMuMzUgNmMxLjA2IDAgMiAuMTQgMi44Mi40MS44Mi4yNyAxLjUyLjY0IDIuMDkgMS4xLjU3LjQ2IDEuMDEgMSAxLjMgMS42Mi4yOS42MS40NCAxLjI3LjQ0IDEuOTcgMCAuNzEtLjE0IDEuMzctLjQxIDEuOTYtLjI4LjYtLjc3IDEuMTEtMS40NiAxLjU0LS42OC40MS0xLjYuNzQtMi43My45Ny0xLjEyLjIzLTIuNTYuMzQtNC4yOC4zNC0uNCAwLS43OCAwLTEuMTItLjAxbC0uODItLjAzYy4xOS44MS42MyAxLjQ2IDEuMzMgMS45OC43OC41OCAxLjkyLjg3IDMuMzkuODdhNy45MjUgNy45MjUgMCAwMDMuNC0uNzNjLjI1LS4xMi40My0uMi41NS0uMjZsLjIxLS4xIDEuNDcgMi43NC0uMTkuMTFjLS4xNi4xLS40Mi4yNC0uNzYuNDItLjM1LjE4LS43OS4zNi0xLjMxLjUycy0xLjEyLjMtMS43OS40MmMtLjY5LjEtMS40NC4xNi0yLjI1LjE2Ii8+PHBhdGggaWQ9IkZpbGwtNSIgY2xhc3M9InN0MSIgZD0iTTUwLjU5IDEwLjE3Yy0uNjggMC0xLjI5LjEyLTEuODMuMzUtLjU0LjI0LTEuMDEuNTYtMS40MS45Ny0uMzkuNC0uNy45LS45MSAxLjQ2LS4yMS41Ny0uMzIgMS4xOS0uMzIgMS44NyAwIC42Ny4xMSAxLjI5LjMyIDEuODUuMjEuNTYuNTIgMS4wNC45MSAxLjQ1LjM5LjQxLjg3LjczIDEuNDEuOTcgMS4wNS40NiAyLjUzLjQ3IDMuNjQuMDEuNTUtLjIyIDEuMDItLjU0IDEuNC0uOTMuMzgtLjQuNjktLjg4LjkxLTEuNDUuMjItLjU3LjM0LTEuMjEuMzQtMS44OSAwLS42NS0uMTEtMS4yNi0uMzQtMS44M2E0LjYxIDQuNjEgMCAwMC0uOTEtMS40OGMtLjM4LS40MS0uODYtLjc0LTEuNC0uOTgtLjU0LS4yNS0xLjE1LS4zNy0xLjgxLS4zN001MC41MyAyM2MtMS4yMyAwLTIuMzgtLjIxLTMuNDEtLjYyLTEuMDMtLjQxLTEuOTQtLjk4LTIuNjktMS43YTcuODEzIDcuODEzIDAgMDEtMS43OC0yLjZjLS40My0xLS42NS0yLjEtLjY1LTMuMjcgMC0xLjE4LjIxLTIuMjkuNjEtMy4yOC40MS0uOTkuOTgtMS44NyAxLjctMi42czEuNTktMS4zIDIuNTYtMS43Yy45Ny0uNCAyLjA1LS42IDMuMi0uNiAxLjIxIDAgMi4zLjI0IDMuMjMuNy42OS4zNSAxLjI4Ljc2IDEuNzUgMS4yMlYxLjgzYzAtLjYxLjE5LTEuMDguNTYtMS4zOC4zNy0uMy44OC0uNDUgMS41Mi0uNDUuMzkgMCAuNzUuMDUgMS4wOC4xNS4zMi4wOS41My4xNi42My4ybC4xNi4wNlYxNC4xYzAgMS40OC0uMjIgMi43OS0uNjQgMy45LS40MyAxLjExLTEuMDMgMi4wNC0xLjc4IDIuNzgtLjc1Ljc0LTEuNjYgMS4zLTIuNjkgMS42Ny0xLjAzLjM2LTIuMTUuNTUtMy4zNi41NSIvPjxwYXRoIGlkPSJGaWxsLTciIGNsYXNzPSJzdDEiIGQ9Ik02NSAyMmgtNFY4Ljc3YzAtLjYxLjItMS4wNy41OS0xLjM2LjM3LS4yNy44OC0uNDEgMS41My0uNDEuMzkgMCAuNzYuMDUgMS4wOS4xNC4zMi4wOS41My4xNS42My4xOWwuMTYuMDZWMjJ6Ii8+PHBhdGggaWQ9IkZpbGwtOSIgY2xhc3M9InN0MSIgZD0iTTc0LjY3IDE0LjczYy0xLjMzIDAtMi4yOS4xOS0yLjg4LjU2LS41Ni4zNi0uODMuOTEtLjgzIDEuNjkgMCAuMzIuMDYuNjEuMTguODcuMTEuMjUuMzEuNDcuNTkuNjQuMy4xOS43Mi4zMyAxLjI0LjQzLjU0LjEgMS4yMi4xNiAyLjA0LjE2LjkyIDAgMS42Ni0uMDMgMi4xOS0uMS4zOS0uMDUuNjktLjA5Ljg4LS4xMnYtMy44OWMtLjIyLS4wNC0uNTMtLjA4LS45My0uMTQtLjU1LS4wNi0xLjM4LS4xLTIuNDgtLjFNNzUgMjJjLTEuNiAwLTIuOTItLjE0LTMuOTQtLjQtMS4wMy0uMjctMS44Ni0uNjQtMi40Ni0xLjEtLjYxLS40Ni0xLjA0LTEuMDEtMS4yNy0xLjYzLS4yMi0uNi0uMzMtMS4yMi0uMzMtMS44NSAwLS44My4xMy0xLjU3LjQtMi4yLjI3LS42NC43Mi0xLjE5IDEuMzMtMS42Mi42LS40MyAxLjQtLjc1IDIuMzYtLjk2Ljk1LS4yMSAyLjExLS4zMSAzLjQ2LS4zMS43NiAwIDEuNTEuMDMgMi4yMS4wNy41My4wNC45Ni4wNyAxLjI4LjExLS4wMy0uNTMtLjEzLS45OC0uMzItMS4zMy0uMjEtLjQxLS41MS0uNzMtLjg3LS45Ni0uMzgtLjIzLS44NC0uNC0xLjM3LS40OS0uNTUtLjA5LTEuMTctLjE0LTEuODQtLjE0LTEuMTIgMC0yLjAzLjEyLTIuNy4zNy0uNjcuMjUtMS4xMi40NS0xLjMyLjYxbC0uMTYuMTItLjE1LS4xMmMtLjE0LS4xMS0uMzItLjMxLS41NC0uNmExLjg2MiAxLjg2MiAwIDAxLS4xMS0yLjA2Yy4xOC0uMy40OC0uNTcuOS0uNzkuNDEtLjIyLjk1LS4zOSAxLjYyLS41MS42Ny0uMTUgMS41MS0uMjEgMi41MS0uMjEgMS4yMSAwIDIuMzMuMTIgMy4zMy4zNCAxLjAxLjIzIDEuODkuNiAyLjYzIDEuMTFhNS4yNSA1LjI1IDAgMDExLjc0IDIuMDJjLjQxLjgzLjYyIDEuODQuNjIgM3Y5LjAxbC0uMi4wNGMtLjIxLjA0LS41My4wOC0uOTguMTNhNTQuNTk1IDU0LjU5NSAwIDAxLTMuNTMuMjhjLS43My4wNS0xLjUuMDctMi4zLjA3Ii8+PHBhdGggaWQ9IkZpbGwtMTEiIGNsYXNzPSJzdDEiIGQ9Ik0xMDQgMjJoLTRWOC43N2MwLS42MS4yLTEuMDcuNTktMS4zNi4zNy0uMjcuODktLjQxIDEuNTQtLjQxLjM5IDAgLjc2LjA1IDEuMDkuMTQuMzIuMDkuNTMuMTUuNjMuMTlsLjE1LjA2VjIyeiIvPjxwYXRoIGlkPSJGaWxsLTEzIiBjbGFzcz0ic3QxIiBkPSJNMTIxIDIyaC0zLjg3di04LjQ4YzAtMS4yOS0uMzEtMi4yOS0uOTItMi45NS0uNi0uNjYtMS41Mi0uOTktMi43MS0uOTktMS4yMSAwLTIuMTMuMzMtMi43Mi45OS0uNi42Ni0uOTEgMS42Ni0uOTEgMi45NVYyMkgxMDZ2LTkuMzVjMC0xLjAzLjE5LTEuOTcuNTctMi43OS4zOC0uODIuOTEtMS41MiAxLjU4LTIuMDkuNjYtLjU3IDEuNDYtMS4wMSAyLjM3LTEuMzEuOTEtLjMgMS45MS0uNDUgMi45OC0uNDVzMi4wOC4xNSAyLjk5LjQ1YTcgNyAwIDAxMi4zOSAxLjMxYy42Ny41NyAxLjIgMS4yOCAxLjU3IDIuMS4zNy44Mi41NiAxLjc2LjU2IDIuNzlWMjJ6Ii8+PHBhdGggaWQ9IkZpbGwtMTUiIGNsYXNzPSJzdDEiIGQ9Ik0xMzEuNTkgMTAuMTdjLS42NyAwLTEuMjkuMTItMS44My4zNS0uNTQuMjQtMS4wMS41Ni0xLjQxLjk3LS4zOS40LS43LjktLjkxIDEuNDYtLjIxLjU3LS4zMiAxLjItLjMyIDEuODcgMCAuNjcuMTEgMS4yOS4zMiAxLjg1LjIxLjU2LjUyIDEuMDQuOTEgMS40NS4zOS40MS44Ny43MyAxLjQuOTcgMS4wNS40NiAyLjUzLjQ3IDMuNjQuMDEuNTUtLjIyIDEuMDItLjU0IDEuNC0uOTMuMzgtLjQuNjktLjg4LjkxLTEuNDUuMjItLjU3LjM0LTEuMjEuMzQtMS44OSAwLS42NS0uMTEtMS4yNi0uMzQtMS44My0uMjItLjU3LS41My0xLjA2LS45Mi0xLjQ4LS4zOC0uNDEtLjg2LS43NC0xLjQtLjk4LS41Mi0uMjUtMS4xMy0uMzctMS43OS0uMzdNMTMxLjUzIDIzYy0xLjIzIDAtMi4zOC0uMjEtMy40MS0uNjJhOC4xNyA4LjE3IDAgMDEtMi42OS0xLjcgNy44MTMgNy44MTMgMCAwMS0xLjc4LTIuNmMtLjQzLTEtLjY1LTIuMS0uNjUtMy4yNyAwLTEuMTguMjEtMi4yOS42MS0zLjI4LjQxLS45OS45OC0xLjg3IDEuNy0yLjZzMS41OC0xLjMgMi41Ni0xLjdjLjk3LS40IDIuMDUtLjYgMy4yLS42IDEuMjEgMCAyLjMuMjQgMy4yMy43LjY5LjM1IDEuMjguNzYgMS43NSAxLjIyVjEuODNjMC0uNjEuMTktMS4wOC41Ni0xLjM4LjM2LS4zLjg3LS40NSAxLjUyLS40NS4zOSAwIC43NS4wNSAxLjA4LjE1LjMyLjA5LjUzLjE2LjYzLjJsLjE2LjA2VjE0LjFjMCAxLjQ4LS4yMiAyLjc5LS42NCAzLjktLjQzIDEuMTEtMS4wMyAyLjA0LTEuNzggMi43OC0uNzUuNzQtMS42NiAxLjMtMi42OSAxLjY3LTEuMDMuMzYtMi4xNS41NS0zLjM2LjU1Ii8+PHBhdGggaWQ9IkZpbGwtMTciIGNsYXNzPSJzdDEiIGQ9Ik05NS45MSAyMmMtLjUzIDAtMS4wNy0uMjEtMS40Ny0uNjJsLTguODMtOC45Yy0uODEtLjgyLS44MS0yLjE1IDAtMi45N2w4LjgzLTguOWMuODEtLjgyIDIuMTMtLjgyIDIuOTUgMCAuODEuODIuODEgMi4xNSAwIDIuOTdMOTAuMDQgMTFsNy4zNSA3LjQxYy44MS44Mi44MSAyLjE1IDAgMi45Ny0uNDEuNDEtLjk0LjYyLTEuNDguNjIiLz48cGF0aCBpZD0iRmlsbC0xOSIgZD0iTTg2IDFjLjU2IDAgMS4wMy4xOSAxLjQyLjU4LjM5LjM5LjU4Ljg2LjU4IDEuNDIgMCAuNTYtLjE5IDEuMDQtLjU4IDEuNDItLjM5LjM5LS44Ni41OC0xLjQyLjU4cy0xLjAzLS4xOS0xLjQyLS41OEM4NC4xOSA0LjAzIDg0IDMuNTYgODQgM2MwLS41Ni4xOS0xLjAzLjU4LTEuNDIuMzktLjM5Ljg2LS41OCAxLjQyLS41OCIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNkNDEwM2EiLz48cGF0aCBpZD0iRmlsbC0yMSIgY2xhc3M9InN0MSIgZD0iTTIxLjcyIDEuMTZjLS43Ny0uMzItMS42Ny0uMTQtMi4yNi40NWwtOS41MSA5LjUzLTMuNzEtMy43MmgtLjAxbC0yLjY5LTIuN2EyLjA3IDIuMDcgMCAwMC0yLjkzIDBDLjIgNS4xMyAwIDUuNjcgMCA2LjIxdjE0LjcxQzAgMjIuMDcuOTMgMjMgMi4wOCAyM3MyLjA3LS45MyAyLjA3LTIuMDh2LTkuN2wxLjYzIDEuNjRoLjAxbDIuNjkgMi43Yy44MS44MSAyLjEyLjgxIDIuOTMgMGw3LjQ0LTcuNDV2MTIuODJjMCAxLjE1LjkzIDIuMDggMi4wNyAyLjA4UzIzIDIyLjA3IDIzIDIwLjkyVjMuMDhjMC0uODQtLjUxLTEuNi0xLjI4LTEuOTIiLz48L2c+PC9nPjwvc3ZnPg==" />
                 </div>                
@@ -1821,10 +1886,10 @@
                                 Current Time:
                             </td>
                             <td>
-                                <input type="text" id="current_epoch" class="epoch_time">
+                                <span id="current_epoch" class="epoch_time"></span>
                             </td>
                             <td>
-                                <input type="text" id="current_time" class="hr_time">
+                                <span id="current_time" class="hr_time"></span>
                             </td>
                             <td width="20px"></td>
                             <td class="left-border" style="width:330px;">
@@ -1893,76 +1958,79 @@
                 </div>
             </div>
 
-            <div id="playlists_div">
+            <div id="playlist_div">
                 <div id="playlist_actions_div">
-                    <button id="load_playlist" type="button" onclick="get_manifest_url('nl_playlist');">Load Manifest / Playlist</button>
+                    <button id="load_playlist" type="button" onclick="get_manifest_url('playlist_data');">Load Manifest / Playlist</button>
+                    &nbsp;&nbsp;
                     <button id="mark_recording" type="button" onclick="extract_recording_modal($('#dvr_channel_id_select').val(), $('#starttime_input_hour').val(), $('#stoptime_input_hour').val())">Mark as recording</button>
                 </div>
 
                 <div id="playlist_error_div">
                     An error occured while retrieving the playlist/manifest.
                 </div>
+                <div id="playlist_url_div">
+                    <span id="playlist_url" size="100"></span>
+                </div>
+                <div id="playlist_copy_div">
+                    <button type="button" id="playlist_copy_button" onclick="navigator.clipboard.writeText($('#playlist_url').text());">Copy URL</button>
+                    &nbsp;&nbsp;
+                    <button type="button" id="playlist_content_copy_button" onclick="navigator.clipboard.writeText($('#playlist_data_div').text());">Copy Manifest / Playlist</button>
+                </div>
+                <div id="playlist_content_div">
+                    <div id="playlist_data_div"></div>   
+                    <div id="playlist_player_div">
+                        <div class="video-container" id="video_player_div"></div>
 
-                <table>
-                    <tr>
-                        <th colspan="2">
-                            <span id="nl_playlist_url" size="100"></span>
-                            <div id="nl_playlist_copy_div">
-                                <button type="button" id="nl_playlist_copy" onclick="navigator.clipboard.writeText($('#nl_playlist_url').text());">Copy URL</button>
-                                <button type="button" id="nl_playlist_content_copy" onclick="navigator.clipboard.writeText($('#nl_playlist').text());">Copy Manifest / Playlist</button>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr><td colspan="2" style="border-bottom: 1px solid rgba(0,0,0,.1);"></td></tr>
-                    <tr>
-                        <td>
-                            <div id="nl_playlist" class="playlist"></div>
-                        </td>
-                        <td>
-                            <div id="nl_playlist_player_div">
-                                <div class="video-container" id="video_player_div"></div>
+                        <div id="video_player_controls_div">
+                            <button type="button" id="video_play" onclick="start_player($('#playlist_url').text());">Play</button>
+                            <button type="button" id="video_pause" onclick="stop_player();">Stop</button>
+                        </div>
+                    </div>
 
-                                <div id="video_player_controls_div">
-                                    <button type="button" id="nl_playlist_play" onclick="start_player($('#nl_playlist_url').text());">Play</button>
-                                    <button type="button" id="nl_playlist_pause" onclick="stop_player();">Stop</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                </div>
             </div>
         </main>
 
+        <footer id="page-footer" class="footer">
+            <div id="footer_div">
+                <div id="footer_left_div">
+                    <span id="footer_left"></span>
+                </div>
+                <div id="footer_right_div">
+                    <span id="footer_right">v2.6</span>
+                </div>
+            </div>
+        </footer>
+
         <div id="recording_modal_div" class="modal">
             <div id="recording_modal_div_content">
-                <div class="header modal_header">
+                <div class="modal_header">
                     <span id="recording_modal_title"></span>
-                    <span class="recording_modal_close">&times;</span>
                 </div>
                 <div style="padding-left: 20px;">
                     <span class="info" id="recording_modal_info"></span>
                     <span class="error" id="recording_modal_error"></span>
                 </div>
-                <div style="padding: 0px 20px 20px 20px;">
+                <div style="padding: 10px;">
                     <input type="hidden" id="recording_modal_id">
                     <input type="hidden" id="recording_modal_dvr_channel_id">
-                    <div id="recording_modal_name_div">
+                    <div id="recording_modal_name_div" class="recording_modal_input">
                         <label>Name:</label>
                         <input type="text" id="recording_modal_name_input">
                     </div>
-                    <div id="recording_modal_content_id_div">
+                    <div id="recording_modal_content_id_div" class="recording_modal_input">
                         <label>Content Id:</label>
                         <input type="text" id="recording_modal_content_id_input">
                     </div>
-                    <div id="recording_modal_current_time_div">
+                    <div id="recording_modal_current_time_div" class="recording_modal_input">
                         <label>Current time</label>
                         <span class="info" id="recording_modal_current_time_info" size="50"></span>
                     </div>
-                    <div id="recording_modal_start_time_div">
+                    <div id="recording_modal_start_time_div" class="recording_modal_input">
                         <label>Start Time:</label>
                         <input type="text" id="recording_modal_start_time_input">
                     </div>
-                    <div id="recording_modal_stop_time_div">
+                    <div id="recording_modal_stop_time_div" class="recording_modal_input">
                         <label>Stop Time:</label>
                         <input type="text" id="recording_modal_stop_time_input">
                     </div>
@@ -1980,6 +2048,7 @@
         const host = window.location.host.split('.')[0];
         const domain = host.split('-')[0] + "-" + host.split('-')[1];
         const subdomain = host.split('-')[2];
+        
         let saas_hub_url = "https://hub" + (subdomain===undefined?"":"-"+subdomain) + ".aas.mediakind.com";
         let solution_hub_url = "https://aquila" + (subdomain===undefined?"":"-"+subdomain) + ".aas.mediakind.com";
 
@@ -2003,33 +2072,35 @@
         let grafana_url = "";
         let elastic_url = "";
 
-        let cors_anywhere_url = "https://atlas-cors-proxy.aas.mediakind.com:8443/";
+        //let cors_anywhere_url = "https://atlas-cors-proxy.aas.mediakind.com:8443/";
+        let cors_anywhere_url = "";        
 
-        if (subdomain == "staging") {
-            grafana_url = "https://mediakindsaas.grafana.net/d/5KXr-p7Vk/cdvr-high-level-dashboard?orgId=1&var-node=All&var-namespace=mediakind&var-Datasource=victoria-metrics-dev&from=now-1h&to=now&var-cluster=CLUSTER-ID";
-            elastic_url = "https://mpd-dev.kb.westeurope.azure.elastic-cloud.com:9243/app/dashboards#/view/88ddc920-e7b3-11ea-99e3-e3e4a4929f7a?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-1h,to:now))&_a=(description:'',filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:env.keyword,negate:!f,params:(query:CLUSTER-ID),type:phrase),query:(match_phrase:(env.keyword:CLUSTER-ID))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!t,type:custom),query:(wildcard:(kubernetes.host.keyword:'*controller-*'))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!t,type:custom),query:(wildcard:(kubernetes.host.keyword:'*abrsurveyor-*')))),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(enhancements:()),gridData:(h:11,i:'2a327779-a29a-4214-aa41-af4601303d25',w:7,x:0,y:0),id:'80dc9300-e90c-11ea-99e3-e3e4a4929f7a',panelIndex:'2a327779-a29a-4214-aa41-af4601303d25',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:11,i:'81b090f6-08d8-4178-860b-822e919d5990',w:41,x:7,y:0),id:fcfdc340-e7b4-11ea-99e3-e3e4a4929f7a,panelIndex:'81b090f6-08d8-4178-860b-822e919d5990',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:'96ceae7d-edf1-4b5d-950e-cefc1b3b66a2',w:24,x:0,y:11),id:ba686460-e7b2-11ea-99e3-e3e4a4929f7a,panelIndex:'96ceae7d-edf1-4b5d-950e-cefc1b3b66a2',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:e39f52ca-2ada-4cf2-a66e-40f018735200,w:24,x:24,y:11),id:d79e4ee0-e7b3-11ea-99e3-e3e4a4929f7a,panelIndex:e39f52ca-2ada-4cf2-a66e-40f018735200,type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:ac0f5e7a-fa54-4144-a47e-5c948a636f77,w:24,x:0,y:27),id:'33327b10-e7b3-11ea-99e3-e3e4a4929f7a',panelIndex:ac0f5e7a-fa54-4144-a47e-5c948a636f77,type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:f9fed6c2-557c-44df-a485-d55deef91fcb,w:24,x:24,y:27),id:ecd2c660-e7b3-11ea-99e3-e3e4a4929f7a,panelIndex:f9fed6c2-557c-44df-a485-d55deef91fcb,type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:17,i:'3d7d5d92-63a6-4ad5-97ba-9eff0f24b86b',w:24,x:0,y:43),id:'6e3c28a0-e7b3-11ea-99e3-e3e4a4929f7a',panelIndex:'3d7d5d92-63a6-4ad5-97ba-9eff0f24b86b',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:17,i:'2a85634f-274b-49a6-96d7-f997c706600e',w:24,x:24,y:43),id:'2d4927c0-e7b4-11ea-99e3-e3e4a4929f7a',panelIndex:'2a85634f-274b-49a6-96d7-f997c706600e',type:visualization,version:'7.17.6'),(embeddableConfig:(columns:!(kubernetes.container_name,message,msg,pri,subsys,w3c.sc-status),enhancements:()),gridData:(h:42,i:d924886b-222d-4ec1-8f90-25e9447c7412,w:48,x:0,y:60),id:'766f5060-4532-11eb-843c-41222f975acd',panelIndex:d924886b-222d-4ec1-8f90-25e9447c7412,type:search,version:'7.17.6')),query:(language:kuery,query:''),tags:!(),timeRestore:!f,title:'IPHEv4:%20Log%20Volumes',viewMode:view)";
+        if (subdomain === "onprem") {
+            $('#user_div').show();
         }
         else {
-            grafana_url = "https://mediakindsaas.grafana.net/d/5KXr-p7Vk/cdvr-high-level-dashboard?orgId=1&var-node=All&var-namespace=mediakind&var-Datasource=Victoria-metrics-Aquila:%20Mr.Admin&from=now-1h&to=now&var-cluster=CLUSTER-ID";
-            elastic_url = "https://mpd-prod.kb.eastus2.azure.elastic-cloud.com:9243/app/dashboards#/view/88ddc920-e7b3-11ea-99e3-e3e4a4929f7a?_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-1h,to:now))&_a=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,field:env.keyword,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:env.keyword,negate:!f,params:(query:CLUSTER-ID),type:phrase),query:(match_phrase:(env.keyword:CLUSTER-ID))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!f,type:custom),query:(wildcard:(kubernetes.host.keyword:'*controller-*'))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!f,type:custom),query:(wildcard:(kubernetes.host.keyword:'*abrsurveyor-*')))))";          
+            if (subdomain === "staging") {
+                grafana_url = "https://mediakindsaas.grafana.net/d/5KXr-p7Vk/cdvr-high-level-dashboard?orgId=1&var-node=All&var-namespace=mediakind&var-Datasource=victoria-metrics-dev&from=now-1h&to=now&var-cluster=CLUSTER-ID";
+                elastic_url = "https://mpd-dev.kb.westeurope.azure.elastic-cloud.com:9243/app/dashboards#/view/88ddc920-e7b3-11ea-99e3-e3e4a4929f7a?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-1h,to:now))&_a=(description:'',filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:env.keyword,negate:!f,params:(query:CLUSTER-ID),type:phrase),query:(match_phrase:(env.keyword:CLUSTER-ID))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!t,type:custom),query:(wildcard:(kubernetes.host.keyword:'*controller-*'))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!t,type:custom),query:(wildcard:(kubernetes.host.keyword:'*abrsurveyor-*')))),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(enhancements:()),gridData:(h:11,i:'2a327779-a29a-4214-aa41-af4601303d25',w:7,x:0,y:0),id:'80dc9300-e90c-11ea-99e3-e3e4a4929f7a',panelIndex:'2a327779-a29a-4214-aa41-af4601303d25',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:11,i:'81b090f6-08d8-4178-860b-822e919d5990',w:41,x:7,y:0),id:fcfdc340-e7b4-11ea-99e3-e3e4a4929f7a,panelIndex:'81b090f6-08d8-4178-860b-822e919d5990',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:'96ceae7d-edf1-4b5d-950e-cefc1b3b66a2',w:24,x:0,y:11),id:ba686460-e7b2-11ea-99e3-e3e4a4929f7a,panelIndex:'96ceae7d-edf1-4b5d-950e-cefc1b3b66a2',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:e39f52ca-2ada-4cf2-a66e-40f018735200,w:24,x:24,y:11),id:d79e4ee0-e7b3-11ea-99e3-e3e4a4929f7a,panelIndex:e39f52ca-2ada-4cf2-a66e-40f018735200,type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:ac0f5e7a-fa54-4144-a47e-5c948a636f77,w:24,x:0,y:27),id:'33327b10-e7b3-11ea-99e3-e3e4a4929f7a',panelIndex:ac0f5e7a-fa54-4144-a47e-5c948a636f77,type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:16,i:f9fed6c2-557c-44df-a485-d55deef91fcb,w:24,x:24,y:27),id:ecd2c660-e7b3-11ea-99e3-e3e4a4929f7a,panelIndex:f9fed6c2-557c-44df-a485-d55deef91fcb,type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:17,i:'3d7d5d92-63a6-4ad5-97ba-9eff0f24b86b',w:24,x:0,y:43),id:'6e3c28a0-e7b3-11ea-99e3-e3e4a4929f7a',panelIndex:'3d7d5d92-63a6-4ad5-97ba-9eff0f24b86b',type:visualization,version:'7.17.6'),(embeddableConfig:(enhancements:()),gridData:(h:17,i:'2a85634f-274b-49a6-96d7-f997c706600e',w:24,x:24,y:43),id:'2d4927c0-e7b4-11ea-99e3-e3e4a4929f7a',panelIndex:'2a85634f-274b-49a6-96d7-f997c706600e',type:visualization,version:'7.17.6'),(embeddableConfig:(columns:!(kubernetes.container_name,message,msg,pri,subsys,w3c.sc-status),enhancements:()),gridData:(h:42,i:d924886b-222d-4ec1-8f90-25e9447c7412,w:48,x:0,y:60),id:'766f5060-4532-11eb-843c-41222f975acd',panelIndex:d924886b-222d-4ec1-8f90-25e9447c7412,type:search,version:'7.17.6')),query:(language:kuery,query:''),tags:!(),timeRestore:!f,title:'IPHEv4:%20Log%20Volumes',viewMode:view)";
+            }
+            else {
+                grafana_url = "https://mediakindsaas.grafana.net/d/5KXr-p7Vk/cdvr-high-level-dashboard?orgId=1&var-node=All&var-namespace=mediakind&var-Datasource=Victoria-metrics-Aquila:%20Mr.Admin&from=now-1h&to=now&var-cluster=CLUSTER-ID";
+                elastic_url = "https://mpd-prod.kb.eastus2.azure.elastic-cloud.com:9243/app/dashboards#/view/88ddc920-e7b3-11ea-99e3-e3e4a4929f7a?_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-1h,to:now))&_a=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,field:env.keyword,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:env.keyword,negate:!f,params:(query:CLUSTER-ID),type:phrase),query:(match_phrase:(env.keyword:CLUSTER-ID))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!f,type:custom),query:(wildcard:(kubernetes.host.keyword:'*controller-*'))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'6477d280-3b0d-11eb-843c-41222f975acd',key:query,negate:!f,type:custom),query:(wildcard:(kubernetes.host.keyword:'*abrsurveyor-*')))))";          
+            }
+
+            $('#credentials').html("Not logged in");
+            login_solution_hub();   
         }
 
         const urlParams = new URLSearchParams(window.location.search);
         const onPrem = urlParams.get('onprem');
         const data = JSON.parse(urlParams.get('data'));
 
+        //data={"backend_url":"IP|FQDN","backend_password":"PWD","origin_server":"IP|FQDN"}
         if (data !== null) {
             $("#backend_user_url").val(data.backend_url);
             $("#backend_user_password").val(data.backend_password);
             $("#origin_user_url").val(data.origin_server);
-        }
-
-        if (onPrem !== "true") {
-            $('#credentials').html("Not logged in");
-            login_solution_hub();   
-        }
-        else {
-            $('#user_div').show();
         }
 
         refresh_epoch_time();
