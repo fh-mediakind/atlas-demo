@@ -571,7 +571,14 @@
 
                 if (json !== null && index !== null) {
                     cluster_info = json[index];
-                    $('#cluster_info').html(json[index].status.cluster_status[0].status + " / " + json[index].config.clusters[0].version + " / " + json[index].config.zone);
+
+                    if (json[index].status.cluster_status[0].type === "Uniform") {
+                        $('#cluster_error').html("Uniform Clusters are not supported yet.");
+                        update_view();
+                        return;
+                    }
+
+                    $('#cluster_info').html(json[index].status.cluster_status[0].status + " / " + json[index].config.clusters[0].version + " / " + json[index].config.region);
 
                     $('#links .cloud_vendor').hide();
                     $('#links').show();
@@ -613,6 +620,7 @@
                 let body = "client_id=admin&client_secret=" + controller_password;
 
                 $('#backend_info').html("Authorizing...");
+                $('#backend_error').html("");
 
                 let response = await http_post(cors_anywhere_url + controller_url + "/o/token", body, "application/x-www-form-urlencoded");
                 if (response === null || !response.ok) {
