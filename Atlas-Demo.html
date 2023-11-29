@@ -158,10 +158,6 @@
                 padding: 10px 0px 10px 15px;
             }
 
-            #account_div,  #admin_div, #user_div, #backend_div, #origin_div, #settings_div, #time_settings_div, #recording_div, #channel_div, #asset_div {
-                display: none;
-            }
-
             #time_settings_div table {
                 border: 0px;
             }
@@ -232,6 +228,10 @@
                 width:360px;
                 height:202px;
                 margin-left: 20px;
+            }
+
+            #account_div,  #admin_div, #user_div, #backend_div, #origin_div, #settings_div, #time_settings_div, #playlist_div, #recording_div, #channel_div, #asset_div {
+                display: none;
             }
 
             #video_pause  {
@@ -2005,7 +2005,7 @@
                     <span id="footer_left"></span>
                 </div>
                 <div id="footer_right_div">
-                    <span id="footer_right">v2.6</span>
+                    <span id="footer_right">v2.7</span>
                 </div>
             </div>
         </footer>
@@ -2080,11 +2080,12 @@
         let grafana_url = "";
         let elastic_url = "";
 
-        //let cors_anywhere_url = "https://atlas-cors-proxy.aas.mediakind.com:8443/";
-        let cors_anywhere_url = "";        
+        let cors_anywhere_url = "https://atlas-cors-proxy.aas.mediakind.com:8443/";
+        //let cors_anywhere_url = "";        
 
         if (subdomain === "onprem") {
             $('#user_div').show();
+            $('#credentials_div').hide();
         }
         else {
             if (subdomain === "staging") {
