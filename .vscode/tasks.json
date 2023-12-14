@@ -6,7 +6,7 @@
         {
             "label": "Atlas Demo Prod",
             "type": "shell",
-            "command": "scp -i ~/.ssh/gcp_key Atlas-Demo.html frederic.huet@cdvr-mvp.aas.mediakind.com:/var/www/html/Atlas-Demo.html",
+            "command": "scp -i ~/.ssh/atlas-demo-fht_key.pem Atlas-Demo.html azureuser@atlas-demo.aas.mediakind.com:/var/www/html/Atlas-Demo.html",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -16,7 +16,7 @@
         {
             "label": "Atlas Demo Staging",
             "type": "shell",
-            "command": "scp -i ~/.ssh/gcp_key Atlas-Demo.html frederic.huet@cdvr-mvp.aas.mediakind.com:/var/www/html/Atlas-Demo-Staging.html",
+            "command": "scp -i ~/.ssh/atlas-demo-fht_key.pem Atlas-Demo.html azureuser@atlas-demo.aas.mediakind.com:/var/www/html/Atlas-Demo.html",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -26,7 +26,7 @@
         {
             "label": "CDVR Latency",
             "type": "shell",
-            "command": "scp -i ~/.ssh/gcp_key Atlas-CDVR-Latency-v2.html frederic.huet@cdvr-mvp.aas.mediakind.com:/var/www/html/mkplayer/latency.html",
+            "command": "scp -i ~/.ssh/atlas-demo-fht_key.pem Atlas-CDVR-Latency-v2.html azureuser@atlas-demo.aas.mediakind.com://var/www/html/mkplayer/latency.html",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

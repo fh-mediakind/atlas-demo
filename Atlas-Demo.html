@@ -21,6 +21,10 @@
                 font-size: 13px;
             }
 
+            div {
+                margin-top: 5px;
+            }
+
             div label {
                 width: 110px;
                 display: inline-block;
@@ -619,21 +623,37 @@
             {
                 let body = "client_id=admin&client_secret=" + controller_password;
 
-                $('#backend_info').html("Authorizing...");
-                $('#backend_error').html("");
+                if (onPrem) {
+                    info_field = $('#backend_user_info');
+                    error_field = $('#backend_user_error');                    
+                }
+                else {
+                    info_field = $('#backend_info');
+                    error_field = $('#backend_error');
+                }
+
+                info_field.html("Authorizing...");
+                error_field.html("");
 
                 let response = await http_post(cors_anywhere_url + controller_url + "/o/token", body, "application/x-www-form-urlencoded");
                 if (response === null || !response.ok) {
-                    $('#backend_info').html("");
-                    $('#backend_error').html("Unauthorized");
+                    info_field.html("");
+                    error_field.html("Unauthorized");
+
                     return false;
                 }
 
                 let data = await response.json();
                 controller_bearer = data.access_token;
 
-                $('#backend_info').html("Authorized");
-                $('#backend_error').html("");
+                if (onPrem) {
+                    $('#backend_user_info').html("Authorized");
+                    $('#backend_user_error').html("");
+                }
+                else {
+                    $('#backend_info').html("Authorized");
+                    $('#backend_error').html("");
+                }
 
                 return true;
             }
@@ -1410,7 +1430,7 @@
             {
                 setInterval(function() { refresh_epoch_time(); }, 5000);
 
-                if (subdomain !== "onprem") {
+                if (!onPrem) {
                     setTimeout(() => refreshHubToken(), 20 * 1000);
                 }
             }
@@ -1825,8 +1845,11 @@
                     <label>Origin Server:</label>
                     <input id="origin_user_url" type="text" size="100"/>
                 </div>
-                <div>
+                <div style="margin-top:20px">
+                    <label></label>
                     <button id="connect" type="button" onclick="controller_url = 'https://' + $('#backend_user_url').val() + ':8443'; controller_password = $('#backend_user_password').val(); origin_url = 'https://' + $('#origin_user_url').val(); update_controller();">Connect</button>
+                    <span class="info" id="backend_user_info"></span>
+                    <span class="error" id="backend_user_error"></span>
                 </div>
             </div>
 
@@ -2083,7 +2106,9 @@
         let cors_anywhere_url = "https://atlas-cors-proxy.aas.mediakind.com:8443/";
         //let cors_anywhere_url = "";        
 
-        if (subdomain === "onprem") {
+        const onPrem = (subdomain === "onprem")?true:false;
+
+        if (onPrem) {
             $('#user_div').show();
             $('#credentials_div').hide();
         }
@@ -2102,7 +2127,6 @@
         }
 
         const urlParams = new URLSearchParams(window.location.search);
-        const onPrem = urlParams.get('onprem');
         const data = JSON.parse(urlParams.get('data'));
 
         //data={"backend_url":"IP|FQDN","backend_password":"PWD","origin_server":"IP|FQDN"}
