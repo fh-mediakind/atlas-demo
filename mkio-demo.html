@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html  lang="en">
+    <head>
+        <title>MK.IO - Demo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <style type="text/css">
+            body {
+                margin: 0px;
+                height: 100vh;          
+                display: flex;
+                flex-direction: column;
+                align-items: center;   
+                font-family: "Segoe UI";
+                font-size: 14px;
+            }
+
+            input {
+                font-family: "Segoe UI";
+                font-size: 13px;
+            }
+
+            div {
+                margin-top: 5px;
+            }
+
+            div label {
+                width: 85px;
+                display: inline-block;
+            }
+
+            div select {
+                min-width: 400px;
+            }
+
+            div input {
+                min-width: 192px;
+            }
+
+            span.info {
+                color: #8CDCDA;
+            }
+
+            span.error {
+                color: red;
+            }
+
+            #page-header {
+                background-color: rgb(0, 21, 41);        
+                height: 60px;
+                width: 100%;
+            }
+
+            #header_div {
+                margin-top: 0px;
+                text-align:center;
+                display: flex;       
+                height: 60px;
+                width: 100%;   
+            }
+
+            .header-image {
+                padding-left: 20px;
+                padding-top: 10px;
+                margin: 0;
+            }
+
+            .header-image img {
+                width: auto;
+                height: 27px;
+                padding: 7px;
+                border: 1px solid transparent;
+            }
+                
+            #main {
+                width: 100%;
+                display: flex;
+                flex-direction: column; 
+                align-items: center;
+                flex-grow: 1;
+            }
+  
+            #title {
+                padding-left: 25px;
+                font-size: 30px;
+                color: white;
+                float: left;
+            }
+
+            #page-footer {
+                background-color: rgb(0, 21, 41);        
+                height: 30px;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            #footer_div {
+                display: flex;
+                margin-top: 0px;
+            }
+
+            #footer_right_div {
+                flex-grow: 1;
+                color: white;
+                text-align: right;
+                padding-right: 10px;
+            }
+
+            #playlist_url {
+                padding: 0px 0px 30px 60px;
+                font-weight: bold;
+            }
+
+            #time_settings_div, #playlist_div, #url_div {
+                /* display: block; */
+                border-radius: 5px;
+                background: #f8f8f8;
+                border: 1px solid rgba(0,0,0,.1);
+                width: 90%;
+                margin-top: 10px;
+                padding: 10px 0px 10px 15px;
+            }
+
+            #time_settings_div table {
+                border: 0px;
+            }
+
+            .epoch_time {
+                text-align: center;
+                display: block;
+                font-size: 13px;;
+            }
+
+            .hr_time {
+                text-align: center;
+                display: block;
+                font-size: 13px;;                
+            }
+
+            #playlist_div {
+                display: flex;
+                flex-grow: 1;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #playlist_actions_div, #playlist_copy_div {
+                margin-top: 5px;
+                padding-bottom: 10px;
+                width: 95%;
+                border-bottom: 1px solid rgba(0,0,0,.1);
+                display: flex;
+                flex-direction: row;
+            }
+
+            #playlist_copy_div {
+                justify-content: center;
+            }
+
+            #playlist_error_div {
+                color: red;
+                display: block;
+                width: 95%;
+                margin: 0 auto;
+                border-radius: 5px;
+                background: #f8f8f8;
+                border: 1px solid red;
+                padding: 10px;
+            }
+
+            #playlist_content_div {
+                display: flex;
+                flex-direction: row;
+                max-height: 50vh;
+                margin: 10px;
+                width: 95%;
+            }
+
+            #playlist_data_div {
+                overflow-y: auto;
+                overflow-x: hidden;
+                resize: none;
+                white-space: pre-wrap;
+                color: #4D4D4C;
+                font-size: 12px;
+                flex-grow: 1;
+            }
+
+            #playlist_player_div {
+                display: none;
+                width:360px;
+                height:202px;
+                margin-left: 20px;
+            }
+
+            #playlist_div {
+                display: none;
+            }
+
+            #video_pause  {
+                display: none;
+            }
+
+            .video-container {
+                overflow: hidden;
+                background: black;
+                position: relative;
+                width:100%;
+                height: 100%;
+                box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.7);
+            }
+    
+            .video-container video {
+                top: 0;
+                left: 0;
+                border: 0;
+                outline: 0;
+                width: 100%;
+                height: 100%;
+                background: black;
+                position: absolute;
+            }
+
+            #video_player_controls_div {
+                margin: 15px auto;
+                width: 50px;
+            }
+
+            #manifest_url{
+                width: 85%;
+            }
+        </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+        <script type="text/javascript" src="./node_modules/@mediakind/mkplayer/mkplayer.js"></script>
+        <link rel="stylesheet" href="./node_modules/@mediakind/mkplayer/mkplayer-ui.css">
+
+        <script type="text/javascript">
+
+            //
+            // HTTP
+            //
+
+            async function http_post(url, data, contentType, bearer_token)
+            {
+                const controller = new AbortController();
+                const timeout_id = setTimeout(() => controller.abort(), 5000);
+
+                let options = {
+                    method: "POST",
+                    mode: "cors",
+                    credentials: "same-origin",
+                    headers: {
+                      "Content-Type": contentType,
+                    },
+                    body: data,
+                    signal: controller.signal
+                };
+
+                if (bearer_token) {
+                    options.headers = {
+                        "Content-Type": contentType,
+                        Authorization: 'Bearer ' + bearer_token,
+                        Accept: '*/*'
+                    }
+                }
+
+                try {
+                    let response = await fetch(url, options);
+                    markOperation();
+                    return response;
+                }
+                catch (error) {
+                    return null;
+                }
+                finally {
+                    clearTimeout(timeout_id);
+                }
+            }
+
+            async function http_get(url, bearer_token)
+            {
+                const controller = new AbortController();
+                const timeout_id = setTimeout(() => controller.abort(), 25000);
+
+                let options = {
+                    method: "GET",
+                    mode: "cors",
+                    credentials: "same-origin",
+                    signal: controller.signal
+                };
+
+                if (bearer_token) {
+                    options.headers = {
+                        Authorization: 'Bearer ' + bearer_token,
+                        Accept: '*/*'
+                    }
+                }
+
+                try {
+                    let response = await fetch(url, options);
+                    markOperation();
+                    return response;
+                }
+                catch (error) {
+                    return null;
+                }
+                finally {
+                    clearTimeout(timeout_id);
+                }
+            }
+
+            async function http_put(url, data, contentType, bearer_token)
+            {
+                let options = {
+                    method: "PUT",
+                    mode: "cors",
+                    credentials: "same-origin",
+                    headers: {
+                      "Content-Type": contentType,
+                    },
+                    body: data
+                };
+
+                if (bearer_token) {
+                    options.headers = {
+                        "Content-Type": contentType,
+                        Authorization: 'Bearer ' + bearer_token,
+                        Accept: '*/*'
+                    }
+                }
+
+                try {
+                    let response = await fetch(url, options);
+                    markOperation();
+                    return response;
+                }
+                catch (error) {
+                    return null;
+                }
+            }
+
+            async function http_delete(url, bearer_token)
+            {
+                let options = {
+                    method: "DELETE",
+                    mode: "cors",
+                    credentials: "same-origin",
+                };
+
+                if (bearer_token) {
+                    options.headers = {
+                        Authorization: 'Bearer ' + bearer_token,
+                        Accept: '*/*'
+                    }
+                }
+
+                try {
+                    let response = await fetch(url, options);
+                    markOperation();
+                    return response;
+                }
+                catch (error) {
+                    return null;
+                }
+            }
+
+            //
+            // Manifest / Playlist
+            //
+
+            async function get_manifest_content(url, target)
+            {
+                if (manifest_update_timeout) {
+                    clearTimeout(manifest_update_timeout);
+                }
+
+                var url2 = null;
+                var new_parameters = null;
+                const regex = /(.*)\((.*)\)/;
+                groups = regex.exec(url);
+
+                if (groups != null) {
+                    url_parameters = groups[2].split(',');
+                    url2 = groups[1] + "(";
+                    if (time_range_parameters != null && time_range_parameters.length > 0) {
+                        new_parameters = url_parameters.filter(function(element) {
+                            return !element.includes("start") && !element.includes("end");
+                        });
+                        new_parameters = new_parameters.concat(time_range_parameters);
+                    }
+                    else {
+                        new_parameters = url_parameters;
+                    };
+                    url2 += new_parameters.join(',');
+                    url2 += ")";
+                }
+
+                let response = await http_get(url2);
+                if (response === null) {
+                    return;
+                }
+
+                let data = await response.text();
+                if (data === null || data.length == 0) {
+                    return null;
+                }
+
+                $('#' + target).html("");
+                let content_type = "closed";
+
+                if (data.match("MPD"))
+                {
+                    if (data.match(/type="dynamic"/)) {
+                        content_type = "open";
+                    }
+
+                    manifest = prettify_xml(data);
+                    manifest = html_special_chars(manifest);
+                    manifest_lines = manifest.split('\n');
+                    manifest_lines[0] = manifest_lines[0].replace(/ ([^=]*=&quot;[^&]*&quot;)/g, (match) => {
+                        newline = false;
+                        if (match.match(/type=/) 
+                            || match.match(/publishTime=/) 
+                            || match.match(/mediaPresentationDuration=/)
+                            || match.match(/profiles=/)
+                            || match.match(/id=/)) {
+                            newline = true;
+                        }
+                        return (newline) ? "\r\n\t" + match : " " + match; 
+                    });
+                    manifest = manifest_lines.join('\n');
+                    manifest = manifest.replace(/(type=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
+                    manifest = manifest.replace(/(timeShiftBufferDepth=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
+                    manifest = manifest.replace(/(mediaPresentationDuration=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
+                    manifest = manifest.replace(/(publishTime=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
+
+                    manifest = manifest.replace(/(&lt;\/?)([^ $&]*)([ $&])/g , "$1<b><span style='color: #000000'>$2</span></b>$3");
+                    manifest = manifest.replace(/=&quot;([^&]*)&quot;/g , "=&quot;<span style='color: #718C00'>$1</span>&quot;");
+                    manifest = manifest.replace(/([a-zA-Z0-9x\.\-:]+)=&/g , "<span style='color: #C82829'>$1=</span>&");
+
+
+                    $('#playlist_player_div').show();
+
+                    $('#' + target).html(manifest);
+                }
+                else if (data.match("EXTM3U"))
+                {
+                    if (!data.match(/#EXT-X-STEAM-INF/) && !data.match(/#EXT-X-ENDLIST/)) {
+                        content_type = "open";
+                    }
+
+                    playlist = html_special_chars(data);
+                    playlist = playlist.replace(/(\#[a-zA-Z0-9\-]*)/g , "<b><span style='color: #000000'>$1</span></b>");
+                    playlist = playlist.replace(/([,:])([a-zA-Z0-9\-]*)=/g , "$1<span style='color: #C82829'>$2</span>=");
+                    playlist = playlist.replace(/=&quot;(?!trackId|m3u8)([^&]*)&quot;/g , "=&quot;<span style='color: #718C00'>$1</span>&quot;");
+                    playlist = playlist.replace(/=(?!trackId|m3u8)([a-zA-Z\.]+)/g , "=<span style='color: #718C00'>$1</span>");
+                    playlist = playlist.replace(/:([a-zA-Z0-9-\.]+)/g , ":<span style='color: #718C00'>$1</span>");
+                    playlist = playlist.replace(/(trackId.*.m3u8)(\(.*\))?("?)/g, "<a href=\"javascript:void(0);\" onclick=\"update_playlist_url('$1$2')\">$1$2</a>$3");
+
+                    $('#playlist_player_div').show();
+
+                    $('#' + target).html(playlist);
+                }
+                else 
+                {
+                    show_playlist_error_div(data);
+                }
+
+                if (content_type === "open") {
+                    manifest_update_timeout = setTimeout(() => get_manifest_content(url2, target), 2 * 1000);
+                }
+
+                $('#playlist_url').html(url2);
+                $('#playlist_copy_div').show()
+            }
+
+            function update_playlist_url(media_playlist)
+            {
+                stop_player();
+
+                var url = $('#playlist_url').html();
+                const regex = /(.*\/).*\((.*)\)/;
+                groups = regex.exec(url);
+                if (groups != null) {
+                    new_url = groups[1] + media_playlist + "(" + groups[2] + ")";
+                }
+
+                $('#playlist_url').html(new_url);
+                get_manifest_content(new_url, 'playlist_data_div');
+            }
+
+            //
+            // Time range panel
+            //
+
+            function update_time_from_input_epoch(input, newValue)
+            {
+                updated_delay = Math.round(($('#current_epoch').html() - newValue) / (-60000));
+
+                $('#' + input + '_input_hour').val(epoch_to_date(updated_time_epoch));
+                $('#' + input + '_slider').val(updated_delay);
+                $('#span_' + input + '_slider').html(updated_delay);
+
+                update_url_time_range();
+            }
+
+            function update_time_from_input_hour(input, newValue)
+            {
+                var d = new Date(newValue);
+
+                updated_delay = Math.round(($('#current_epoch').html() - d.getTime()) / (-60000));
+
+                $('#' + input + '_input_epoch').val(d.getTime());
+                $('#' + input + '_slider').val(updated_delay);
+                $('#span_' + input + '_slider').html(updated_delay);
+
+                update_url_time_range();
+            }
+
+            function update_time_from_slider(elem, newValue)
+            {
+                var d = new Date();
+                updated_time_epoch = d.getTime() - (newValue * (-60000));
+
+                $('#' + elem + '_input_epoch').val(updated_time_epoch);
+                $('#' + elem + '_input_hour').val(epoch_to_date(updated_time_epoch));
+
+                update_url_time_range();
+            }
+
+            function update_duration_from_input_minute(newValue)
+            {
+                var d = new Date(newValue*60000);
+
+                $('#duration_input_hour').val(d.toISOString().slice(11, 19));
+                $('#duration_slider').val(newValue);
+                $('#span_duration_slider').html(newValue);
+
+                update_url_time_range();
+            }
+
+            function update_duration_from_input_hour(newValue)
+            {
+                var minutes = parseInt(newValue.split(':')[0]) * 60 + parseInt(newValue.split(':')[1]);
+
+                $('#duration_input_epoch').val(minutes);
+                $('#duration_slider').val(minutes);
+                $('#span_duration_slider').html(minutes);
+
+                update_url_time_range();
+            }
+
+            function update_duration_from_slider(newValue)
+            {
+                var d = new Date(newValue*60000)
+
+                $('#duration_input_epoch').val(newValue);
+                $('#duration_input_hour').val(d.toISOString().slice(11, 16));
+
+                update_url_time_range();
+            }
+
+            function reset_slider(elem)
+            {
+                $('#' + elem + "_slider").val(0);
+                $('#' + "span_" + elem + "_slider").html(0);
+
+                $('#' + elem + '_input_epoch').val('');
+                $('#' + elem + '_input_hour').val('');
+
+                update_url_time_range();
+            }
+
+            function update_url_time_range()
+            {
+                time_range_parameters.length = 0;
+
+                if ($('#starttime_input_hour').val() != '') {
+                    time_range_parameters.push("start=" + $('#starttime_input_hour').val());
+                }
+
+                if ($('#stoptime_input_hour').val() != '') {
+                    time_range_parameters.push("end=" + $('#stoptime_input_hour').val());
+                }
+            }
+
+            //
+            // Playlist display
+            //
+
+            function hide_playlists()
+            {
+                clear_playlists();
+                hide_playlist_error_div();
+                $('#playlist_div').hide();
+            }
+
+            function show_playlists()
+            {
+                clear_playlists();
+                hide_playlist_error_div();
+                $('#playlist_div').show();    
+            }
+
+            function clear_playlists()
+            {
+                clearTimeout(manifest_update_timeout);
+                
+                $('#playlist_data_div').html("");
+                $('#playlist_url').html("");
+                $('#playlist_copy_div').hide();
+                $('#playlist_player_div').hide();
+
+                stop_player();
+            }
+
+            function show_playlist_error_div(additionalInfo)
+            {
+                clear_playlists();
+                $('#playlist_error_div').show();
+                $('#playlist_error_div').html("An error occured while retrieving the playlist/manifest.<br>" + additionalInfo);
+            }
+
+            function hide_playlist_error_div()
+            {
+                $('#playlist_error_div').hide();
+                $('#error').html("");
+            }
+
+            function show_time_settings()
+            {
+                if ($('#device_profile_select option').length !== 0 && $('#device_profile_select').val() !== 'select') {
+                    $('#time_settings_div').show();
+                    reset_slider('starttime');
+                    reset_slider('stoptime');
+                    reset_slider('duration');
+                }
+            }
+
+            function hide_time_settings() {
+                $('#time_settings_div').hide();
+            }
+
+            //
+            // Utility functions
+            //
+
+            function refresh_epoch_time()
+            {
+                var date = new Date();
+                $('#current_epoch').html(date.getTime());
+                $('#current_time').html(date.toISOString())
+            }
+
+            function markOperation()
+            {
+                last_operation_time = Date.now();
+            }
+
+            function set_timers()
+            {
+                setInterval(function() { refresh_epoch_time(); }, 5000);
+            }
+
+            function html_special_chars(unsafe)
+            {
+                if (unsafe == null) {
+                    return null;
+                }
+
+                return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+            }
+
+            function epoch_to_date(epoch_time)
+            {
+                var d = new Date(0);
+                d.setUTCMilliseconds(epoch_time)
+                return d.toISOString();
+            }
+
+            function prettify_xml(source_xml)
+            {
+                var xmlDoc = new DOMParser().parseFromString(source_xml, 'application/xml');
+                var xsltDoc = new DOMParser().parseFromString([
+                    // describes how we want to modify the XML - indent everything
+                    '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform">',
+                    '  <xsl:strip-space elements="*"/>',
+                    '  <xsl:template match="para[content-style][not(text())]">', // change to just text() to strip space in text nodes
+                    '    <xsl:value-of select="normalize-space(.)"/>',
+                    '  </xsl:template>',
+                    '  <xsl:template match="node()|@*">',
+                    '    <xsl:copy><xsl:apply-templates select="node()|@*"/></xsl:copy>',
+                    '  </xsl:template>',
+                    '  <xsl:output indent="yes"/>',
+                    '</xsl:stylesheet>',
+                ].join('\n'), 'application/xml');
+
+                var xsltProcessor = new XSLTProcessor();
+                xsltProcessor.importStylesheet(xsltDoc);
+                var resultDoc = xsltProcessor.transformToDocument(xmlDoc);
+                var resultXml = new XMLSerializer().serializeToString(resultDoc);
+                return resultXml;
+            }
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function copyToClipboard(textToCopy) {
+                try {
+                    // Navigator clipboard api needs a secure context (https)
+                    if (navigator.clipboard && window.isSecureContext) {
+                        await navigator.clipboard.writeText(textToCopy);
+                    } else {
+                        // Use the 'out of viewport hidden text area' trick
+                        const textArea = document.createElement("textarea");
+                        textArea.value = textToCopy;
+                            
+                        // Move textarea out of the viewport so it's not visible
+                        textArea.style.position = "absolute"; textArea.style.opacity = 0;
+                            
+                        document.body.prepend(textArea);
+                        textArea.select();
+                
+                        try {
+                            document.execCommand('copy');
+                        } catch (error) {
+                            console.error(error);
+                        } finally {
+                            textArea.remove();
+                        }
+                    }
+                }
+                catch {
+                    alert(textToCopy);
+                }
+            }
+
+            function getDuration(startDate, endDate)
+            {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+              
+                const timeDiff = Math.abs(end - start);
+              
+                // Calculate the number of years, months, days, hours, minutes, and seconds
+                const years = Math.floor(timeDiff / (365 * 24 * 60 * 60 * 1000));
+                const months = Math.floor((timeDiff % (365 * 24 * 60 * 60 * 1000)) / (30 * 24 * 60 * 60 * 1000));
+                const days = Math.floor((timeDiff % (30 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+                const hours = Math.floor((timeDiff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                const minutes = Math.floor((timeDiff % (60 * 60 * 1000)) / (60 * 1000));
+                const seconds = Math.floor((timeDiff % (60 * 1000)) / 1000);
+              
+                // Display the duration
+                let duration = ''
+                if (years > 0)
+                    duration += years + ' years, ';
+                if (months > 0)
+                    duration += months + ' months, ';
+                if (days > 0)
+                    duration += days + ' days, ';
+
+                duration += hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+                
+                return duration;
+            }
+
+            //
+            // MediaKind Player
+            //
+
+            let mkPlayer = undefined;
+
+            const playerConfig = {
+                playback: {
+                    muted: true,
+                    autoplay: true,
+                },
+                ui: true,   // ensure mkplayer-ui.css is included in your HTML file!
+                key: "91c1e62d-1547-464b-a73c-4701fc5dea24",
+                log: {
+                    level: "debug"
+                },
+                enableHlsImageMediaPlaylistSupport: false,
+                enableSubtitleOverlay: false
+            };
+
+            
+            function stop_player()
+            {
+                if (mkPlayer) {
+                    mkPlayer.unload()
+                    .then(() => {
+                        console.log("[MKPlayer] Source unloaded!")
+                        mkPlayer.destroy();
+                        mkPlayer = undefined;                        
+                    })
+                    .catch((error) => {console.error("[MKPlayer] Failed to unload source!");});
+                }
+
+                $('#video_play').show();
+                $('#video_pause').hide();
+            }
+
+            function start_player(url)
+            {
+                stop_player();
+
+                const liveSourceConfig = {};
+                const regex = /.*format=([^-]*).*/;
+                extension = regex.exec(url);
+
+                if (extension != null && extension[1] == "mpd") {
+                    liveSourceConfig["dash"] = url
+                }
+                else {
+                    liveSourceConfig["hls"] = url
+                }
+
+                mkPlayer = new mkplayer.MKPlayer(document.querySelector("#video_player_div"), playerConfig);
+                mkPlayer.on("error", (data) => {console.log("[MKPlayer] Error: ", JSON.stringify(data))});
+
+                mkPlayer.load(liveSourceConfig)
+                .catch((error) => {console.error("[MKPlayer] Failed to start playback!");});
+
+                $('#video_play').hide();
+                $('#video_pause').show();
+            }
+
+            //
+            // Page init
+            //
+
+            function on_load()
+            {
+                show_playlists();
+            }
+        </script>
+
+
+
+    </head>
+
+    <body onload="set_timers(); on_load();">
+
+        <header id="page-header" class="header">
+            <div id="header_div">
+                <div class="header-image">
+                    <img alt='' src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCAxNDAgMjMiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZT4uc3Qxe2ZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO2ZpbGw6I2ZmZn08L3N0eWxlPjxnIGlkPSJQYWdlLTEiPjxnIGlkPSJHcm91cC0yMyI+PHBhdGggaWQ9IkZpbGwtMSIgZD0iTTg1IDIyLjU4di01LjE3YzAtLjM3LjM5LS41Ni42Mi0uMjlsMi4yNyAyLjU4Yy4xNC4xNi4xNC40MyAwIC41OWwtMi4yNyAyLjU4Yy0uMjMuMjctLjYyLjA4LS42Mi0uMjkiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjMDA5ZmUzIi8+PHBhdGggaWQ9IkZpbGwtMyIgY2xhc3M9InN0MSIgZD0iTTI4Ljk4IDEzLjFjLjM3LjAxLjcyLjAyIDEuMDYuMDJoMS4yNWMxLjA3IDAgMS45NS0uMDcgMi42MS0uMi42NS0uMTMgMS4xNi0uMyAxLjUxLS41LjMzLS4xOS41NS0uNC42NS0uNjIuMTEtLjI0LjE2LS41LjE2LS43NiAwLS42Ni0uMjYtMS4xNC0uOC0xLjQ3LS41Ny0uMzUtMS4yOC0uNTItMi4xMi0uNTItLjcgMC0xLjMyLjEyLTEuODQuMzZzLS45Ny41Ni0xLjMyLjk1Yy0uMzYuNC0uNjQuODYtLjgzIDEuMzgtLjE5LjQ1LS4yOS45LS4zMyAxLjM2bTQuMjUgOC45Yy0xLjEzIDAtMi4yMS0uMTctMy4xOS0uNTEtLjk5LS4zNC0xLjg3LS44Ni0yLjYyLTEuNTNzLTEuMzQtMS41MS0xLjc3LTIuNDhjLS40My0uOTgtLjY1LTIuMTEtLjY1LTMuMzYgMC0xLjIuMjEtMi4zMS42My0zLjMuNDItLjk5IDEuMDEtMS44NiAxLjc1LTIuNTcuNzQtLjcxIDEuNjMtMS4yNyAyLjY0LTEuNjZDMzEuMDQgNi4yIDMyLjE1IDYgMzMuMzUgNmMxLjA2IDAgMiAuMTQgMi44Mi40MS44Mi4yNyAxLjUyLjY0IDIuMDkgMS4xLjU3LjQ2IDEuMDEgMSAxLjMgMS42Mi4yOS42MS40NCAxLjI3LjQ0IDEuOTcgMCAuNzEtLjE0IDEuMzctLjQxIDEuOTYtLjI4LjYtLjc3IDEuMTEtMS40NiAxLjU0LS42OC40MS0xLjYuNzQtMi43My45Ny0xLjEyLjIzLTIuNTYuMzQtNC4yOC4zNC0uNCAwLS43OCAwLTEuMTItLjAxbC0uODItLjAzYy4xOS44MS42MyAxLjQ2IDEuMzMgMS45OC43OC41OCAxLjkyLjg3IDMuMzkuODdhNy45MjUgNy45MjUgMCAwMDMuNC0uNzNjLjI1LS4xMi40My0uMi41NS0uMjZsLjIxLS4xIDEuNDcgMi43NC0uMTkuMTFjLS4xNi4xLS40Mi4yNC0uNzYuNDItLjM1LjE4LS43OS4zNi0xLjMxLjUycy0xLjEyLjMtMS43OS40MmMtLjY5LjEtMS40NC4xNi0yLjI1LjE2Ii8+PHBhdGggaWQ9IkZpbGwtNSIgY2xhc3M9InN0MSIgZD0iTTUwLjU5IDEwLjE3Yy0uNjggMC0xLjI5LjEyLTEuODMuMzUtLjU0LjI0LTEuMDEuNTYtMS40MS45Ny0uMzkuNC0uNy45LS45MSAxLjQ2LS4yMS41Ny0uMzIgMS4xOS0uMzIgMS44NyAwIC42Ny4xMSAxLjI5LjMyIDEuODUuMjEuNTYuNTIgMS4wNC45MSAxLjQ1LjM5LjQxLjg3LjczIDEuNDEuOTcgMS4wNS40NiAyLjUzLjQ3IDMuNjQuMDEuNTUtLjIyIDEuMDItLjU0IDEuNC0uOTMuMzgtLjQuNjktLjg4LjkxLTEuNDUuMjItLjU3LjM0LTEuMjEuMzQtMS44OSAwLS42NS0uMTEtMS4yNi0uMzQtMS44M2E0LjYxIDQuNjEgMCAwMC0uOTEtMS40OGMtLjM4LS40MS0uODYtLjc0LTEuNC0uOTgtLjU0LS4yNS0xLjE1LS4zNy0xLjgxLS4zN001MC41MyAyM2MtMS4yMyAwLTIuMzgtLjIxLTMuNDEtLjYyLTEuMDMtLjQxLTEuOTQtLjk4LTIuNjktMS43YTcuODEzIDcuODEzIDAgMDEtMS43OC0yLjZjLS40My0xLS42NS0yLjEtLjY1LTMuMjcgMC0xLjE4LjIxLTIuMjkuNjEtMy4yOC40MS0uOTkuOTgtMS44NyAxLjctMi42czEuNTktMS4zIDIuNTYtMS43Yy45Ny0uNCAyLjA1LS42IDMuMi0uNiAxLjIxIDAgMi4zLjI0IDMuMjMuNy42OS4zNSAxLjI4Ljc2IDEuNzUgMS4yMlYxLjgzYzAtLjYxLjE5LTEuMDguNTYtMS4zOC4zNy0uMy44OC0uNDUgMS41Mi0uNDUuMzkgMCAuNzUuMDUgMS4wOC4xNS4zMi4wOS41My4xNi42My4ybC4xNi4wNlYxNC4xYzAgMS40OC0uMjIgMi43OS0uNjQgMy45LS40MyAxLjExLTEuMDMgMi4wNC0xLjc4IDIuNzgtLjc1Ljc0LTEuNjYgMS4zLTIuNjkgMS42Ny0xLjAzLjM2LTIuMTUuNTUtMy4zNi41NSIvPjxwYXRoIGlkPSJGaWxsLTciIGNsYXNzPSJzdDEiIGQ9Ik02NSAyMmgtNFY4Ljc3YzAtLjYxLjItMS4wNy41OS0xLjM2LjM3LS4yNy44OC0uNDEgMS41My0uNDEuMzkgMCAuNzYuMDUgMS4wOS4xNC4zMi4wOS41My4xNS42My4xOWwuMTYuMDZWMjJ6Ii8+PHBhdGggaWQ9IkZpbGwtOSIgY2xhc3M9InN0MSIgZD0iTTc0LjY3IDE0LjczYy0xLjMzIDAtMi4yOS4xOS0yLjg4LjU2LS41Ni4zNi0uODMuOTEtLjgzIDEuNjkgMCAuMzIuMDYuNjEuMTguODcuMTEuMjUuMzEuNDcuNTkuNjQuMy4xOS43Mi4zMyAxLjI0LjQzLjU0LjEgMS4yMi4xNiAyLjA0LjE2LjkyIDAgMS42Ni0uMDMgMi4xOS0uMS4zOS0uMDUuNjktLjA5Ljg4LS4xMnYtMy44OWMtLjIyLS4wNC0uNTMtLjA4LS45My0uMTQtLjU1LS4wNi0xLjM4LS4xLTIuNDgtLjFNNzUgMjJjLTEuNiAwLTIuOTItLjE0LTMuOTQtLjQtMS4wMy0uMjctMS44Ni0uNjQtMi40Ni0xLjEtLjYxLS40Ni0xLjA0LTEuMDEtMS4yNy0xLjYzLS4yMi0uNi0uMzMtMS4yMi0uMzMtMS44NSAwLS44My4xMy0xLjU3LjQtMi4yLjI3LS42NC43Mi0xLjE5IDEuMzMtMS42Mi42LS40MyAxLjQtLjc1IDIuMzYtLjk2Ljk1LS4yMSAyLjExLS4zMSAzLjQ2LS4zMS43NiAwIDEuNTEuMDMgMi4yMS4wNy41My4wNC45Ni4wNyAxLjI4LjExLS4wMy0uNTMtLjEzLS45OC0uMzItMS4zMy0uMjEtLjQxLS41MS0uNzMtLjg3LS45Ni0uMzgtLjIzLS44NC0uNC0xLjM3LS40OS0uNTUtLjA5LTEuMTctLjE0LTEuODQtLjE0LTEuMTIgMC0yLjAzLjEyLTIuNy4zNy0uNjcuMjUtMS4xMi40NS0xLjMyLjYxbC0uMTYuMTItLjE1LS4xMmMtLjE0LS4xMS0uMzItLjMxLS41NC0uNmExLjg2MiAxLjg2MiAwIDAxLS4xMS0yLjA2Yy4xOC0uMy40OC0uNTcuOS0uNzkuNDEtLjIyLjk1LS4zOSAxLjYyLS41MS42Ny0uMTUgMS41MS0uMjEgMi41MS0uMjEgMS4yMSAwIDIuMzMuMTIgMy4zMy4zNCAxLjAxLjIzIDEuODkuNiAyLjYzIDEuMTFhNS4yNSA1LjI1IDAgMDExLjc0IDIuMDJjLjQxLjgzLjYyIDEuODQuNjIgM3Y5LjAxbC0uMi4wNGMtLjIxLjA0LS41My4wOC0uOTguMTNhNTQuNTk1IDU0LjU5NSAwIDAxLTMuNTMuMjhjLS43My4wNS0xLjUuMDctMi4zLjA3Ii8+PHBhdGggaWQ9IkZpbGwtMTEiIGNsYXNzPSJzdDEiIGQ9Ik0xMDQgMjJoLTRWOC43N2MwLS42MS4yLTEuMDcuNTktMS4zNi4zNy0uMjcuODktLjQxIDEuNTQtLjQxLjM5IDAgLjc2LjA1IDEuMDkuMTQuMzIuMDkuNTMuMTUuNjMuMTlsLjE1LjA2VjIyeiIvPjxwYXRoIGlkPSJGaWxsLTEzIiBjbGFzcz0ic3QxIiBkPSJNMTIxIDIyaC0zLjg3di04LjQ4YzAtMS4yOS0uMzEtMi4yOS0uOTItMi45NS0uNi0uNjYtMS41Mi0uOTktMi43MS0uOTktMS4yMSAwLTIuMTMuMzMtMi43Mi45OS0uNi42Ni0uOTEgMS42Ni0uOTEgMi45NVYyMkgxMDZ2LTkuMzVjMC0xLjAzLjE5LTEuOTcuNTctMi43OS4zOC0uODIuOTEtMS41MiAxLjU4LTIuMDkuNjYtLjU3IDEuNDYtMS4wMSAyLjM3LTEuMzEuOTEtLjMgMS45MS0uNDUgMi45OC0uNDVzMi4wOC4xNSAyLjk5LjQ1YTcgNyAwIDAxMi4zOSAxLjMxYy42Ny41NyAxLjIgMS4yOCAxLjU3IDIuMS4zNy44Mi41NiAxLjc2LjU2IDIuNzlWMjJ6Ii8+PHBhdGggaWQ9IkZpbGwtMTUiIGNsYXNzPSJzdDEiIGQ9Ik0xMzEuNTkgMTAuMTdjLS42NyAwLTEuMjkuMTItMS44My4zNS0uNTQuMjQtMS4wMS41Ni0xLjQxLjk3LS4zOS40LS43LjktLjkxIDEuNDYtLjIxLjU3LS4zMiAxLjItLjMyIDEuODcgMCAuNjcuMTEgMS4yOS4zMiAxLjg1LjIxLjU2LjUyIDEuMDQuOTEgMS40NS4zOS40MS44Ny43MyAxLjQuOTcgMS4wNS40NiAyLjUzLjQ3IDMuNjQuMDEuNTUtLjIyIDEuMDItLjU0IDEuNC0uOTMuMzgtLjQuNjktLjg4LjkxLTEuNDUuMjItLjU3LjM0LTEuMjEuMzQtMS44OSAwLS42NS0uMTEtMS4yNi0uMzQtMS44My0uMjItLjU3LS41My0xLjA2LS45Mi0xLjQ4LS4zOC0uNDEtLjg2LS43NC0xLjQtLjk4LS41Mi0uMjUtMS4xMy0uMzctMS43OS0uMzdNMTMxLjUzIDIzYy0xLjIzIDAtMi4zOC0uMjEtMy40MS0uNjJhOC4xNyA4LjE3IDAgMDEtMi42OS0xLjcgNy44MTMgNy44MTMgMCAwMS0xLjc4LTIuNmMtLjQzLTEtLjY1LTIuMS0uNjUtMy4yNyAwLTEuMTguMjEtMi4yOS42MS0zLjI4LjQxLS45OS45OC0xLjg3IDEuNy0yLjZzMS41OC0xLjMgMi41Ni0xLjdjLjk3LS40IDIuMDUtLjYgMy4yLS42IDEuMjEgMCAyLjMuMjQgMy4yMy43LjY5LjM1IDEuMjguNzYgMS43NSAxLjIyVjEuODNjMC0uNjEuMTktMS4wOC41Ni0xLjM4LjM2LS4zLjg3LS40NSAxLjUyLS40NS4zOSAwIC43NS4wNSAxLjA4LjE1LjMyLjA5LjUzLjE2LjYzLjJsLjE2LjA2VjE0LjFjMCAxLjQ4LS4yMiAyLjc5LS42NCAzLjktLjQzIDEuMTEtMS4wMyAyLjA0LTEuNzggMi43OC0uNzUuNzQtMS42NiAxLjMtMi42OSAxLjY3LTEuMDMuMzYtMi4xNS41NS0zLjM2LjU1Ii8+PHBhdGggaWQ9IkZpbGwtMTciIGNsYXNzPSJzdDEiIGQ9Ik05NS45MSAyMmMtLjUzIDAtMS4wNy0uMjEtMS40Ny0uNjJsLTguODMtOC45Yy0uODEtLjgyLS44MS0yLjE1IDAtMi45N2w4LjgzLTguOWMuODEtLjgyIDIuMTMtLjgyIDIuOTUgMCAuODEuODIuODEgMi4xNSAwIDIuOTdMOTAuMDQgMTFsNy4zNSA3LjQxYy44MS44Mi44MSAyLjE1IDAgMi45Ny0uNDEuNDEtLjk0LjYyLTEuNDguNjIiLz48cGF0aCBpZD0iRmlsbC0xOSIgZD0iTTg2IDFjLjU2IDAgMS4wMy4xOSAxLjQyLjU4LjM5LjM5LjU4Ljg2LjU4IDEuNDIgMCAuNTYtLjE5IDEuMDQtLjU4IDEuNDItLjM5LjM5LS44Ni41OC0xLjQyLjU4cy0xLjAzLS4xOS0xLjQyLS41OEM4NC4xOSA0LjAzIDg0IDMuNTYgODQgM2MwLS41Ni4xOS0xLjAzLjU4LTEuNDIuMzktLjM5Ljg2LS41OCAxLjQyLS41OCIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNkNDEwM2EiLz48cGF0aCBpZD0iRmlsbC0yMSIgY2xhc3M9InN0MSIgZD0iTTIxLjcyIDEuMTZjLS43Ny0uMzItMS42Ny0uMTQtMi4yNi40NWwtOS41MSA5LjUzLTMuNzEtMy43MmgtLjAxbC0yLjY5LTIuN2EyLjA3IDIuMDcgMCAwMC0yLjkzIDBDLjIgNS4xMyAwIDUuNjcgMCA2LjIxdjE0LjcxQzAgMjIuMDcuOTMgMjMgMi4wOCAyM3MyLjA3LS45MyAyLjA3LTIuMDh2LTkuN2wxLjYzIDEuNjRoLjAxbDIuNjkgMi43Yy44MS44MSAyLjEyLjgxIDIuOTMgMGw3LjQ0LTcuNDV2MTIuODJjMCAxLjE1LjkzIDIuMDggMi4wNyAyLjA4UzIzIDIyLjA3IDIzIDIwLjkyVjMuMDhjMC0uODQtLjUxLTEuNi0xLjI4LTEuOTIiLz48L2c+PC9nPjwvc3ZnPg==" />
+                </div>                
+            </div>
+        </header>
+
+        <main id="main" class="main">
+
+            <div id="url_div">
+                <label>URL:</label>
+                <input id="manifest_url" type="text" onchange="clear_playlists();"/>
+            </div>
+
+            <div id="time_settings_div">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                Current Time:
+                            </td>
+                            <td>
+                                <span id="current_epoch" class="epoch_time"></span>
+                            </td>
+                            <td>
+                                <span id="current_time" class="hr_time"></span>
+                            </td>
+                            <td width="20px"></td>
+                            <td class="left-border" style="width:330px;">
+                                Delay from current time
+                            </td>
+                            <td class="left-border">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                StartTime:
+                            </td>
+                            <td>
+                                <input type="text" id="starttime_input_epoch" class="epoch_time" onchange="update_time_from_input_epoch('starttime', this.value)">
+                            </td>
+                            <td>
+                                <input type="text" id="starttime_input_hour" class="hr_time" onchange="update_time_from_input_hour('starttime', this.value)">
+                            </td>
+                            <td width="20px"></td>
+                            <td class="left-border" style="width:330px;">
+                                <input id="starttime_slider" type="range" min="-720" max="720" value="0" step="1" onchange="update_time_from_slider('starttime', this.value)" oninput="$('#span_starttime_slider').html(this.value)" style="display:inline; width:100px;" />
+                                <span id="span_starttime_slider">0</span> minutes
+                            </td>
+                            <td class="left-border">
+                                <button type="button" onclick="reset_slider('starttime');">Reset</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                StopTime:
+                            </td>
+                            <td>
+                                <input type="text" id="stoptime_input_epoch" class="epoch_time" onchange="update_time_from_input_epoch('stoptime', this.value)">
+                            <td>
+                                <input type="text" id="stoptime_input_hour" class="hr_time"  onchange="update_time_from_input_hour('stoptime', this.value)">
+                            </td>
+                            <td width="20px"></td>
+                            <td class="left-border" style="width:330px;">
+                                <input id="stoptime_slider" type="range" min="-720" max="720" value="0" step="1" onchange="update_time_from_slider('stoptime', this.value)" oninput="$('#span_stoptime_slider').html(this.value)" style="display:inline; width:100px;" />
+                                <span id="span_stoptime_slider">0</span> minutes
+                            </td>
+                            <td class="left-border">
+                                <button type="button" onclick="reset_slider('stoptime');">Reset</button>
+                            </td>
+                        </tr>
+                        <!--
+                        <tr>
+                            <td>
+                                Duration (minutes):
+                            </td>
+                            <td>
+                                <input type="text" id="duration_input_epoch" class="epoch_time" onchange="update_duration_from_input_minute(this.value)">
+                            <td>
+                                <input type="text" id="duration_input_hour" class="hr_time" onchange="update_duration_from_input_hour(this.value)">
+                            </td>
+                            <td width="20px"></td>
+                            <td class="left-border" style="width:330px;">
+                                <input id="duration_slider" type="range" min="0" max="60" value="0" step="1" onchange="update_duration_from_slider(this.value)" oninput="$('#span_duration_slider').html(this.value)" style="display:inline; width:100px;" />
+                                <span id="span_duration_slider">0</span> minutes
+                            </td>
+                            <td class="left-border">
+                                <button type="button" onclick="reset_slider('duration');">Reset</button>
+                            </td>
+                        </tr>
+                        -->
+                    </table>
+                </div>
+            </div>
+
+            <div id="playlist_div">
+                <div id="playlist_actions_div">
+                    <button id="load_playlist" type="button" onclick="clear_playlists(); get_manifest_content($('#manifest_url').val(), 'playlist_data_div');">Load Manifest / Playlist</button>
+                    
+                </div>
+
+                <div id="playlist_error_div">
+                    An error occured while retrieving the playlist/manifest.
+                </div>
+                <div id="playlist_url_div">
+                    <span id="playlist_url" size="100"></span>
+                </div>
+                <div id="playlist_copy_div">
+                    <button type="button" id="playlist_copy_button" onclick="copyToClipboard($('#playlist_url').text());">Copy URL</button>
+                    &nbsp;&nbsp;
+                    <button type="button" id="playlist_content_copy_button" onclick="copyToClipboard($('#playlist_data_div').text());">Copy Manifest / Playlist</button>
+                </div>
+                <div id="playlist_content_div">
+                    <div id="playlist_data_div"></div>   
+                    <div id="playlist_player_div">
+                        <div class="video-container" id="video_player_div"></div>
+
+                        <div id="video_player_controls_div">
+                            <button type="button" id="video_play" onclick="start_player($('#playlist_url').text());">Play</button>
+                            <button type="button" id="video_pause" onclick="stop_player();">Stop</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <footer id="page-footer" class="footer">
+            <div id="footer_div">
+                <div id="footer_left_div">
+                    <span id="footer_left"></span>
+                </div>
+                <div id="footer_right_div">
+                    <span id="footer_right">v1.0</span>
+                </div>
+            </div>
+        </footer>
+    </body>
+
+    <script type="text/javascript">
+        const urlParams = new URLSearchParams(window.location.search);
+        const data = JSON.parse(urlParams.get('data'));
+
+        let manifest_update_timeout = 0;
+        let last_operation_time = 0;
+        let time_range_parameters = new Array();
+
+        //data={"manifest_url":"https://..."}
+        if (data !== null) {
+            $("#manifest_url").val(data.manifest_url);
+        }
+
+        refresh_epoch_time();
+    </script>
+
+</html>
+

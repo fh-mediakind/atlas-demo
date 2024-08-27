@@ -1083,6 +1083,7 @@
                     manifest = manifest.replace(/(type=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
                     manifest = manifest.replace(/(timeShiftBufferDepth=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
                     manifest = manifest.replace(/(mediaPresentationDuration=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
+                    manifest = manifest.replace(/(publishTime=&quot;[^&]*&quot;)/ , "<span style='background-color: #FFFF00'>$1</span>");
 
                     manifest = manifest.replace(/(&lt;\/?)([^ $&]*)([ $&])/g , "$1<b><span style='color: #000000'>$2</span></b>$3");
                     manifest = manifest.replace(/=&quot;([^&]*)&quot;/g , "=&quot;<span style='color: #718C00'>$1</span>&quot;");
@@ -1690,10 +1691,10 @@
                 stop_player();
 
                 const liveSourceConfig = {};
-                const regex = /(?:\.([^.]+))?$/;
-                extension = regex.exec(url)[1];
+                const regex = /(?:\.([^.]+))?\?.*$/;
+                extension = regex.exec(url);
 
-                if (extension == "mpd") {
+                if (extension != null && extension[1] == "mpd") {
                     liveSourceConfig["dash"] = url
                 }
                 else {
@@ -2103,8 +2104,8 @@
         let grafana_url = "";
         let elastic_url = "";
 
-        let cors_anywhere_url = "https://atlas-cors-proxy.aas.mediakind.com:8443/";
-        //let cors_anywhere_url = "";        
+        //let cors_anywhere_url = "https://atlas-cors-proxy.aas.mediakind.com:8443/";
+        let cors_anywhere_url = "";        
 
         const onPrem = (subdomain === "onprem")?true:false;
 

@@ -32,6 +32,26 @@
                 "kind": "build",
                 "isDefault": true
             }
-        }        
+        },
+        {
+            "label": "Run Server",
+            "type": "shell",
+            "command": "python -m SimpleHTTPServer",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",    
+                "isDefault": true
+            }
+        },
+        {
+            "label": "MK.IO Demo Prod",
+            "type": "shell",
+            "command": "scp -i ~/.ssh/atlas-demo-fht_key.pem mkio-demo.html azureuser@atlas-demo.aas.mediakind.com:/var/www/html/mkio-demo.html",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },          
     ]
 }
